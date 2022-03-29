@@ -1,16 +1,43 @@
-# pyNublad
+# pyNublado
+
+A package to run Cloudy models.
+
+## Setup
+### Requirements
+ * Python 3.7 or newer
+ * Your favourite C++ compiler to build Cloudy
 
 
-## Installing and testing Cloudy
-_from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks_:
-* Download latest Cloudy version ```curl -O https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz```
-* Unzip the file ```tar xvfz /path/to/download-location/c17.02.tar.gz```
-* Navigate to folder ```cd c17.02```
-* Make the executable ```make```
-* Navigate to source ``` cd source ```
-* Test installation  ```./cloudy.exe```
+### Installing and testing Cloudy
+Instructions from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks:
+* Download the latest Cloudy version
+```bash 
+curl -O https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz
+```
+* Unzip the file
+```bash
+tar xvfz /path/to/download-location/c17.02.tar.gz
+```
+* Navigate to folder
+```bash
+cd c17.02/source
+```
+* Make the executable
+```bash
+make
+```
+* Test installation  
+```bash
+./cloudy.exe
+```
 * Type "test" then enter twice
-* Should print "Cloudy exited OK".
+* Cloudy should print "Cloudy exited OK".
+
+* Set PATH variables? tba
+
+### Python modules
+tba
+
 
 ## Running Cloudy
 
