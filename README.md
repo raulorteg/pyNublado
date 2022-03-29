@@ -14,24 +14,24 @@ Instructions from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks
 ```bash 
 curl -O https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz
 ```
-* Unzip the file
+* Unpack the files
 ```bash
 tar xvfz /path/to/download-location/c17.02.tar.gz
 ```
-* Navigate to folder
+* Navigate to the source folder
 ```bash
 cd c17.02/source
 ```
-* Make the executable
+* Build the executable
 ```bash
 make
 ```
-* Test installation  
+* Test the installation  
 ```bash
 ./cloudy.exe
 ```
-* Type "test" then enter twice
-* Cloudy should print "Cloudy exited OK".
+* Type "test" then Enter twice
+* Cloudy should print some output, which ends with "Cloudy exited OK"
 
 * Set PATH variables? tba
 
