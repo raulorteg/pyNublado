@@ -12,7 +12,7 @@ A package to run Cloudy models.
 Instructions from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks:
 * Download the latest Cloudy version
 ```bash 
-curl -O https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz
+wget https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz --no-check-certificate
 ```
 * Unpack the files
 ```bash
