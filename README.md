@@ -16,7 +16,7 @@ wget https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz --no-check-certi
 ```
 * Unpack the files
 ```bash
-tar xvfz /path/to/download-location/c17.02.tar.gz
+tar xvfz c17.02.tar.gz
 ```
 * Navigate to the source folder
 ```bash
