@@ -46,11 +46,13 @@ tba
 
 
 ## Input parameters
-* Gas density (log scale): 1.7 - 6 (Dense Gas), -3-1.7 (Diffuse Gas)
-* Gas phase metallicity: 0.01, 0.05, 0.1, 0.5, 1.0, 2.0 (solar)
-* Cosmic ray flux: 1-1e3 x background
-* CMD background (z_redshift): 3-15 (or 4-10)
-* Raidation spectrum (BPASS): depends on age, metalicity (Z)
+* Gas density (log scale): -3-6
+* Gas phase metallicity: 0.01 - 2.0 (solar)
+* CMD background (z_redshift): 3-12
+* Raidation spectrum (BPASS) 300 max mass, imf135: depends on age, metalicity (Z)
+* ages (is delimited by the redhisft): 1 Myr up to 2 Gyr.
+* Metalicity (Z): 0.001-0.040 (absolute value)
+
 
 ## Output params:
 * Lines in ```data/LineLabels_filtered.txt```.
