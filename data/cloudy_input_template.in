@@ -1,0 +1,81 @@
+title test_script_cloudy
+
+# BPASS model binary file (compiled by Cloudy)
+table star "BPASSv2p1_imf135all_100_burst_binary.mod" age=2e8 years Z=-1.8
+#
+# gas density (in log units)
+hden 1.0
+#
+# Ionization fraction (used to scaled the BPASS spectra) 
+ionization parameter -4.0
+#
+# Abundances can be defined element by elemenet or using templates
+# for approx known conditions (e.g primordial, hii region [no grains], ...)
+# (no grains): no metal depletion
+abundances solar_GASS10 no grains
+#
+# Use Orion-type grains of x0.2 the size (use dust depletion)
+grains Orion 0.2
+#
+# Poly-Aromatic Carbons in the grains x0.2 the size
+grains PAH 0.2
+#
+# Pressure will be constant within each zone
+constant pressure
+#
+# covering factor Omega/4*pi for the emission-line region. Since we work on slab geometry
+# this covering factor (unity) is the default
+covering factor 1.0
+#
+# turns on energy deposition and ionization due to relativistic particles
+# The first number is the log of the cosmic ray density (n(cr), cm-3).
+# The second optional number is a power-law index α, describing the variation of the cosmic ray
+# density with radius
+cosmic rays background
+#
+# CMD background redshift z=6
+background, z=6
+#
+# Magnetic field
+# magnetic field -3.5 gauss
+#
+# Stopping criteria for the simulation:
+# AV stops at given visual extinction
+stop AV 100.0
+# temperature stop criteria defaults to 4000 k, here we turn it off
+stop temperature off
+#
+# This sets the default limit to the number of zones that will be computed (default is 1400)
+# another command to use is stop zone, which prints warning if it gets reached
+set nend 2000
+#
+# This is a special form of the iterate command in which the code will continue to iterate until the
+# optical depths have converged or a limit to the number of iterations has been reached.
+iterate to convergence max=3
+#
+# CLOUDY will normally print the intensities of all emission lines with intensities greater than 10e-3
+# of the reference line, which is usually H-beta, If no numbers are entered, but the keyword off appears then all lines are printed, even
+# those with zero intensity.
+print line faint _off
+#
+# Normally results for every iteration are printed as they are computed. This command says to print
+# only results for the last iteration.
+print last iteration
+#
+# prefix path of out files
+set save prefix "../output_models/"
+#
+save last line labels ".label"
+# save last radius ".rad"
+save last continuum ".cont"
+# save last physical conditions ".phy"
+save last overview ".ovr"
+save last heating ".heat"
+save last cooling ".cool"
+save last optical depth ".opd"
+# save last element hydrogen ".ele_H"
+save last lines emissivity ".emis"
+save results last iteration column ".results"
+#
+#
+save line list "LineList_out.txt" "LineList_in.dat"
