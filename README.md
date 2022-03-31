@@ -36,8 +36,26 @@ make
 * Set PATH variables? tba
 
 ### Python modules
-tba
+The following Python modules are needed
 
+* numpy
+* matplotlib
+* astropy
+* pyDOE
+* ...
+
+##### pip
+The Python dependencies can be installed with `pip` like so:
+```bash
+pip3 install -r requirements.txt
+```
+
+##### conda
+In Anaconda (or Miniconda) environments the requirements can be installed like so:
+```bash
+conda config --add channels conda-forge
+conda install --yes --file requirements_conda.txt
+```
 
 ## Running Cloudy
 
