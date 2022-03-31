@@ -8,9 +8,10 @@ from astropy.cosmology import Planck18
 from common.settings_parameters import *
 from common.settings import PARAMETER_FILE
 from common.utils import *
+from common.plot import *
 
 
-def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_file=True):
+def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_file=True, plot=False):
     """
     This function creates a set of parameters for a sample.
 
@@ -18,9 +19,10 @@ def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_fi
         path: output directory
         prefix: file prefix
         n_samples: Number of parameter samples to be generated
-        save_to_file: Save parameters to file
-        filter: Filter the sample for parameter combinations that are unphysical.
-                This will results in a lower n_sample than specified.
+        save_to_file: Boolean - Save parameters to file
+        filter: Boolean - Filter the sample for parameter combinations that are unphysical.
+                          This will results in a lower n_sample than specified.
+        plot: Boolean - create a visualisation of the parameter space
 
     Returns:
           A 2D numpy array in which each row represents a parameter vector.
@@ -41,17 +43,24 @@ def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_fi
         n_samples = parameters.shape[0]
 
     if save_to_file:
-        file_name = '{}_{}_N{}.npy'.format(prefix, PARAMETER_FILE, n_samples)
+        if prefix:
+            file_name = '{}_{}_N{}.npy'.format(prefix, PARAMETER_FILE, n_samples)
+        else:
+            file_name = '{}_N{}.npy'.format(PARAMETER_FILE, n_samples)
+
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
         print('Saved parameter file to {}'.format(parameter_file_path))
+
+    if plot:
+        plot_parameter_space(parameters=parameters, output_dir=path, prefix=prefix, file_type='png')
 
     return parameters
 
 
 def sampling_filter_redshift_stellar_age(parameters):
     """
-    remove all parameter vectors for which the stellar age exceeds the age of the universe (given by the redshift)
+    Remove all parameter vectors for which the stellar age exceeds the age of the universe (given by the redshift)
 
     Args:
         parameters: 2D array containing the parameters
@@ -81,7 +90,7 @@ def sampling_filter_redshift_stellar_age(parameters):
     # bookkeeping
     n_samples_post = parameters.shape[0]
     delta = n_samples_pre - n_samples_post
-    print('\t{} samples removed. {} remaining.'.format(delta, n_samples_post))
+    print('  {} samples removed. {} remaining.'.format(delta, n_samples_post))
 
     return parameters
 
@@ -92,12 +101,13 @@ def sampling_filter_redshift_stellar_age(parameters):
 if __name__ == "__main__":
 
     target_directory = '../data/samples/'
-    target_prefix = 'test'
-    N = 100
+    target_prefix = 'test_filter'
+    N = 2000
 
     sampling_create_parameters(path=target_directory,
                                prefix=target_prefix,
                                n_samples=N,
                                filter=True,
-                               save_to_file=True
+                               save_to_file=True,
+                               plot=False
                                )

@@ -28,7 +28,7 @@ PARAMETER_NAMES_LATEX =['\log_{10}(\\rho\, \mathrm{cm^{3}})',
                         'Z/Z_{\\odot}',
                         'z',
                         'Z_{\\ast}',
-                        't_{\\ast}'
+                        't_{\\ast} \; [Myr]'
                         ]
 
 
