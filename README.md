@@ -11,7 +11,7 @@ A package to run Cloudy models.
 ### Installing and testing Cloudy
 Instructions from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks:
 * Download the latest Cloudy version
-```bash 
+```bash
 wget https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz --no-check-certificate
 ```
 * Unpack the files
@@ -41,17 +41,17 @@ tba
 
 ## Running Cloudy
 
-* 
-* 
+*
+*
 
 
 ## Input parameters
 * Gas density (log scale): -3-6
 * Gas phase metallicity: 0.01 - 2.0 (solar)
 * CMD background (z_redshift): 3-12
-* Raidation spectrum (BPASS) 300 max mass, imf135: depends on age, metalicity (Z)
-* ages (is delimited by the redhisft): 1 Myr up to 2 Gyr.
-* Metalicity (Z): 0.001-0.040 (absolute value)
+* Radiation spectrum (BPASS), Chabrier IMF, Mup=300 Msun: depends on age, metalicity (Z)
+* ages (is delimited by the redshift): 1 Myr up to 2 Gyr.
+* Metalicity (Z): 1e-5-0.040 (absolute value)
 
 
 ## Output params:
