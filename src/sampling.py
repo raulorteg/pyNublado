@@ -6,7 +6,7 @@ from astropy.cosmology import Planck18
 
 
 from common.settings_parameters import *
-from common.settings import PARAMETER_FILE, RANDOM_SEED
+from common.settings import PARAMETER_FILE_BASE, RANDOM_SEED, SAMPLE_DIR_BASE
 from common.utils import *
 from common.plot import *
 
@@ -29,10 +29,12 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
           It will also be saved as a numpy object.
     """
 
+    folder = '{}{}'.format(SAMPLE_DIR_BASE, n_samples)
+    path = os.path.join(path, folder)
+
     if not os.path.exists(path):
         os.makedirs(path)
         print('Created directory {}'.format(path))
-
 
     np.random.seed(RANDOM_SEED)
 
@@ -51,7 +53,7 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
 
     if save_to_file:
 
-        file_name = '{}_N{}.npy'.format(PARAMETER_FILE, n_samples)
+        file_name = '{}_N{}.npy'.format(PARAMETER_FILE_BASE, n_samples)
 
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
