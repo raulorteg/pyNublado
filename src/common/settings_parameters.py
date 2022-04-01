@@ -22,7 +22,9 @@ PARAMETER_LIMITS = [[-3.0, 6.0],
                     [1.0, 2000.0]
                     ]
 
+PARAMETER_NUMBER_GAS_PHASE_METALLICITY = 2
 PARAMETER_NUMBER_REDSHIFT = 3
+PARAMETER_NUMBER_STELLAR_METALLICITY = 5
 PARAMETER_NUMBER_STELLAR_AGE = 6
 
 # LaTeX names of our parameters (for matplotlib)
