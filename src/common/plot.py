@@ -20,13 +20,11 @@ mpl.rc('text', usetex=True)
 # -----------------------------------------------------------------
 #  visualise the sample distribution of the whole parameter space
 # -----------------------------------------------------------------
-def plot_parameter_space(parameters, output_dir, prefix, file_type='png'):
+def plot_parameter_space(parameters, n_samples, output_dir, file_type='png'):
 
     print('Creating parameter space visualisation')
 
     N = PARAMETER_NUMBER
-
-    n_samples = parameters.shape[0]
 
     # set up parameter ranges and labels
     p_labels = PARAMETER_NAMES_LATEX
@@ -101,13 +99,9 @@ def plot_parameter_space(parameters, output_dir, prefix, file_type='png'):
     # make good use of space
     f.subplots_adjust(hspace=0, wspace=0, left=0.13, bottom=0.10, right=0.95, top=0.98)
 
-    # build file name
+    # build file name and save figure
 
-    if prefix:
-        file_name = '{}_parameter_space_N{}.{}'.format(prefix, n_samples, file_type)
-
-    else:
-        file_name = 'parameter_space_N{}.{}'.format(n_samples, file_type)
+    file_name = 'parameter_space_N{}.{}'.format(n_samples, file_type)
 
     output_path = os.path.join(output_dir, file_name)
     f.savefig(output_path)

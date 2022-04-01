@@ -11,7 +11,7 @@ from common.utils import *
 from common.plot import *
 
 
-def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_file=True, plot=False):
+def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True, plot=False):
     """
     This function creates a set of parameters for a sample.
 
@@ -40,18 +40,15 @@ def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_fi
 
     if filter:
         parameters = sampling_filter_redshift_stellar_age(parameters)
-        n_samples = parameters.shape[0]
 
     if plot:
-        plot_parameter_space(parameters=parameters, output_dir=path, prefix=prefix, file_type='png')
+        plot_parameter_space(parameters=parameters, n_samples=n_samples, output_dir=path, file_type='png')
 
     parameters = sampling_adjust_columns(parameters)
 
     if save_to_file:
-        if prefix:
-            file_name = '{}_{}_N{}.npy'.format(prefix, PARAMETER_FILE, n_samples)
-        else:
-            file_name = '{}_N{}.npy'.format(PARAMETER_FILE, n_samples)
+
+        file_name = '{}_N{}.npy'.format(PARAMETER_FILE, n_samples)
 
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
@@ -126,11 +123,10 @@ def sampling_filter_redshift_stellar_age(parameters):
 if __name__ == "__main__":
 
     target_directory = '../data/samples/'
-    target_prefix = 'test_filter'
+
     N = 2000
 
     sampling_create_parameters(path=target_directory,
-                               prefix=target_prefix,
                                n_samples=N,
                                filter=True,
                                save_to_file=True,
