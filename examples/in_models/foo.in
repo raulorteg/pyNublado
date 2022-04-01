@@ -1,0 +1,83 @@
+title foo
+table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" age=200000000.0 years Z=-1.8
+hden 1.0
+ionization parameter -4.0
+abundances solar_GASS10 no grains
+metals and grains 0.001
+grains Orion 0.2
+grains PAH 0.2
+constant pressure
+covering factor 1.0
+cosmic rays background
+background, z=6.0
+stop AV 100.0
+stop temperature off
+set nend 2000
+iterate to convergence max=3
+print line faint _off
+print last iteration
+set save prefix "../out_models/foo"
+save last line labels ".label"
+save last continuum ".cont"
+save last overview ".ovr"
+save last heating ".heat"
+save last cooling ".cool"
+save last optical depth ".opd"
+save last lines emissivity ".emis"
+C  2  157.636m
+O  3  88.3323m
+O  3  51.8004m
+O  4  25.8832m
+O  1  63.1679m
+O  1  145.495m
+N  3  57.3238m
+N  2  205.244m
+N  2  121.767m
+C  4  1550.78A
+C  4  1548.19A
+H  1  6562.80A
+H  1  4861.32A
+C  3  1908.73A
+O  2  3728.81A
+O  2  3726.03A
+O  3  1666.15A
+N  2  6583.45A
+N  5  1238.82A
+N  5  1242.80A
+He 2  1640.41A
+O  3  5006.84A
+O  3  4958.91A
+S  2  6730.82A
+S  2  6716.44A
+Ne 3  3868.76A
+CO  2600.05m
+CO  1300.05m	 
+CO  866.727m	 
+CO  650.074m	 
+CO  520.089m	 
+CO  433.438m 
+CO  371.549m 
+"^13CO"  2719.67m 
+"^13CO"  1359.86m 
+"^13CO"  906.599m 
+"^13CO"  679.978m 
+HCO+  3360.43m	 
+HCO+  1680.21m	 
+HCO+  1120.18m	 
+HCO+  840.150m	 
+HCO+  672.144m	 
+HCO+  560.140m	 
+HCN  3381.44m	 
+HCN  3381.58m	 
+HCN  3381.52m	 
+HCN  1690.82m	
+HCN  1690.78m	 
+HCN  1690.80m	 
+HCN  1127.22m	 
+HCN  845.428m
+HCN  676.373m 
+HCN  563.665m	 
+HCN  483.168m 
+HCN  422.796m
+HCN  375.844m
+end of lines

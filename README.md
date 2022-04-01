@@ -96,12 +96,13 @@ cloudy
 
 
 ## Input parameters
-* Gas density (log scale): -3-6
-* Gas phase metallicity: 0.01 - 2.0 (solar)
-* CMD background (z_redshift): 3-12
+* Gas density (log scale): -3 - 6
+* Gas phase metallicity: 0.0001 - 2.0 (solar) #NOTE: sampled in log space
+* CMB background (z_redshift): 3-12
+* Ionization parameter: -4 - 0 (log units)
 * Radiation spectrum (BPASS), Chabrier IMF, Mup=300 Msun: depends on age, metalicity (Z)
-* ages (is delimited by the redshift): 1 Myr up to 2 Gyr.
-* Metalicity (Z): 1e-5-0.040 (absolute value)
+    * Stellar ages (is delimited by the redshift): 1 Myr up to 2 Gyr.
+    * Stellar Metalicity (Z): 1e-5-0.040 (absolute value)
 
 
 ## Output params:

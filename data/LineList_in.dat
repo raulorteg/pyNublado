@@ -1,198 +1,56 @@
-85400	C  2                157.636m		# type: t, index=1, 2 Elow=0   Stout, 2s2.2p 2P*1/2 -- 2s2.2p 2P*3/2
-120025	O  3                88.3323m		# type: t, index=1, 2 Elow=0   Stout, 2s2.2p2 3P0 -- 2s2.2p2 3P1
-120035	O  3                51.8004m		# type: t, index=2, 3 Elow=113.178   Stout, 2s2.2p2 3P1 -- 2s2.2p2 3P2
-169470	O  4                25.8832m		# type: t, index=1, 2 Elow=0   Chianti, 
-119865	O  1                63.1679m		# type: t, index=1, 2 Elow=0   Stout, 2s2.2p4 3P2 -- 2s2.2p4 3P1
-119870	O  1                145.495m		# type: t, index=2, 3 Elow=158.265   Stout, 2s2.2p4 3P1 -- 2s2.2p4 3P0
-163275	N  3                57.3238m		# type: t, index=1, 2 Elow=0   Chianti, 
-163130	N  2                205.244m		# type: t, index=1, 2 Elow=0   Chianti, 
-163135	N  2                121.767m		# type: t, index=2, 3 Elow=48.7   Chianti, 
-134935	C  4                1550.78A		# type: t, index=1, 2 Elow=0   Chianti, 
-134940	C  4                1548.19A		# type: t, index=1, 3 Elow=0   Chianti, 
-3671	H  1                6562.80A		# type: t, index=2, 5 Elow=82259.11   H-like,   2^2S - n=  3
-3676	H  1                4861.32A		# type: t, index=2, 8 Elow=82259.11   H-like,   2^2S - n=  4
-85405	C  3                1908.73A		# type: t, index=1, 3 Elow=0   Stout, 1s2.2s2 1S0 -- 1s2.2s.2p 3P1
-120015	O  2                3728.81A		# type: t, index=1, 2 Elow=0   Stout, 2s2.2p3 4S*3/2 -- 2s2.2p3 2D*5/2
-120020	O  2                3726.03A		# type: t, index=1, 3 Elow=0   Stout, 2s2.2p3 4S*3/2 -- 2s2.2p3 2D*3/2
-120075	O  3                1666.15A		# type: t, index=3, 6 Elow=306.174   Stout, 2s2.2p2 3P2 -- 2s.2p3 5S*2
-163150	N  2                6583.45A		# type: t, index=3, 4 Elow=130.8   Chianti, 
-116200	N  5                1238.82A		# type: t, index=1, 3 Elow=0   Stout, 1s2.2s 2S1/2 -- 1s2.2p 2P*3/2
-116205	N  5                1242.80A		# type: t, index=1, 2 Elow=0   Stout, 1s2.2s 2S1/2 -- 1s2.2p 2P*1/2
-5251	He 2                1640.41A		# type: t, index=2, 5 Elow=329181.7   H-like,   2^2S - n=  3
-4120050	O  3                5006.84A		# type: t, index=3, 4 Elow=306.174   Stout, 2s2.2p2 3P2 -- 2s2.2p2 1D2
-120045	O  3                4958.91A		# type: t, index=2, 4 Elow=113.178   Stout, 2s2.2p2 3P1 -- 2s2.2p2 1D2
-121370	S  2                6730.82A		# type: t, index=1, 2 Elow=0   Stout, 3s2.3p3 4S* -- 3s2.3p3 2D*
-121375	S  2                6716.44A		# type: t, index=1, 3 Elow=0   Stout, 3s2.3p3 4S* -- 3s2.3p3 2D*
-117020	Ne 3                3868.76A		# type: t, index=1, 4 Elow=0   Stout, 2s22p4(3P) (3)1( 2.0) -- 2s22p4(1D) (1)2( 2.0)
-70985	CO                  2600.05m		# type: t, index=1, 2 Elow=0   LAMDA, 
-70990	CO                  1300.05m		# type: t, index=2, 3 Elow=3.845033   LAMDA, 
-70995	CO                  866.727m		# type: t, index=3, 4 Elow=11.53495   LAMDA, 
-71000	CO                  650.074m		# type: t, index=4, 5 Elow=23.06947   LAMDA, 
-71005	CO                  520.089m		# type: t, index=5, 6 Elow=38.44813   LAMDA, 
-71010	CO                  433.438m		# type: t, index=6, 7 Elow=57.67036   LAMDA, 
-71015	CO                  371.549m		# type: t, index=7, 8 Elow=80.73542   LAMDA, 
-71020	CO                  325.137m		# type: t, index=8, 9 Elow=107.6424   LAMDA, 
-71025	CO                  289.041m		# type: t, index=9, 10 Elow=138.3903   LAMDA, 
-71030	CO                  260.169m		# type: t, index=10, 11 Elow=172.978   LAMDA, 
-71035	CO                  236.549m		# type: t, index=11, 12 Elow=211.4041   LAMDA, 
-71040	CO                  216.868m		# type: t, index=12, 13 Elow=253.6672   LAMDA, 
-71045	CO                  200.218m		# type: t, index=13, 14 Elow=299.7656   LAMDA, 
-71050	CO                  185.949m		# type: t, index=14, 15 Elow=349.6975   LAMDA, 
-71055	CO                  173.584m		# type: t, index=15, 16 Elow=403.4612   LAMDA, 
-71060	CO                  162.767m		# type: t, index=16, 17 Elow=461.0544   LAMDA, 
-71065	CO                  153.225m		# type: t, index=17, 18 Elow=522.4751   LAMDA, 
-71070	CO                  144.745m		# type: t, index=18, 19 Elow=587.7208   LAMDA, 
-71075	CO                  137.159m		# type: t, index=19, 20 Elow=656.7892   LAMDA, 
-71080	CO                  130.333m		# type: t, index=20, 21 Elow=729.6774   LAMDA, 
-71085	CO                  124.160m		# type: t, index=21, 22 Elow=806.3828   LAMDA, 
-71090	CO                  118.548m		# type: t, index=22, 23 Elow=886.9023   LAMDA, 
-71095	CO                  113.427m		# type: t, index=23, 24 Elow=971.2332   LAMDA, 
-71100	CO                  108.733m		# type: t, index=24, 25 Elow=1059.372   LAMDA, 
-71105	CO                  104.416m		# type: t, index=25, 26 Elow=1151.315   LAMDA, 
-71110	CO                  100.433m		# type: t, index=26, 27 Elow=1247.059   LAMDA, 
-71115	CO                  96.7462m		# type: t, index=27, 28 Elow=1346.601   LAMDA, 
-71120	CO                  93.3237m		# type: t, index=28, 29 Elow=1449.936   LAMDA, 
-71125	CO                  90.1384m		# type: t, index=29, 30 Elow=1557.061   LAMDA, 
-71130	CO                  87.1666m		# type: t, index=30, 31 Elow=1667.971   LAMDA, 
-71135	CO                  84.3877m		# type: t, index=31, 32 Elow=1782.662   LAMDA, 
-71140	CO                  81.7835m		# type: t, index=32, 33 Elow=1901.131   LAMDA, 
-71145	CO                  79.3383m		# type: t, index=33, 34 Elow=2023.371   LAMDA, 
-71150	CO                  77.0375m		# type: t, index=34, 35 Elow=2149.38   LAMDA, 
-71155	CO                  74.8697m		# type: t, index=35, 36 Elow=2279.151   LAMDA, 
-71160	CO                  72.8231m		# type: t, index=36, 37 Elow=2412.68   LAMDA, 
-71165	CO                  70.8878m		# type: t, index=37, 38 Elow=2549.962   LAMDA, 
-71170	CO                  69.0557m		# type: t, index=38, 39 Elow=2690.991   LAMDA, 
-71175	CO                  67.3181m		# type: t, index=39, 40 Elow=2835.763   LAMDA, 
-71180	CO                  65.6684m		# type: t, index=40, 41 Elow=2984.271   LAMDA, 
-71185	CO                  64.0998m		# type: t, index=41, 42 Elow=3136.51   LAMDA, 
-71190	CO                  62.6072m		# type: t, index=42, 43 Elow=3292.474   LAMDA, 
-71195	CO                  61.1843m		# type: t, index=43, 44 Elow=3452.156   LAMDA, 
-71200	CO                  59.8271m		# type: t, index=44, 45 Elow=3615.552   LAMDA, 
-71205	CO                  58.5311m		# type: t, index=45, 46 Elow=3782.655   LAMDA, 
-71210	CO                  57.2920m		# type: t, index=46, 47 Elow=3953.458   LAMDA, 
-71215	CO                  56.1066m		# type: t, index=47, 48 Elow=4127.955   LAMDA, 
-71220	CO                  54.9712m		# type: t, index=48, 49 Elow=4306.138   LAMDA, 
-71225	CO                  53.8829m		# type: t, index=49, 50 Elow=4488.002   LAMDA, 
-71230	CO                  52.8388m		# type: t, index=50, 51 Elow=4673.539   LAMDA, 
-71235	CO                  51.8365m		# type: t, index=51, 52 Elow=4862.742   LAMDA, 
-71240	CO                  50.8731m		# type: t, index=52, 53 Elow=5055.604   LAMDA, 
-71245	CO                  49.9472m		# type: t, index=53, 54 Elow=5252.118   LAMDA, 
-71250	CO                  49.0559m		# type: t, index=54, 55 Elow=5452.275   LAMDA, 
-71255	CO                  48.1977m		# type: t, index=55, 56 Elow=5656.068   LAMDA, 
-71260	CO                  47.3709m		# type: t, index=56, 57 Elow=5863.491   LAMDA, 
-71265	CO                  46.5738m		# type: t, index=57, 58 Elow=6074.533   LAMDA, 
-71270	CO                  45.8046m		# type: t, index=58, 59 Elow=6289.188   LAMDA, 
-71275	CO                  45.0623m		# type: t, index=59, 60 Elow=6507.447   LAMDA, 
-71280	CO                  44.3452m		# type: t, index=60, 61 Elow=6729.301   LAMDA, 
-71285	CO                  43.6523m		# type: t, index=61, 62 Elow=6954.743   LAMDA, 
-71290	CO                  42.9823m		# type: t, index=62, 63 Elow=7183.764   LAMDA, 
-71295	CO                  42.3344m		# type: t, index=63, 64 Elow=7416.354   LAMDA, 
-71300	CO                  41.7069m		# type: t, index=64, 65 Elow=7652.504   LAMDA, 
-71305	CO                  41.0997m		# type: t, index=65, 66 Elow=7892.207   LAMDA, 
-71310	CO                  40.5112m		# type: t, index=66, 67 Elow=8135.452   LAMDA, 
-71315	CO                  39.9409m		# type: t, index=67, 68 Elow=8382.229   LAMDA, 
-71320	CO                  39.3878m		# type: t, index=68, 69 Elow=8632.531   LAMDA, 
-71325	CO                  38.8516m		# type: t, index=69, 70 Elow=8886.348   LAMDA, 
-72405	^13CO               2719.67m		# type: t, index=1, 2 Elow=0   LAMDA, 
-72410	^13CO               1359.86m		# type: t, index=2, 3 Elow=3.675921   LAMDA, 
-72415	^13CO               906.599m		# type: t, index=3, 4 Elow=11.02763   LAMDA, 
-72420	^13CO               679.978m		# type: t, index=4, 5 Elow=22.05486   LAMDA, 
-72425	^13CO               544.012m		# type: t, index=5, 6 Elow=36.7572   LAMDA, 
-72430	^13CO               453.374m		# type: t, index=6, 7 Elow=55.13412   LAMDA, 
-72435	^13CO               388.637m		# type: t, index=7, 8 Elow=77.18495   LAMDA, 
-72440	^13CO               340.088m		# type: t, index=8, 9 Elow=102.9089   LAMDA, 
-72445	^13CO               302.332m		# type: t, index=9, 10 Elow=132.305   LAMDA, 
-72450	^13CO               272.130m		# type: t, index=10, 11 Elow=165.3722   LAMDA, 
-72455	^13CO               247.423m		# type: t, index=11, 12 Elow=202.1092   LAMDA, 
-72460	^13CO               226.836m		# type: t, index=12, 13 Elow=242.5148   LAMDA, 
-72465	^13CO               209.419m		# type: t, index=13, 14 Elow=286.5875   LAMDA, 
-72470	^13CO               194.493m		# type: t, index=14, 15 Elow=334.3257   LAMDA, 
-72475	^13CO               181.558m		# type: t, index=15, 16 Elow=385.7275   LAMDA, 
-72480	^13CO               170.243m		# type: t, index=16, 17 Elow=440.7912   LAMDA, 
-72485	^13CO               160.261m		# type: t, index=17, 18 Elow=499.5146   LAMDA, 
-72490	^13CO               151.390m		# type: t, index=18, 19 Elow=561.8958   LAMDA, 
-72495	^13CO               143.454m		# type: t, index=19, 20 Elow=627.9324   LAMDA, 
-72500	^13CO               136.314m		# type: t, index=20, 21 Elow=697.6219   LAMDA, 
-72505	^13CO               129.855m		# type: t, index=21, 22 Elow=770.9619   LAMDA, 
-72510	^13CO               123.985m		# type: t, index=22, 23 Elow=847.9496   LAMDA, 
-72515	^13CO               118.627m		# type: t, index=23, 24 Elow=928.5823   LAMDA, 
-72520	^13CO               113.717m		# type: t, index=24, 25 Elow=1012.857   LAMDA, 
-72525	^13CO               109.201m		# type: t, index=25, 26 Elow=1100.771   LAMDA, 
-72530	^13CO               105.034m		# type: t, index=26, 27 Elow=1192.32   LAMDA, 
-72535	^13CO               101.176m		# type: t, index=27, 28 Elow=1287.502   LAMDA, 
-72540	^13CO               97.5955m		# type: t, index=28, 29 Elow=1386.312   LAMDA, 
-72545	^13CO               94.2629m		# type: t, index=29, 30 Elow=1488.748   LAMDA, 
-72550	^13CO               91.1537m		# type: t, index=30, 31 Elow=1594.805   LAMDA, 
-72555	^13CO               88.2461m		# type: t, index=31, 32 Elow=1704.48   LAMDA, 
-72560	^13CO               85.5213m		# type: t, index=32, 33 Elow=1817.769   LAMDA, 
-72565	^13CO               82.9627m		# type: t, index=33, 34 Elow=1934.667   LAMDA, 
-72570	^13CO               80.5556m		# type: t, index=34, 35 Elow=2055.17   LAMDA, 
-72575	^13CO               78.2869m		# type: t, index=35, 36 Elow=2179.274   LAMDA, 
-72580	^13CO               76.1453m		# type: t, index=36, 37 Elow=2306.975   LAMDA, 
-72585	^13CO               74.1205m		# type: t, index=37, 38 Elow=2438.267   LAMDA, 
-72590	^13CO               72.2030m		# type: t, index=38, 39 Elow=2573.145   LAMDA, 
-72595	^13CO               70.3848m		# type: t, index=39, 40 Elow=2711.606   LAMDA, 
-72600	^13CO               68.6584m		# type: t, index=40, 41 Elow=2853.643   LAMDA, 
-74210	HCO+                3360.43m		# type: t, index=1, 2 Elow=0   LAMDA, 
-74215	HCO+                1680.21m		# type: t, index=2, 3 Elow=2.975   LAMDA, 
-74220	HCO+                1120.18m		# type: t, index=3, 4 Elow=8.925   LAMDA, 
-74225	HCO+                840.150m		# type: t, index=4, 5 Elow=17.8497   LAMDA, 
-74230	HCO+                672.144m		# type: t, index=5, 6 Elow=29.7491   LAMDA, 
-74235	HCO+                560.140m		# type: t, index=6, 7 Elow=44.6228   LAMDA, 
-74240	HCO+                480.147m		# type: t, index=7, 8 Elow=62.4706   LAMDA, 
-74245	HCO+                420.151m		# type: t, index=8, 9 Elow=83.2919   LAMDA, 
-74250	HCO+                373.490m		# type: t, index=9, 10 Elow=107.0864   LAMDA, 
-74255	HCO+                336.166m		# type: t, index=10, 11 Elow=133.8536   LAMDA, 
-74260	HCO+                305.628m		# type: t, index=11, 12 Elow=163.5927   LAMDA, 
-74265	HCO+                280.184m		# type: t, index=12, 13 Elow=196.3033   LAMDA, 
-74270	HCO+                258.655m		# type: t, index=13, 14 Elow=231.9844   LAMDA, 
-74275	HCO+                240.204m		# type: t, index=14, 15 Elow=270.6354   LAMDA, 
-74280	HCO+                224.214m		# type: t, index=15, 16 Elow=312.2554   LAMDA, 
-74285	HCO+                210.226m		# type: t, index=16, 17 Elow=356.8434   LAMDA, 
-74290	HCO+                197.884m		# type: t, index=17, 18 Elow=404.3984   LAMDA, 
-74295	HCO+                186.915m		# type: t, index=18, 19 Elow=454.9193   LAMDA, 
-74300	HCO+                177.102m		# type: t, index=19, 20 Elow=508.405   LAMDA, 
-74305	HCO+                168.271m		# type: t, index=20, 21 Elow=564.8543   LAMDA, 
-74310	HCO+                160.284m		# type: t, index=21, 22 Elow=624.2659   LAMDA, 
-74315	HCO+                153.023m		# type: t, index=22, 23 Elow=686.6383   LAMDA, 
-74320	HCO+                146.395m		# type: t, index=23, 24 Elow=751.9703   LAMDA, 
-74325	HCO+                140.320m		# type: t, index=24, 25 Elow=820.2602   LAMDA, 
-74330	HCO+                134.732m		# type: t, index=25, 26 Elow=891.5066   LAMDA, 
-74335	HCO+                129.576m		# type: t, index=26, 27 Elow=965.7077   LAMDA, 
-74340	HCO+                124.802m		# type: t, index=27, 28 Elow=1042.862   LAMDA, 
-74345	HCO+                120.370m		# type: t, index=28, 29 Elow=1122.967   LAMDA, 
-74350	HCO+                116.245m		# type: t, index=29, 30 Elow=1206.022   LAMDA, 
-74355	HCO+                112.396m		# type: t, index=30, 31 Elow=1292.024   LAMDA,
-70725	HCN                 3381.44m		# type: t, index=1, 4 Elow=0   LAMDA, 
-70730	HCN                 3381.58m		# type: t, index=1, 2 Elow=0   LAMDA, 
-70735	HCN                 3381.52m		# type: t, index=1, 3 Elow=0   LAMDA, 
-70740	HCN                 1690.82m		# type: t, index=4, 5 Elow=2.95651   LAMDA, 
-70745	HCN                 1690.78m		# type: t, index=2, 5 Elow=2.95639   LAMDA, 
-70750	HCN                 1690.80m		# type: t, index=3, 5 Elow=2.95644   LAMDA, 
-70755	HCN                 1127.22m		# type: t, index=5, 6 Elow=8.8692   LAMDA, 
-70760	HCN                 845.428m		# type: t, index=6, 7 Elow=17.7382   LAMDA, 
-70765	HCN                 676.373m		# type: t, index=7, 8 Elow=29.5633   LAMDA, 
-70770	HCN                 563.665m		# type: t, index=8, 9 Elow=44.344   LAMDA, 
-70775	HCN                 483.168m		# type: t, index=9, 10 Elow=62.0802   LAMDA, 
-70780	HCN                 422.796m		# type: t, index=10, 11 Elow=82.7713   LAMDA, 
-70785	HCN                 375.844m		# type: t, index=11, 12 Elow=106.4169   LAMDA, 
-70790	HCN                 338.285m		# type: t, index=12, 13 Elow=133.0164   LAMDA, 
-70795	HCN                 307.557m		# type: t, index=13, 14 Elow=162.5692   LAMDA, 
-70800	HCN                 281.953m		# type: t, index=14, 15 Elow=195.0746   LAMDA, 
-70805	HCN                 260.290m		# type: t, index=15, 16 Elow=230.5318   LAMDA, 
-70810	HCN                 241.723m		# type: t, index=16, 17 Elow=268.94   LAMDA, 
-70815	HCN                 225.634m		# type: t, index=17, 18 Elow=310.2983   LAMDA, 
-70820	HCN                 211.558m		# type: t, index=18, 19 Elow=354.6057   LAMDA, 
-70825	HCN                 199.139m		# type: t, index=19, 20 Elow=401.8612   LAMDA, 
-70830	HCN                 188.102m		# type: t, index=20, 21 Elow=452.0636   LAMDA, 
-70835	HCN                 178.228m		# type: t, index=21, 22 Elow=505.2117   LAMDA, 
-70840	HCN                 169.342m		# type: t, index=22, 23 Elow=561.3044   LAMDA, 
-70845	HCN                 161.305m		# type: t, index=23, 24 Elow=620.3402   LAMDA, 
-70850	HCN                 153.999m		# type: t, index=24, 25 Elow=682.3178   LAMDA, 
-70855	HCN                 147.329m		# type: t, index=25, 26 Elow=747.2357   LAMDA, 
-70860	HCN                 141.217m		# type: t, index=26, 27 Elow=815.0925   LAMDA, 
-70865	HCN                 135.594m		# type: t, index=27, 28 Elow=885.8864   LAMDA, 
-70870	HCN                 130.405m		# type: t, index=28, 29 Elow=959.6158   LAMDA, 
-70875	HCN                 125.602m		# type: t, index=29, 30 Elow=1036.279   LAMDA, 
-70880	HCN                 121.142m		# type: t, index=30, 31 Elow=1115.874   LAMDA, 
-70885	HCN                 116.991m		# type: t, index=31, 32 Elow=1198.4   LAMDA, 
+C  2  157.636m
+O  3  88.3323m
+O  3  51.8004m
+O  4  25.8832m
+O  1  63.1679m
+O  1  145.495m
+N  3  57.3238m
+N  2  205.244m
+N  2  121.767m
+C  4  1550.78A
+C  4  1548.19A
+H  1  6562.80A
+H  1  4861.32A
+C  3  1908.73A
+O  2  3728.81A
+O  2  3726.03A
+O  3  1666.15A
+N  2  6583.45A
+N  5  1238.82A
+N  5  1242.80A
+He 2  1640.41A
+O  3  5006.84A
+O  3  4958.91A
+S  2  6730.82A
+S  2  6716.44A
+Ne 3  3868.76A
+CO  2600.05m
+CO  1300.05m	 
+CO  866.727m	 
+CO  650.074m	 
+CO  520.089m	 
+CO  433.438m 
+CO  371.549m 
+"^13CO"  2719.67m 
+"^13CO"  1359.86m 
+"^13CO"  906.599m 
+"^13CO"  679.978m 
+HCO+  3360.43m	 
+HCO+  1680.21m	 
+HCO+  1120.18m	 
+HCO+  840.150m	 
+HCO+  672.144m	 
+HCO+  560.140m	 
+HCN  3381.44m	 
+HCN  3381.58m	 
+HCN  3381.52m	 
+HCN  1690.82m	
+HCN  1690.78m	 
+HCN  1690.80m	 
+HCN  1127.22m	 
+HCN  845.428m
+HCN  676.373m 
+HCN  563.665m	 
+HCN  483.168m 
+HCN  422.796m
+HCN  375.844m
