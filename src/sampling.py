@@ -6,7 +6,7 @@ from astropy.cosmology import Planck18
 
 
 from common.settings_parameters import *
-from common.settings import PARAMETER_FILE
+from common.settings import PARAMETER_FILE, RANDOM_SEED
 from common.utils import *
 from common.plot import *
 
@@ -32,6 +32,9 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     if not os.path.exists(path):
         os.makedirs(path)
         print('Created directory {}'.format(path))
+
+
+    np.random.seed(RANDOM_SEED)
 
     # get normalised latin hyper cube (all parameter values are in the [0,1] range)
     lhs_normalised = lhs(n=PARAMETER_NUMBER, samples=n_samples)
