@@ -1,9 +1,11 @@
-import subprocess
 import pathlib
 
 class CloudyInput:
-    def __init__(self, title:str, LineList_path:str):
-        self.title = title
+    def __init__(self, index:int, N:int, target_dir:str, LineList_path:str):
+        self.title = "model"
+        self.target_dir = target_dir
+        self.index = index
+        self.N = N 
         self.LineList_path = LineList_path
         self.buffer_to_write = []
 
@@ -112,10 +114,9 @@ class CloudyInput:
         self.buffer_to_write.append(command)
     
     def _set_prefix_for_savefiles(self):
-        pathlib.Path('../out_models').mkdir(parents=True, exist_ok=True)
-        pathlib.Path('../in_models').mkdir(parents=True, exist_ok=True) 
-        title = '../out_models/'+self.title
-        command = 'set save prefix "{}"'.format(title)
+        pathlib.Path(f'{self.target_dir}sample_N{self.N}/{self.index}').mkdir(parents=True, exist_ok=True)
+        #title = f'{self.target_dir}sample_N{self.N}/{self.index}/'+self.title
+        command = 'set save prefix "{}"'.format(self.title) # model
         self.buffer_to_write.append(command)
     
     def _set_save_lines(self):
@@ -184,7 +185,8 @@ class CloudyInput:
         self._set_save_emissivity()
         self._set_lines_to_save()
 
-        with open('../in_models/'+self.title+".in", "w+") as f:
+        self.in_file = f'{self.target_dir}sample_N{self.N}/{self.index}/'+self.title+".in"
+        with open(self.in_file, "w+") as f:
             for command in self.buffer_to_write:
                 print(command, file=f)
 
@@ -192,8 +194,8 @@ class CloudyInput:
                     gas_phase_metallicity:float,
                     redshift:float,
                     ionization_parameter:float,
-                    stellar_age:float,
-                    stellar_metallicity:float):
+                    stellar_metallicity:float,
+                    stellar_age:float):
         
         # set the input variables as attributes
         self.log_gas_density = log_gas_density
@@ -205,15 +207,18 @@ class CloudyInput:
 
         # create the list of commands and write them into a .in file
         self._create()
+        return self.in_file
 
 if __name__ == "__main__":
     # example usage
 
-    CloudyInput(title="foo",
-                LineList_path="../data/LineList_in.dat"
-                ).create(log_gas_density=1.0,
-                        gas_phase_metallicity=0.001,
-                        redshift=6.0,
-                        ionization_parameter=-4.0,
-                        stellar_age=2e8,
-                        stellar_metallicity=-1.8)
+    ## approach 1 (queue of infiles)
+    samples = np.array()
+    
+    # create all in files
+    for sample in samples:
+        CloudyInput().create(sample)
+    
+    # run the in files (multiple cpus)
+    for in_file in infiles:
+        run(in_file)

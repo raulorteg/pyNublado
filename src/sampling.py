@@ -79,7 +79,7 @@ def sampling_adjust_columns(parameters):
     t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
 
     parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
-    parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
+    # parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
     parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
 
     return parameters
