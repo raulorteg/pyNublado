@@ -42,6 +42,11 @@ def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_fi
         parameters = sampling_filter_redshift_stellar_age(parameters)
         n_samples = parameters.shape[0]
 
+    if plot:
+        plot_parameter_space(parameters=parameters, output_dir=path, prefix=prefix, file_type='png')
+
+    parameters = sampling_adjust_columns(parameters)
+
     if save_to_file:
         if prefix:
             file_name = '{}_{}_N{}.npy'.format(prefix, PARAMETER_FILE, n_samples)
@@ -52,8 +57,28 @@ def sampling_create_parameters(path, prefix, n_samples, filter=False, save_to_fi
         np.save(parameter_file_path, parameters)
         print('Saved parameter file to {}'.format(parameter_file_path))
 
-    if plot:
-        plot_parameter_space(parameters=parameters, output_dir=path, prefix=prefix, file_type='png')
+    return parameters
+
+
+def sampling_adjust_columns(parameters):
+    """
+    Metalicities are sampled in log space and have to be changed to linear space.
+    Cloudy wants the stellar age in years and not Mega years.
+
+    Args:
+        parameters: parameter object
+
+    Returns: parameter objact
+
+    """
+
+    Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
+    Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
+    t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
+
+    parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
+    parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
+    parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
 
     return parameters
 
@@ -109,5 +134,5 @@ if __name__ == "__main__":
                                n_samples=N,
                                filter=True,
                                save_to_file=True,
-                               plot=False
+                               plot=True
                                )
