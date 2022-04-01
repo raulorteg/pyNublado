@@ -34,18 +34,20 @@ def plot_parameter_space(parameters, output_dir, prefix, file_type='png'):
         p_labels[i] = '$' + label + '$'
 
     # parameter ranges and padding
+    # Parameter names           Intervals                   Units
     # 1. Gas density            interval=[-3.0, 6.0]        log (cm^-3)
-    # 2. Gas phase metallicity  interval=[0.01, 2.0]        Solar metallicity
-    # 2. Redshift               interval=[3.0, 12.0]        Absolute value
-    # 4. Stellar metallicity    interval=[1e-5, 0.04]       Absolute value
-    # 5. Stellar age            interval=[1.0, 2000.0]      Myr
+    # 2. Gas phase metallicity  interval=[-3.0, 0.30103]    Solar metallicity
+    # 3. Redshift               interval=[3.0, 12.0]        Absolute value
+    # 4. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8
+    # 5. Stellar metallicity    interval=[-5, -1.3979]      Absolute value
+    # 6. Stellar age            interval=[1.0, 2000.0]      Myr
 
-    padding = [(-3.5, 6.5), (-0.2, 2.2), (2.0, 13.), (1e-5, 0.043), (-150, 2080)]
+    padding = [(-3.5, 6.5), (-3.2, 0.5), (2.0, 13.), (-4.4, 0.5), (-5.5, -1.1), (-150, 2080)]
 
     # some plot settings
     marker_size = 150
     tick_label_size = 20
-    label_size = 26
+    label_size = 22
 
     # set up main plot
     f, ax_array = plt.subplots(N - 1, N - 1, figsize=(12, 12))

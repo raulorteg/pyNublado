@@ -109,5 +109,5 @@ if __name__ == "__main__":
                                n_samples=N,
                                filter=True,
                                save_to_file=True,
-                               plot=False
+                               plot=True
                                )
