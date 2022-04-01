@@ -57,6 +57,38 @@ conda config --add channels conda-forge
 conda install --yes --file requirements_conda.txt
 ```
 
+### Preparing the BPASS models
+* From the BPASS V2.1 [data release](https://bpass.auckland.ac.nz/8.html) download the data for [BPASSV2.1_bin-imf135_300](https://drive.google.com/drive/folders/0B7vqPPPgOdtIaUdWRElMMDdHSG8?resourcekey=0-pIKN3NE1KTpfbEfr_K_Rcw)
+* Use the [pearl script](https://data.nublado.org/stars/convert_bpassv2.x.pl) to convert the data to ascii format readable for CLOUDY:
+
+_NOTE: the pearl script needs to be placed on the parent directory_
+
+```bash
+├── BPASSv2.1_bin-imf135_300
+│   ├── ...
+│   └── ...
+├── convert_bpassv2.x.pl
+```
+
+* Navigate inside the BPASS folder
+```bash
+cd BPASSv2.1_bin-imf135_300
+```
+* Execute the pearl script from the folder
+```bash
+../convert_bpassv2.x.pl
+```
+_NOTE: If it complains about permissions grant the pearl file permissions_
+```bash
+chmod +x convert_bpassv2.x.pl
+```
+* Generate binary files from the resulting _.ascii_ files using CLOUDY
+```
+cloudy
+```
+* Type enter, then ```compile star "BPASSv2_imf135_100_burst_binary.ascii" ``` then enter again.
+
+
 ## Running Cloudy
 
 *
