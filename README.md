@@ -61,7 +61,7 @@ conda install --yes --file requirements_conda.txt
 * From the BPASS V2.2.1 [data release](https://bpass.auckland.ac.nz/9.html) download the data for _bpass_v2p2.1_imf_chab300_
 
 
-_NOTE: the pearl script (in data/) needs to be placed on the parent directory_
+_NOTE: the Perl script (in data/) needs to be placed on the parent directory_
 
 ```bash
 ├── BPASSv2.1_bin-imf135_300
@@ -71,10 +71,10 @@ _NOTE: the pearl script (in data/) needs to be placed on the parent directory_
 ```
 
 * Navigate to the BPASS folder ```cd BPASSv2.1_bin-imf135_300 ```
-* Execute the pearl script from the folder
+* Execute the Perl script from the folder
 ``` ../convert_bpassv2.x.pl```
 
-_NOTE: If it complains about permissions grant the pearl file permissions_
+_NOTE: If it complains about permissions grant the Perl file permissions_
 
 ```bash
 chmod +x convert_bpassv2.x.pl
