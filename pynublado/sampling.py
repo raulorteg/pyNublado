@@ -15,18 +15,16 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     """
     This function creates a set of parameters for a sample.
 
-    Args:
-        path: output directory
-        prefix: file prefix
-        n_samples: Number of parameter samples to be generated
-        save_to_file: Boolean - Save parameters to file
-        filter: Boolean - Filter the sample for parameter combinations that are unphysical.
-                          This will results in a lower n_sample than specified.
-        plot: Boolean - create a visualisation of the parameter space
+    :param str path: output directory
+    :param str prefix: file prefix
+    :param int n_samples: Number of parameter samples to be generated
+    :param bool save_to_file: Boolean - Save parameters to file
+    :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical.
+    This will results in a lower n_sample than specified.
+    :param bool plot: Boolean - create a visualisation of the parameter space
 
-    Returns:
-          A 2D numpy array in which each row represents a parameter vector.
-          It will also be saved as a numpy object.
+    :return: A 2D numpy array in which each row represents a parameter vector. It will also be saved as a numpy object.
+    :rtype: numpy.array
     """
 
     folder = '{}{}'.format(SAMPLE_DIR_BASE, n_samples)
@@ -67,11 +65,8 @@ def sampling_adjust_columns(parameters):
     Metalicities are sampled in log space and have to be changed to linear space.
     Cloudy wants the stellar age in years and not Mega years.
 
-    Args:
-        parameters: parameter object
-
-    Returns: parameter objact
-
+    :param parameters: parameter object
+    :return: parameter object
     """
 
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
@@ -89,11 +84,9 @@ def sampling_filter_redshift_stellar_age(parameters):
     """
     Remove all parameter vectors for which the stellar age exceeds the age of the universe (given by the redshift)
 
-    Args:
-        parameters: 2D array containing the parameters
-
-    Returns:
-        The filtered 2D parameter array
+    :param numpy.array parameters: 2D array containing the parameters
+    :return: The filtered 2D parameter array
+    :rtype: numpy.array
     """
 
     print('Filtering un-physical parameter combinations:')

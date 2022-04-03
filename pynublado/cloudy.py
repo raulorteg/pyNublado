@@ -2,15 +2,16 @@ import pathlib
 
 class CloudyInput:
     """ Class used to create model.in file and the file structure given a sample, a 
-    combination of parameters that are to be run on CLOUDY. """
+    combination of parameters that are to be run on CLOUDY.
+    
+    :param int index: index identifier of the sample within the whole array of samples.
+    :param int N: number of total samples.
+    :param str target_dir: path of directory where samples are to be saved.
+    :param str LineList_path: path to file where lines to be saved are written. 
+    """
 
     def __init__(self, index:int, N:int, target_dir:str, LineList_path:str):
-        """
-        :param index: int index identifier of the sample within the whole array of samples
-        :param N: int number of total samples
-        :param target_dir: string path of directory where samples are to be saved
-        :LineList_path: string path to file where lines to be saved are written. 
-        """
+
         self.target_dir = target_dir        # directory path where samples are to be saved
         self.index = index                  # index of the sample, identifier for the sample
         self.N = N                          # number of total samples
@@ -214,13 +215,15 @@ class CloudyInput:
         Main method of the class, called to produce the model.in file using the 
         parameters in the sample. Returns the path to the model.in file created so the
         location is known and it can be found and run with ease.
-        :param log_gas_density: float value logarithm of the gas density
-        :param gas_phase metallicity: float value log of the gas metallicity
-        :param redshift: float value of the redshift
-        :param ionization_parameter: float value log of the ionization parameter
-        :param stellar_metallicity: float value log of the stellar metallicity
-        :param stellar_age: float value stellar age in years
-        :return: string path to the model.in file created
+
+        :param float log_gas_density: value logarithm of the gas density
+        :param float gas_phase_metallicity: value log of the gas metallicity
+        :param float redshift: value of the redshift
+        :param float ionization_parameter: value log of the ionization parameter
+        :param float stellar_metallicity: value log of the stellar metallicity
+        :param float stellar_age: value stellar age in years
+        :return: path to the model.in file created
+        :rtype: str
         """
         
         # set the input variables as attributes

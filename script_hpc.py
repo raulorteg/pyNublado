@@ -7,8 +7,8 @@ Example script to run the sampling of CLOUDY space.
 
 if __name__ == "__main__":
 
-    from cloudy_queue import QueueManager
-    from sampling import sampling_create_parameters
+    from pynublado.manager import QueueManager
+    from pynublado.sampling import sampling_create_parameters
 
     import argparse
     # example: python script_hpc.py --N=100
