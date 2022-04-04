@@ -1,5 +1,6 @@
 from datetime import datetime
 import sys; sys.path.append('..')
+import glob, os.path, re
 
 
 def utils_scale_parameters(limits, parameters):
@@ -73,3 +74,57 @@ def utils_get_current_timestamp():
         Custom formatted date time string
     """
     return datetime.now().strftime('%Y_%m_%d__%H_%M_%S')
+
+
+def atoi(text):
+    """
+    Args:
+        text: Input string
+    Returns:
+        Converts 'text' to integer if it is a digit
+    """
+    return int(text) if text.isdigit() else text
+
+
+def natural_keys(text):
+    """
+    Splits text to its digit
+    Args:
+        text: Input string
+    Returns:
+        Integer portion of text if it contains digits
+    """
+
+    return [atoi(c) for c in re.split('(\d+)', text)]
+
+
+def get_folders(target_dir):
+    """
+    Get folders in 'target_dir'
+    Args:
+        target_dir: A string containing the target directory of samples
+    Returns:
+        List of folders
+    """
+
+    folders = glob.glob(traget_dir+'*/', recursive = True)
+    folders.sort(key=natural_keys)
+
+    return folders
+
+def read_output(folder_name):
+    """
+    Reads in 'model.out' inside 'folder_name'
+    Args:
+        folder_name: A string containing a sample directory with cloudy outputs
+    Returns:
+        A string with the last 3 lines of output, returns '' if empty
+    """
+
+    with open(F'{folder_name}model.out', 'r') as f:
+        last_line = f.readlines()[-3:]
+
+    last_line=''.join(last_line)
+    last_line=re.sub(r'[\n]|\[|\]', '', last_line)
+
+    return last_line

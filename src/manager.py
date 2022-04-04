@@ -4,13 +4,14 @@ import multiprocessing
 import numpy as np
 
 from common.settings import CLOUDY_PATH
+from common.utils import
 from cloudy import CloudyInput
 
 class QueueManager:
     """ Class used to manage a queue of CLOUDY input models. It uses an array of samples to construct
     model.in files and runs them as subprocesses on multiple CPUs.
 
-    :param numpy.array samples: numpy.array of dimension (m,n) where m is the number of samples and n is 
+    :param numpy.array samples: numpy.array of dimension (m,n) where m is the number of samples and n is
     the dimension of the sample. A sample contains, in order: [Gas density, Gas phase metallicity,
     redshift, ionization parameter, stellar metallicity, stellar age]
     :param int N: int number of models to run (initially before the filter)
@@ -19,7 +20,7 @@ class QueueManager:
     :param bool verbose: bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)
     """
     def __init__(self, target_dir:str="data/sampes/sample_N4000",  ncpus:int=None, verbose:bool=True):
-        
+
         # set number of cpus to use, if not defined use all avalable
         if not ncpus:
             self.ncpus = multiprocessing.cpu_count()
@@ -42,7 +43,7 @@ class QueueManager:
         for item in directory.iterdir():
             if item.is_dir():
                 self.in_files.append(str(pathlib.Path(item, 'model.in')))
-    
+
     def _run_in_file(self, in_file:str) -> None:
         """ Private method. Given the model.in path open a subprocess
         and run it there with CLOUDY.
@@ -68,7 +69,7 @@ class QueueManager:
                                maxtasksperchild=1)
         if self.verbose: print('Initialized {} threads'.format(self.ncpus))
         pool.map(self._run_in_file, self.in_files)
-        
+
         pool.close()
         pool.join()
 
@@ -79,3 +80,38 @@ class QueueManager:
         if self.verbose: print(f"---- {len(self.in_files)} model.in files found ----")
         if self.verbose: print("Running the model.in files ...")
         self._run()             # runs all created model.in files in multiple CPUs
+
+    def _check_run(self):
+        """Checks the target_dir for cloudy runs; writes out successful and failed run folders to dictionary file with summary message.
+        """
+
+        sample_files=get_files(self.target_dir)
+        to_do={}
+        run_ok={}
+        ii=0
+        for sample_file in sample_files:
+            last_line=check_output(sample_file)
+            if last_line=='':
+                to_do[sample_file]='Empty'
+            elif 'ABORT' in last_line:
+                to_do[sample_file]='Cloudy Error'
+            elif "Cloudy exited OK" not in last_line:
+                to_do[sample_file]='Time up'
+
+            if "Cloudy exited OK" in last_line:
+                run_ok[sample_file]='OK'
+                ii+=1
+
+        if self.verbose: print(f'{len(sample_files-ii)} models failed to run')
+        np.save(f'{self.target_dir}/ok.npy', run_ok)
+        np.save(f'{self.target_dir}/todo.npy', to_do)
+
+        try:
+            pathlib.Path(f'{self.target_dir}/todo').mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            if self.verbose: print("Folder exists")
+        else:
+            if self.verbose: print("Folder created")
+
+        for key in to_do:
+            subprocess.call(f'mv {key} {self.target_dir}/todo/', shell=True)
