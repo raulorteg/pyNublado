@@ -1,4 +1,5 @@
 import pathlib
+from sampling import sampling_create_parameters
 
 class CloudyInput:
     """ Class used to create model.in file and the file structure given a sample, a 
@@ -239,3 +240,27 @@ class CloudyInput:
 
         # return the path to the model.in file created
         return self.in_file
+    
+def create_inputs(N:int, target_dir:str, LineList_path:str, filter:bool=True, save_to_file:bool=True, plot:bool=False):
+    """
+    Creates the model.in inputs for CLOUDY and saves them creaing the folder structure.
+    Calls the sampling.sampling_create_parameters() to obtain the combinations of parameters,
+    then for every combination it creates the model.in file using the template.
+
+    :param int N: number of original (before filtering) different combinations of input parameters.
+    :param str target_dir: string path to the directory where the samples are to be saved.
+    :param str LineList_path: string path to the file where the list of lines to be saved are listed.
+    :param bool filter: Filter out non-physical combinations.
+    :param bool save_to_file: Saves the resulting parameters as numpy array.
+    :param bool plot: Create a visual representation of the input space.
+    :return: None
+    :rtype: None
+    """
+    samples = sampling_create_parameters(path=target_dir,
+                               n_samples=N,
+                               filter=True,
+                               save_to_file=True,
+                               plot=False
+                               )
+    for idx, sample in enumerate(samples):
+        CloudyInput(index=idx, N=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
