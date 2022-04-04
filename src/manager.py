@@ -4,7 +4,7 @@ import multiprocessing
 import numpy as np
 
 from common.settings import CLOUDY_PATH
-from common.utils import
+from common.utils import read_output
 from cloudy import CloudyInput
 
 class QueueManager:
@@ -85,12 +85,23 @@ class QueueManager:
         """Checks the target_dir for cloudy runs; writes out successful and failed run folders to dictionary file with summary message.
         """
 
-        sample_files=get_files(self.target_dir)
+        try:
+            pathlib.Path(f'{self.target_dir}/todo').mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            if self.verbose: print("Folder exists")
+            req_dir=f'{self.target_dir}/todo'
+            exists=True
+        else:
+            if self.verbose: print("Folder created")
+            req_dir=self.target_dir
+            exists=False
+
+        sample_files=get_files(req_dir)
         to_do={}
         run_ok={}
         ii=0
         for sample_file in sample_files:
-            last_line=check_output(sample_file)
+            last_line=read_output(sample_file)
             if last_line=='':
                 to_do[sample_file]='Empty'
             elif 'ABORT' in last_line:
@@ -106,12 +117,9 @@ class QueueManager:
         np.save(f'{self.target_dir}/ok.npy', run_ok)
         np.save(f'{self.target_dir}/todo.npy', to_do)
 
-        try:
-            pathlib.Path(f'{self.target_dir}/todo').mkdir(parents=True, exist_ok=False)
-        except FileExistsError:
-            if self.verbose: print("Folder exists")
+        if exists:
+            for key in run_ok:
+                subprocess.call(f'mv {key} {self.target_dir}/', shell=True)
         else:
-            if self.verbose: print("Folder created")
-
-        for key in to_do:
-            subprocess.call(f'mv {key} {self.target_dir}/todo/', shell=True)
+            for key in to_do:
+                subprocess.call(f'mv {key} {self.target_dir}/todo', shell=True)
