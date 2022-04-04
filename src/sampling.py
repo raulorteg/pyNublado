@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from pyDOE import *
 import astropy.units as u
@@ -16,7 +15,6 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     This function creates a set of parameters for a sample.
 
     :param str path: output directory
-    :param str prefix: file prefix
     :param int n_samples: Number of parameter samples to be generated
     :param bool save_to_file: Boolean - Save parameters to file
     :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical.
@@ -27,12 +25,7 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     :rtype: numpy.array
     """
 
-    folder = '{}{}'.format(SAMPLE_DIR_BASE, n_samples)
-    path = os.path.join(path, folder)
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-        print('Created directory {}'.format(path))
+    print('Creating a set of parameters (N = {}) '.format(n_samples))
 
     np.random.seed(RANDOM_SEED)
 
@@ -51,7 +44,7 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
 
     if save_to_file:
 
-        file_name = '{}_N{}.npy'.format(PARAMETER_FILE_BASE, n_samples)
+        file_name = '{}{}.npy'.format(PARAMETER_FILE_BASE, n_samples)
 
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
@@ -62,7 +55,7 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
 
 def sampling_adjust_columns(parameters):
     """
-    Metalicities are sampled in log space and have to be changed to linear space.
+    Metallicities are sampled in log space and have to be changed to linear space.
     Cloudy wants the stellar age in years and not Mega years.
 
     :param parameters: parameter object
@@ -70,7 +63,7 @@ def sampling_adjust_columns(parameters):
     """
 
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
-    Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
+    # Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
     t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
 
     parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
@@ -116,15 +109,18 @@ def sampling_filter_redshift_stellar_age(parameters):
 
 
 # -----------------------------------------------------------------
-# execute this when file is executed
+# Testing ... 1, 2, 3
 # -----------------------------------------------------------------
 if __name__ == "__main__":
 
-    target_directory = '../data/samples/'
+    sample_directory = '../data/samples/test_sample_N2000'
+
+    if not os.path.isdir(sample_directory):
+        os.makedirs(sample_directory)
 
     N = 2000
 
-    sampling_create_parameters(path=target_directory,
+    sampling_create_parameters(path=sample_directory,
                                n_samples=N,
                                filter=True,
                                save_to_file=True,
