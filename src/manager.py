@@ -6,19 +6,18 @@ from cloudy import CloudyInput
 
 class QueueManager:
     """ Class used to manage a queue of CLOUDY input models. It uses an array of samples to construct
-    model.in files and runs them as subprocesses on multiple CPUs. 
+    model.in files and runs them as subprocesses on multiple CPUs.
+
+    :param numpy.array samples: numpy.array of dimension (m,n) where m is the number of samples and n is 
+    the dimension of the sample. A sample contains, in order: [Gas density, Gas phase metallicity,
+    redshift, ionization parameter, stellar metallicity, stellar age]
+    :param int N: int number of models to run (initially before the filter)
+    :param str target_dir: string path to the folder where the samples are to be saved
+    :param int npcus: int Maximum number of CPUS to use, if not defined it will use all available CPUS in the system.
+    :param bool verbose: bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)
     """
     def __init__(self, samples:np.array, N:int, target_dir:str,  ncpus:int=None, verbose:bool=True):
-        """
-        :param samples: numpy.array of dimension (m,n) where m is the number of samples and n is 
-        the dimension of the sample. A sample contains, in order: [Gas density, Gas phase metallicity,
-        redshift, ionization parameter, stellar metallicity, stellar age]
-        :param N: int number of models to run (initially before the filter)
-        :param target_dir: string path to the folder where the samples are to be saved
-        :npcus: int Maximum number of CPUS to use, if not defined it will use all available CPUS
-        in the system.
-        :verbose: bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)
-        """
+        
         # set number of cpus to use, if not defined use all avalable
         if not ncpus:
             self.ncpus = multiprocessing.cpu_count()
