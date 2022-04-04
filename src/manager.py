@@ -2,6 +2,8 @@ import pathlib
 import subprocess
 import multiprocessing
 import numpy as np
+
+from common.settings import CLOUDY_PATH
 from cloudy import CloudyInput
 
 class QueueManager:
@@ -16,32 +18,30 @@ class QueueManager:
     :param int npcus: int Maximum number of CPUS to use, if not defined it will use all available CPUS in the system.
     :param bool verbose: bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)
     """
-    def __init__(self, samples:np.array, N:int, target_dir:str,  ncpus:int=None, verbose:bool=True):
+    def __init__(self, target_dir:str="data/sampes/sample_N4000",  ncpus:int=None, verbose:bool=True):
         
         # set number of cpus to use, if not defined use all avalable
         if not ncpus:
             self.ncpus = multiprocessing.cpu_count()
         else:
             self.ncpus = ncpus
-        
-        self.samples = samples          # set samples as attributes of the class
-        self.N = N                      # number of samples
+
         self.target_dir = target_dir    # set the target directory
         self.verbose = verbose          # verbosity level
-    
-    def _create_in_files(self) -> None:
-        """ Private method called by self._run(). When called create all the model.in files from the list of samples
-        and save the path to each model.in file in a buffer attribute of the class
-        so they can be run later.
-        """
-        if self.verbose: print("Creating the in files ...")
-        self.in_files = [] # buffer where the paths to model.in files are stored
 
-        # for all samples create the model.in file to be run by cloudy
-        # and append the path where the model.in file is to the buffer so we know its location
-        for idx, sample in enumerate(self.samples):
-            in_file = CloudyInput(index=idx, N=self.N, target_dir=self.target_dir, LineList_path="../data/LineList_in.dat").create(*sample)
-            self.in_files.append(in_file)
+    def _get_infiles(self):
+        """ Looks inside the todo/ directory, iterates over all item in directory
+        and appends them into a buffer if they are a subdirectory and not a file.
+        e.g if target directory is ".../data/samples/sample_Nxxx"
+        then will iterate over all directories ".../data/samples/sample_Nxxx/todo/x"
+        and append them to a list of model.in paths e.g ".../data/samples/sample_Nxxx/todo/x/model.in"
+        """
+        directory = pathlib.Path(self.target_dir, "todo")
+        assert directory.exists(), f'Couldnt find todo/ directory in {self.target_dir}.'
+        self.in_files = []
+        for item in directory.iterdir():
+            if item.is_dir():
+                self.in_files.append(str(pathlib.Path(item, 'model.in')))
     
     def _run_in_file(self, in_file:str) -> None:
         """ Private method. Given the model.in path open a subprocess
@@ -52,7 +52,7 @@ class QueueManager:
             # CLOUDY doesn't accept paths to the model.in files, so here we cd to the
             # directory where the model.in file is (dir_) and run cloudy from there.
             dir_ = str(pathlib.Path(in_file).parent)
-            subprocess.call(f'cd {dir_} && ~/c17.02/source/cloudy.exe model.in', shell=True)
+            subprocess.call(f'cd {dir_} && {CLOUDY_PATH} model.in', shell=True)
 
         # manage exception
         except Exception as error:
@@ -64,7 +64,6 @@ class QueueManager:
         """ Private method called by the public method self.run(). When called it runs all created
         model.in files using CLOUDY on as may CPUs as defined (user-defined maximum or systen maximum)
         """
-        if self.verbose: print("Running the in files ...")
         pool = multiprocessing.Pool(processes=self.ncpus,
                                maxtasksperchild=1)
         if self.verbose: print('Initialized {} threads'.format(self.ncpus))
@@ -74,6 +73,9 @@ class QueueManager:
         pool.join()
 
     def run(self) -> None:
-        """ Main method of the class, it wraps the private methods to create the files and run the files."""
-        self._create_in_files() # creates all model.in files and recors their paths
+        """ Main method of the class, it wraps the private methods to read the files and run the files."""
+        if self.verbose: print("Reading the input files ...")
+        self._get_infiles()
+        if self.verbose: print(f"---- {len(self.in_files)} model.in files found ----")
+        if self.verbose: print("Running the model.in files ...")
         self._run()             # runs all created model.in files in multiple CPUs
