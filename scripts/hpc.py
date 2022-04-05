@@ -47,7 +47,7 @@ def main(args):
                         LineList_path=args.line_list_path).create(*sample)
 
     # 2. create a queue of models and run them
-    queue = QueueManager(target_dir=sample_path,
+    queue = QueueManager(sample_dir=sample_path,
                          N_CPUs=args.N_cpus,
                          N_batch=args.N_batch,
                          verbose=True)
