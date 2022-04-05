@@ -128,7 +128,7 @@ class CloudyInput:
 
         # create the folder structure if it doesnt exist
         pathlib.Path(f'{self.target_dir}/{self.index}').mkdir(parents=True, exist_ok=True)
-        command = 'set save prefix model'
+        command = 'set save prefix "model"'
         self.buffer_to_write.append(command)
     
     def _set_save_lines(self) -> None:
