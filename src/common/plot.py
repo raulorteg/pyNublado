@@ -20,7 +20,7 @@ mpl.rc('text', usetex=True)
 # -----------------------------------------------------------------
 #  visualise the sample distribution of the whole parameter space
 # -----------------------------------------------------------------
-def plot_parameter_space(parameters, n_samples, output_dir, file_type='png'):
+def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
 
     print('Creating parameter space visualisation')
 
@@ -101,7 +101,7 @@ def plot_parameter_space(parameters, n_samples, output_dir, file_type='png'):
 
     # build file name and save figure
 
-    file_name = 'parameter_space_N{}.{}'.format(n_samples, file_type)
+    file_name = 'parameter_space_N{}.{}'.format(N_sample, file_type)
 
     output_path = os.path.join(output_dir, file_name)
     f.savefig(output_path)
