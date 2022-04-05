@@ -26,7 +26,8 @@ class CloudyInput:
     
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
-        command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
+        command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" '
+        command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
         self.buffer_to_write.append(command)
     
     def _set_gas_density(self) -> None:
@@ -77,9 +78,9 @@ class CloudyInput:
         self.buffer_to_write.append(command)
     
     def _set_cloud_covering_factor(self) -> None:
-        """ Covering factor Ω/4π for the emission-line region. Affects both the luminosity of the emitted spectrum and the radiative
-        transfer of lines and continua. If a covering factor is set and the luminosity case used then the
-        luminosities will be for a shell covering Ω sr of the central object. """
+        """ Covering factor Ω/4π for the emission-line region. Affects both the luminosity of the emitted spectrum
+        and the radiative transfer of lines and continua. If a covering factor is set and the luminosity case used
+        then the luminosities will be for a shell covering Ω sr of the central object. """
         command = 'covering factor 1.0'
         self.buffer_to_write.append(command)
     
@@ -261,13 +262,13 @@ def create_inputs(N: int, target_dir: str, LineList_path: str, filter: bool=True
     :rtype: None
     """
     samples = sampling_create_parameters(path=target_dir,
-                               n_samples=N,
-                               filter=True,
-                               save_to_file=True,
-                               plot=False
-                               )
+                                         N_sample=N,
+                                         filter=True,
+                                         save_to_file=True,
+                                         plot=False
+                                         )
     for idx, sample in enumerate(samples):
-        CloudyInput(index=idx, N=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
+        CloudyInput(index=idx, N_sample=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
 
 
     #TODO: FK: this is also done in the hpc.py script, so might be obsolete?
