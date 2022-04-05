@@ -70,20 +70,20 @@ def utils_rescale_parameters_single(limits, p):
     return p
 
 
-def utils_setup_sample_dir(parent_path, N_samples):
+def utils_setup_sample_dir(parent_path, N_sample):
     """
     Create the sample directory and its sub directories if they do not yet exist.
     IF the directory exists, do not overwrite anything.
 
     Args:
         parent_path: string: parent path
-        N_samples:  int: number of samples
+        N_sample:  int: number of samples
 
     Returns: string: containing the sample path
              boolean: False if the directory already exists, True otherwise
     """
 
-    folder = '{}{}'.format(SAMPLE_DIR_BASE, N_samples)
+    folder = '{}{}'.format(SAMPLE_DIR_BASE, N_sample)
     path = os.path.join(parent_path, folder)
 
     new_directory = not os.path.isdir(path)

@@ -10,12 +10,12 @@ from common.utils import *
 from common.plot import *
 
 
-def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True, plot=False):
+def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, plot=False):
     """
     This function creates a set of parameters for a sample.
 
     :param str path: output directory
-    :param int n_samples: Number of parameter samples to be generated
+    :param int N_sample: Number of parameter samples to be generated
     :param bool save_to_file: Boolean - Save parameters to file
     :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical.
     This will results in a lower n_sample than specified.
@@ -25,12 +25,12 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     :rtype: numpy.array
     """
 
-    print('Creating a set of parameters (N = {}) '.format(n_samples))
+    print('Creating a set of parameters (N = {}) '.format(N_sample))
 
     np.random.seed(RANDOM_SEED)
 
     # get normalised latin hyper cube (all parameter values are in the [0,1] range)
-    lhs_normalised = lhs(n=PARAMETER_NUMBER, samples=n_samples)
+    lhs_normalised = lhs(n=PARAMETER_NUMBER, samples=N_sample)
 
     parameters = utils_rescale_parameters(limits=PARAMETER_LIMITS, parameters=lhs_normalised)
 
@@ -38,13 +38,13 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
         parameters = sampling_filter_redshift_stellar_age(parameters)
 
     if plot:
-        plot_parameter_space(parameters=parameters, n_samples=n_samples, output_dir=path, file_type='png')
+        plot_parameter_space(parameters=parameters, N_sample=N_sample, output_dir=path, file_type='png')
 
     parameters = sampling_adjust_columns(parameters)
 
     if save_to_file:
 
-        file_name = '{}{}.npy'.format(PARAMETER_FILE_BASE, n_samples)
+        file_name = '{}{}.npy'.format(PARAMETER_FILE_BASE, N_sample)
 
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
@@ -84,7 +84,7 @@ def sampling_filter_redshift_stellar_age(parameters):
 
     print('Filtering un-physical parameter combinations:')
 
-    n_samples_pre = parameters.shape[0]
+    N_sample_pre = parameters.shape[0]
 
     z_column = PARAMETER_NUMBER_REDSHIFT - 1
     t_column = PARAMETER_NUMBER_STELLAR_AGE - 1
@@ -101,9 +101,9 @@ def sampling_filter_redshift_stellar_age(parameters):
     parameters = parameters[mask]
 
     # bookkeeping
-    n_samples_post = parameters.shape[0]
-    delta = n_samples_pre - n_samples_post
-    print('  {} samples removed. {} remaining.'.format(delta, n_samples_post))
+    N_sample_post = parameters.shape[0]
+    delta = N_sample_pre - N_sample_post
+    print('  {} samples removed. {} remaining.'.format(delta, N_sample_post))
 
     return parameters
 
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     N = 2000
 
     sampling_create_parameters(path=sample_directory,
-                               n_samples=N,
+                               N_sample=N,
                                filter=True,
                                save_to_file=True,
                                plot=True

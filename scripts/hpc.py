@@ -22,16 +22,16 @@ from common.utils import *
 def main(args):
 
     # 1. set up directory sample / check if it exists
-    sample_path, new_sample = utils_setup_sample_dir(parent_path=args.sample_parent_dir, N_samples=args.N_samples)
+    sample_path, new_sample = utils_setup_sample_dir(parent_path=args.sample_parent_dir, N_sample=args.N_sample)
 
     if not new_sample:
 
         print('Sample {} already exists, skipping sample generation'.format(sample_path))
 
     else:
-        # 1.a generate parameter samples
+        # 1a. generate parameter samples
         parameter_samples = sampling_create_parameters(path=sample_path,
-                                                       n_samples=args.N_samples,
+                                                       N_sample=args.N_sample,
                                                        filter=True,
                                                        save_to_file=True,
                                                        plot=False)
@@ -42,36 +42,38 @@ def main(args):
         print('Creating *.in files in {}'.format(sample_todo_dir))
         for idx, sample in enumerate(parameter_samples):
             CloudyInput(index=idx,
-                        N=args.N_samples,
+                        N_sample=args.N_sample,
                         target_dir=sample_todo_dir,
                         LineList_path=args.line_list_path).create(*sample)
 
-
     # 2. create a queue of models and run them
-    # TODO: fix this. 
-    # queue = QueueManager(samples, N=N_samples, target_dir=sample_directory, verbose=True)
-    # queue.run()
+    queue = QueueManager(target_dir=sample_path,
+                         N_CPUs=args.N_cpus,
+                         N_batch=args.N_batch,
+                         verbose=True)
+
+    queue.manager_run()
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--N_samples", required=True, type=int,
-                        help="Number of samples to run "
-                             "(Note: some combinations will be filtered out due to not being Physical.)"
-                        )
+    parser.add_argument("--N_sample", required=True, type=int,
+                        help="Number of models in the sample. "
+                             "Note: some parameter combinations will be filtered out due to not being physical)")
 
-    parser.add_argument("--N_cpus", required=False, type=int, default=1,
+    parser.add_argument("--N_cpus", required=False, type=int,
                         help="Number of CPU cores to utilise")
 
-    args = parser.parse_args()
+    parser.add_argument("--N_batch", required=False, type=int,
+                        help="Number of models to run (default: all)")
 
-    args.sample_parent_dir = '../data/samples/'
-    args.line_list_path = '../data/LineList_in.dat'
+    my_args = parser.parse_args()
 
+    my_args.sample_parent_dir = '../data/samples/'
+    my_args.line_list_path = '../data/LineList_in.dat'
 
-
-    main(args)
+    main(my_args)
 
 
 

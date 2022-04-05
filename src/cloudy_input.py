@@ -7,16 +7,16 @@ class CloudyInput:
     combination of parameters that are to be run on CLOUDY.
     
     :param int index: index identifier of the sample within the whole array of samples.
-    :param int N: number of total samples.
+    :param int N_sample: number of total models.
     :param str target_dir: path of directory where samples are to be saved.
     :param str LineList_path: path to file where lines to be saved are written. 
     """
 
-    def __init__(self, index: int, N: int, target_dir: str, LineList_path: str):
+    def __init__(self, index: int, N_sample: int, target_dir: str, LineList_path: str):
 
         self.target_dir = target_dir        # directory path where samples are to be saved
         self.index = index                  # index of the sample, identifier for the sample
-        self.N = N                          # number of total samples
+        self.N = N_sample                          # number of total samples
         self.LineList_path = LineList_path  # path to file containing lines to be saved
         self.buffer_to_write = []           # buffer with the final paths of all model.in files created
 
