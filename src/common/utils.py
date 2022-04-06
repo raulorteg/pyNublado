@@ -73,7 +73,7 @@ def utils_rescale_parameters_single(limits, p):
 def utils_setup_sample_dir(parent_path, N_sample):
     """
     Create the sample directory and its sub directories if they do not yet exist.
-    IF the directory exists, do not overwrite anything.
+    If the directory exists, do not overwrite anything.
 
     Args:
         parent_path: string: parent path
@@ -94,17 +94,12 @@ def utils_setup_sample_dir(parent_path, N_sample):
 
         path_todo = os.path.join(path, SAMPLE_SUBDIR_TODO)
         path_done = os.path.join(path, SAMPLE_SUBDIR_DONE)
-        path_running = os.path.join(path, SAMPLE_SUBDIR_RUNNING)
-        path_problems = os.path.join(path, SAMPLE_SUBDIR_PROBLEM)
 
         os.makedirs(path_todo)
         os.makedirs(path_done)
-        os.makedirs(path_running)
-        os.makedirs(path_problems)
+
         print('Created directory {}'.format(path_todo))
         print('Created directory {}'.format(path_done))
-        print('Created directory {}'.format(path_running))
-        print('Created directory {}'.format(path_problems))
 
     return path, new_directory
 
