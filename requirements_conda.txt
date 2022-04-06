@@ -2,3 +2,4 @@ numpy
 pydoe
 astropy
 matplotlib
+pytest
