@@ -101,6 +101,7 @@ Example of running Cloudy independently:
 * Gas density (log scale): -3 - 6
 * Gas phase metallicity: 0.0001 - 2.0 (solar) 
 * CMB background (z_redshift): 3-12
+* Cosmic rays background: ```cosmic rays background linear 1``` 1-1000
 * Ionization parameter: -4 - 0 (log units)
 * Radiation spectrum (BPASS), Chabrier IMF, Mup=300 M_sun: depends on age, metallicity (Z)
     * Stellar ages (is delimited by the redshift): 1 Myr up to 2 Gyr.
