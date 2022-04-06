@@ -65,10 +65,14 @@ def sampling_adjust_columns(parameters):
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
     # Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
     t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
+    cr_column = PARAMETER_NUMBER_CR_SCALING - 1
 
     parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
+
     # parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
     parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
+
+    parameters[:, cr_column] = 10 ** (parameters[:, cr_column])
 
     return parameters
 

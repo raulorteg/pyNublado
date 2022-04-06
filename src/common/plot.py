@@ -36,11 +36,12 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     # 1. Gas density            interval=[-3.0, 6.0]        log (cm^-3)
     # 2. Gas phase metallicity  interval=[-3.0, 0.30103]    Solar metallicity
     # 3. Redshift               interval=[3.0, 12.0]        Absolute value
-    # 4. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8
-    # 5. Stellar metallicity    interval=[-5, -1.3979]      Absolute value
-    # 6. Stellar age            interval=[1.0, 2000.0]      Myr
+    # 4. CR ionization factor   interval=[1.0, 1000.0]      Cosmic ray scaling factor, see Hazy X.y
+    # 5. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8
+    # 6. Stellar metallicity    interval=[-5, -1.3979]      Absolute value
+    # 7. Stellar age            interval=[1.0, 2000.0]      Myr
 
-    padding = [(-3.5, 6.5), (-3.2, 0.5), (2.0, 13.), (-4.4, 0.5), (-5.5, -1.1), (-150, 2080)]
+    padding = [(-3.5, 6.5), (-3.2, 0.5), (2.0, 13.), (-50, 1050), (-4.4, 0.5), (-5.5, -1.1), (-150, 2080)]
 
     # some plot settings
     marker_size = 150
