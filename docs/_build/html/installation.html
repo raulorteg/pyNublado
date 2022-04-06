@@ -40,11 +40,14 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-cloudy">Installing CLOUDY</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-pynublado">Installing pyNublado</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-pynublado">Installing pyNublado</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pip">pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conda">conda</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bpass.html">Using BPASS models</a></li>
@@ -88,7 +91,7 @@
 </section>
 <section id="installing-cloudy">
 <h2>Installing CLOUDY<a class="headerlink" href="#installing-cloudy" title="Permalink to this headline"></a></h2>
-<p><em>Note: Instructions from https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks</em></p>
+<p>Instructions from <a class="reference external" href="https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks">the Cloudy wiki</a>:</p>
 <ul class="simple">
 <li><p>Download the latest Cloudy version <code class="docutils literal notranslate"><span class="pre">wget</span> <span class="pre">https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz</span> <span class="pre">--no-check-certificate</span></code></p></li>
 <li><p>Unpack the files <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xvfz</span> <span class="pre">c17.02.tar.gz</span></code></p></li>
@@ -105,8 +108,12 @@ Once installed, to test that the installation was successful:</p></li>
 <h2>Installing pyNublado<a class="headerlink" href="#installing-pynublado" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
 <li><p>Clone the repository <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/raulorteg/pyNublado</span></code></p></li>
-<li><p>Create virtual environment:</p>
+</ol>
+<section id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline"></a></h3>
 <ul class="simple">
+<li><p>Create virtual environment:</p>
+<ul>
 <li><p>Update pip <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pip</span> <span class="pre">--upgrade</span></code></p></li>
 <li><p>Install <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> using pip <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">virtualenv</span></code></p></li>
 <li><p>Create Virtual environment <code class="docutils literal notranslate"><span class="pre">virtualenv</span> <span class="pre">pynublado</span></code></p></li>
@@ -115,7 +122,16 @@ Once installed, to test that the installation was successful:</p></li>
 </ul>
 </li>
 <li><p>Install requirements on the Virtual environment <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p></li>
-</ol>
+</ul>
+</section>
+<section id="conda">
+<h3>conda<a class="headerlink" href="#conda" title="Permalink to this headline"></a></h3>
+<p>In Anaconda (or Miniconda) environments the requirements can be installed like so:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">config</span> <span class="pre">--add</span> <span class="pre">channels</span> <span class="pre">conda-forge</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">--yes</span> <span class="pre">--file</span> <span class="pre">requirements_conda.txt</span></code></p></li>
+</ul>
+</section>
 </section>
 </section>
 

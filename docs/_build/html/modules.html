@@ -39,7 +39,6 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bpass.html">Using BPASS models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -70,26 +69,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-cloudy">
-<span id="modules"></span><h1>Modules<a class="headerlink" href="#module-cloudy" title="Permalink to this headline"></a></h1>
+  <section id="module-cloudy_input">
+<span id="modules"></span><h1>Modules<a class="headerlink" href="#module-cloudy_input" title="Permalink to this headline"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="cloudy.CloudyInput">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudy.</span></span><span class="sig-name descname"><span class="pre">CloudyInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LineList_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudy.CloudyInput" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cloudy_input.CloudyInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudy_input.</span></span><span class="sig-name descname"><span class="pre">CloudyInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LineList_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudy_input.CloudyInput" title="Permalink to this definition"></a></dt>
 <dd><p>Class used to create model.in file and the file structure given a sample, a 
 combination of parameters that are to be run on CLOUDY.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>index</strong> (<em>int</em>) – index identifier of the sample within the whole array of samples.</p></li>
-<li><p><strong>N</strong> (<em>int</em>) – number of total samples.</p></li>
+<li><p><strong>N_sample</strong> (<em>int</em>) – number of total models.</p></li>
 <li><p><strong>target_dir</strong> (<em>str</em>) – path of directory where samples are to be saved.</p></li>
 <li><p><strong>LineList_path</strong> (<em>str</em>) – path to file where lines to be saved are written.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="cloudy.CloudyInput.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_gas_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gas_phase_metallicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redshift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ionization_parameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stellar_metallicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stellar_age</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cloudy.CloudyInput.create" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cloudy_input.CloudyInput.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_gas_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gas_phase_metallicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redshift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cosmic_ray_ionization_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ionization_parameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stellar_metallicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stellar_age</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cloudy_input.CloudyInput.create" title="Permalink to this definition"></a></dt>
 <dd><p>Main method of the class, called to produce the model.in file using the 
 parameters in the sample. Returns the path to the model.in file created so the
 location is known and it can be found and run with ease.</p>
@@ -99,6 +98,7 @@ location is known and it can be found and run with ease.</p>
 <li><p><strong>log_gas_density</strong> (<em>float</em>) – value logarithm of the gas density</p></li>
 <li><p><strong>gas_phase_metallicity</strong> (<em>float</em>) – value log of the gas metallicity</p></li>
 <li><p><strong>redshift</strong> (<em>float</em>) – value of the redshift</p></li>
+<li><p><strong>cosmic_ray_ionization_factor</strong> (<em>float</em>) – value to use to scale the cosmic ray background</p></li>
 <li><p><strong>ionization_parameter</strong> (<em>float</em>) – value log of the ionization parameter</p></li>
 <li><p><strong>stellar_metallicity</strong> (<em>float</em>) – value log of the stellar metallicity</p></li>
 <li><p><strong>stellar_age</strong> (<em>float</em>) – value stellar age in years</p></li>
@@ -115,26 +115,53 @@ location is known and it can be found and run with ease.</p>
 
 </dd></dl>
 
-<span class="target" id="module-manager"></span><dl class="py class">
-<dt class="sig sig-object py" id="manager.QueueManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">manager.</span></span><span class="sig-name descname"><span class="pre">QueueManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncpus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#manager.QueueManager" title="Permalink to this definition"></a></dt>
-<dd><p>Class used to manage a queue of CLOUDY input models. It uses an array of samples to construct
-model.in files and runs them as subprocesses on multiple CPUs.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudy_input.create_inputs">
+<span class="sig-prename descclassname"><span class="pre">cloudy_input.</span></span><span class="sig-name descname"><span class="pre">create_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LineList_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudy_input.create_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Creates the model.in inputs for CLOUDY and saves them creaing the folder structure.
+Calls the sampling.sampling_create_parameters() to obtain the combinations of parameters,
+then for every combination it creates the model.in file using the template.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>samples</strong> (<em>numpy.array</em>) – numpy.array of dimension (m,n) where m is the number of samples and n is</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>N</strong> (<em>int</em>) – number of original (before filtering) different combinations of input parameters.</p></li>
+<li><p><strong>target_dir</strong> (<em>str</em>) – string path to the directory where the samples are to be saved.</p></li>
+<li><p><strong>LineList_path</strong> (<em>str</em>) – string path to the file where the list of lines to be saved are listed.</p></li>
+<li><p><strong>filter</strong> (<em>bool</em>) – Filter out non-physical combinations.</p></li>
+<li><p><strong>save_to_file</strong> (<em>bool</em>) – Saves the resulting parameters as numpy array.</p></li>
+<li><p><strong>plot</strong> (<em>bool</em>) – Create a visual representation of the input space.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>the dimension of the sample. A sample contains, in order: [Gas density, Gas phase metallicity,
-redshift, ionization parameter, stellar metallicity, stellar age]
-:param int N: int number of models to run (initially before the filter)
-:param str target_dir: string path to the folder where the samples are to be saved
-:param int npcus: int Maximum number of CPUS to use, if not defined it will use all available CPUS in the system.
-:param bool verbose: bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)</p>
+</dd></dl>
+
+<span class="target" id="module-manager"></span><dl class="py class">
+<dt class="sig sig-object py" id="manager.QueueManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">manager.</span></span><span class="sig-name descname"><span class="pre">QueueManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_CPUs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#manager.QueueManager" title="Permalink to this definition"></a></dt>
+<dd><p>Class used to manage a queue of Cloudy input models.</p>
+<p>It uses the directory containing a sample of models, creates a queue of runs to be performed,
+and runs subprocesses on multiple CPU cores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_dir</strong> (<em>str</em>) – string path to the folder where the samples are to be saved</p></li>
+<li><p><strong>N_CPUs</strong> (<em>int</em>) – int Maximum number of CPUS to use, if not defined it will use all available CPUS in the system.</p></li>
+<li><p><strong>N_batch</strong> (<em>int</em>) – int Number of models to run. If not specified or larger than the total number of models, all
+models will be run.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – bool flag used to activate/deactivate the verbosity. Defaults to True (verbose)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="manager.QueueManager.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#manager.QueueManager.run" title="Permalink to this definition"></a></dt>
-<dd><p>Main method of the class, it wraps the private methods to create the files and run the files.</p>
+<dt class="sig sig-object py" id="manager.QueueManager.manager_run">
+<span class="sig-name descname"><span class="pre">manager_run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#manager.QueueManager.manager_run" title="Permalink to this definition"></a></dt>
+<dd><p>Main method of the class, it wraps the private methods to read the files and run the files.</p>
 </dd></dl>
 
 </dd></dl>
@@ -142,7 +169,7 @@ redshift, ionization parameter, stellar metallicity, stellar age]
 <span class="target" id="module-sampling"></span><dl class="py function">
 <dt class="sig sig-object py" id="sampling.sampling_adjust_columns">
 <span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sampling_adjust_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sampling_adjust_columns" title="Permalink to this definition"></a></dt>
-<dd><p>Metalicities are sampled in log space and have to be changed to linear space.
+<dd><p>Metallicities are sampled in log space and have to be changed to linear space.
 Cloudy wants the stellar age in years and not Mega years.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -156,14 +183,13 @@ Cloudy wants the stellar age in years and not Mega years.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sampling.sampling_create_parameters">
-<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sampling_create_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sampling_create_parameters" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sampling_create_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sampling_create_parameters" title="Permalink to this definition"></a></dt>
 <dd><p>This function creates a set of parameters for a sample.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>path</strong> (<em>str</em>) – output directory</p></li>
-<li><p><strong>prefix</strong> (<em>str</em>) – file prefix</p></li>
-<li><p><strong>n_samples</strong> (<em>int</em>) – Number of parameter samples to be generated</p></li>
+<li><p><strong>N_sample</strong> (<em>int</em>) – Number of parameter samples to be generated</p></li>
 <li><p><strong>save_to_file</strong> (<em>bool</em>) – Boolean - Save parameters to file</p></li>
 <li><p><strong>filter</strong> (<em>bool</em>) – Boolean - Filter the sample for parameter combinations that are unphysical.</p></li>
 </ul>
@@ -198,7 +224,7 @@ Cloudy wants the stellar age in years and not Mega years.</p>
 </dl>
 </dd></dl>
 
-</section>
+<span class="target" id="module-common"></span></section>
 
 
            </div>

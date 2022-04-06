@@ -39,25 +39,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#pynublado">pyNublado</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-and-testing-cloudy">Installing and testing Cloudy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#python-modules">Python modules</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pip">pip</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conda">conda</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pynublado">pyNublado</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-cloudy">Running Cloudy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-parameters">Input parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-params">Output params:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#using-bpass-models">Using BPASS models</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#running-cloudy">Running Cloudy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#input-parameters">Input parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#output-params">Output params:</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bpass.html">Using BPASS models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
@@ -88,148 +81,50 @@
              
   <section id="readme">
 <h1>README<a class="headerlink" href="#readme" title="Permalink to this headline"></a></h1>
-</section>
 <section id="pynublado">
-<h1>pyNublado<a class="headerlink" href="#pynublado" title="Permalink to this headline"></a></h1>
-<p>A package to run Cloudy models.</p>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline"></a></h2>
-<section id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Python 3.7 or newer</p></li>
-<li><p>Your favourite C++ compiler to build Cloudy</p></li>
-</ul>
-</section>
-<section id="installing-and-testing-cloudy">
-<h3>Installing and testing Cloudy<a class="headerlink" href="#installing-and-testing-cloudy" title="Permalink to this headline"></a></h3>
-<p>Instructions from <a class="reference external" href="https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks">https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks</a>:</p>
-<ul>
-<li><p>Download the latest Cloudy version
-.. code-block:: bash</p>
-<blockquote>
-<div><p>wget <a class="reference external" href="https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz">https://data.nublado.org/cloudy_releases/c17/c17.02.tar.gz</a> –no-check-certificate</p>
-</div></blockquote>
-</li>
-<li><p>Unpack the files
-.. code-block:: bash</p>
-<blockquote>
-<div><p>tar xvfz c17.02.tar.gz</p>
-</div></blockquote>
-</li>
-<li><p>Navigate to the source folder
-.. code-block:: bash</p>
-<blockquote>
-<div><p>cd c17.02/source</p>
-</div></blockquote>
-</li>
-<li><p>Build the executable
-.. code-block:: bash</p>
-<blockquote>
-<div><p>make</p>
-</div></blockquote>
-</li>
-<li><p>Test the installation
-.. code-block:: bash</p>
-<blockquote>
-<div><p>./cloudy.exe</p>
-</div></blockquote>
-</li>
-<li><p>Type “test” then Enter twice</p></li>
-<li><p>Cloudy should print some output, which ends with “Cloudy exited OK”</p></li>
-<li><p>Set PATH variables? tba</p></li>
-</ul>
-</section>
-<section id="python-modules">
-<h3>Python modules<a class="headerlink" href="#python-modules" title="Permalink to this headline"></a></h3>
-<p>The following Python modules are needed</p>
-<ul class="simple">
-<li><p>numpy</p></li>
-<li><p>matplotlib</p></li>
-<li><p>astropy</p></li>
-<li><p>pyDOE</p></li>
-<li><p>…</p></li>
-</ul>
-<section id="pip">
-<h4>pip<a class="headerlink" href="#pip" title="Permalink to this headline"></a></h4>
-<p>The Python dependencies can be installed with <code class="docutils literal notranslate"><span class="pre">pip</span></code> like so:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -r requirements.txt
-</pre></div>
-</div>
-</section>
-<section id="conda">
-<h4>conda<a class="headerlink" href="#conda" title="Permalink to this headline"></a></h4>
-<p>In Anaconda (or Miniconda) environments the requirements can be installed like so:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda config --add channels conda-forge
-conda install --yes --file requirements_conda.txt
-</pre></div>
-</div>
-</section>
-</section>
-<section id="using-bpass-models">
-<h3>Using BPASS models<a class="headerlink" href="#using-bpass-models" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>From the BPASS V2.2.1 <a class="reference external" href="https://bpass.auckland.ac.nz/9.html">data release</a> download the data for _bpass_v2p2.1_imf<em>chab300</em></p></li>
-</ul>
-<p><em>NOTE: the pearl script (in data/) needs to be placed on the parent directory</em></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>├── BPASSv2.1_bin-imf135_300
-│   ├── ...
-│   └── ...
-├── convert_bpassv2.x.pl
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Navigate to the BPASS folder <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">BPASSv2.1_bin-imf135_300</span></code></p></li>
-<li><p>Execute the pearl script from the folder
-<code class="docutils literal notranslate"><span class="pre">../convert_bpassv2.x.pl</span></code></p></li>
-</ul>
-<p><em>NOTE: If it complains about permissions grant the pearl file permissions</em></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x convert_bpassv2.x.pl
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Generate binary files from the resulting <em>.ascii</em> files excuting CLOUDY <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span></code></p></li>
-<li><p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code></p></li>
-<li><p>Type <code class="docutils literal notranslate"><span class="pre">compile</span> <span class="pre">star</span> <span class="pre">BPASSv2_imf135_100_burst_binary.ascii&quot;</span></code></p></li>
-<li><p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code> again to generate the binaries.</p></li>
-</ul>
-<p>The binaries now need to be placed in a special location for CLOUDY to use them.</p>
-<ul class="simple">
-<li><p>Navigate to the CLOUDY data directory <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/c17.02/data</span></code></p></li>
-<li><p>Create a binaries directory <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">binaries</span></code></p></li>
-<li><p>Finally copy the binary BPASS file to the binaries/ directory <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">bpass_v2p2.1_imf_chab300_burst_binary.mod</span> <span class="pre">~/c17.02/data/binaries/</span></code></p></li>
-</ul>
-</section>
-</section>
+<h2>pyNublado<a class="headerlink" href="#pynublado" title="Permalink to this headline"></a></h2>
+<p>A package to run (a lot of) <a class="reference external" href="https://nublado.org">Cloudy</a> models.</p>
 <section id="running-cloudy">
-<h2>Running Cloudy<a class="headerlink" href="#running-cloudy" title="Permalink to this headline"></a></h2>
-<p>Example of running CLOUDY indendently:</p>
+<h3>Running Cloudy<a class="headerlink" href="#running-cloudy" title="Permalink to this headline"></a></h3>
+<p>Example of running Cloudy independently:</p>
 <ol class="arabic simple">
 <li><p>Create a <em>[name].in</em> file</p></li>
-<li><p>Navigate to the folder where the .in file is</p></li>
-<li><p>Execute CLOUDY from the directory <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span> <span class="pre">[name].in</span></code></p></li>
+<li><p>Navigate to the folder where the .in file is located</p></li>
+<li><p>Execute Cloudy from the directory <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span> <span class="pre">[name].in</span></code></p></li>
 </ol>
 </section>
 <section id="input-parameters">
-<h2>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline"></a></h2>
+<h3>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Gas density (log scale): -3 - 6</p></li>
-<li><p>Gas phase metallicity: 0.0001 - 2.0 (solar) #NOTE: sampled in log space</p></li>
+<li><p>Gas phase metallicity: 0.0001 - 2.0 (solar)</p></li>
 <li><p>CMB background (z_redshift): 3-12</p></li>
+<li><p>Cosmic rays background: <code class="docutils literal notranslate"><span class="pre">cosmic</span> <span class="pre">rays</span> <span class="pre">background</span> <span class="pre">linear</span> <span class="pre">1</span></code> 1-1000</p></li>
 <li><p>Ionization parameter: -4 - 0 (log units)</p></li>
-<li><p>Radiation spectrum (BPASS), Chabrier IMF, Mup=300 Msun: depends on age, metalicity (Z)</p>
+<li><p>Radiation spectrum (BPASS), Chabrier IMF, Mup=300 M_sun: depends on age, metallicity (Z)</p>
 <ul>
 <li><p>Stellar ages (is delimited by the redshift): 1 Myr up to 2 Gyr.</p></li>
-<li><p>Stellar Metalicity (Z): 1e-5-0.040 (absolute value)</p></li>
+<li><p>Stellar metallicity (Z): 1e-5-0.040 (absolute value)</p></li>
 </ul>
 </li>
 </ul>
 </section>
 <section id="output-params">
-<h2>Output params:<a class="headerlink" href="#output-params" title="Permalink to this headline"></a></h2>
+<h3>Output params:<a class="headerlink" href="#output-params" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Lines in <code class="docutils literal notranslate"><span class="pre">data/LineLabels_filtered.txt</span></code>.</p></li>
 </ul>
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<p>Tests can be found in <code class="docutils literal notranslate"><span class="pre">tests/</span></code>, to run the tests with pytest:</p>
+<ol class="arabic simple">
+<li><p>Install pytest <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pytest</span></code></p></li>
+<li><p>Navigate to tests <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">tests</span></code></p></li>
+<li><p>Run tests <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-v</span> <span class="pre">test.py</span></code>, the -v flag is optional for verbosity</p></li>
+</ol>
+<p>The tests check if cloudy path in <code class="docutils literal notranslate"><span class="pre">src/common/settings.py</span></code> is the correct path of the cloudy installation in our system by runnning a test model.in, then checks if the output of CLOUDY is ok (“Cloudy exited OK”), then creates the file structure src.manager.QueueManager() expects and runs 4 models on multiple cpus to check the pipeline.</p>
+</section>
 </section>
 </section>
 
