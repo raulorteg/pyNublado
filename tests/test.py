@@ -5,7 +5,7 @@ sys.path.append("../src")
 import os, pathlib, shutil
 import time
 import pytest
-from src.common.settings import CLOUDY_PATH
+from src.common.settings import CLOUDY_PATH, SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from src.manager import QueueManager
 
 
@@ -24,6 +24,7 @@ def test_cloudy_runs():
     
     # check there was an model.out generated
     assert os.path.exists("model.out"), "No model.out was generated, CLOUDY didnt run."
+
 
 def test_cloudy_exits_ok():
     # check no model.out file exists
@@ -47,6 +48,7 @@ def test_cloudy_exits_ok():
     for file_ in ["model.in", "model.out"]:
         if os.path.exists(file_):
             os.remove(file_)
+
 
 def test_queue_manager():
 
@@ -73,16 +75,16 @@ def test_queue_manager():
     # assert number of models run is ok
     assert queue.N_models_to_run == 4, "Some models didnt get identified by the _get_models() method."
 
-    ## check all directories that need to be created exist
-    for dir_ in ["todo", "running", "done", "problems"]:
-        assert os.path.exists(f"tmp_data/sample_N100/{dir_}"), f"{dir_} directory couldnt be found"
+    # check all directories that need to be created exist
+    for dir_ in [ SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE ]:
+        assert os.path.exists(f"tmp_data/sample_N100/{dir_}"), f"{dir_} directory could not be found"
 
-    ## check all directories that need to be empty are so
-    for dir_ in ["todo", "running", "problems"]:
+    # check all directories that need to be empty are so
+    for dir_ in [SAMPLE_SUBDIR_TODO]:
         assert len(os.listdir(f'tmp_data/sample_N100/{dir_}/')) == 0, f"Some models remain in {dir_} folder"
 
-    ## TODO:
-    # more tests....
+# TODO: more tests here ...
+
 
 if __name__ == "__main__":
     test_queue_manager()
