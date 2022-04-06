@@ -23,7 +23,7 @@ def test_cloudy_runs():
     os.popen(command).read()
     
     # check there was an model.out generated
-    assert os.path.exists("model.out"), "No model.out was generated, CLOUDY didnt run."
+    assert os.path.exists("model.out"), "No model.out was generated, Cloudy did not run."
 
 
 def test_cloudy_exits_ok():
@@ -73,7 +73,7 @@ def test_queue_manager():
     time.sleep(30)
 
     # assert number of models run is ok
-    assert queue.N_models_to_run == 4, "Some models didnt get identified by the _get_models() method."
+    assert queue.N_models_to_run == 4, "Some models did not get identified by the _get_models() method."
 
     # check all directories that need to be created exist
     for dir_ in [ SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE ]:
