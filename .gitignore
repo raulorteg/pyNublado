@@ -1,6 +1,5 @@
 data/samples/
 examples/
-*.rst
 *.out
 *.in
 .pytest_cache/

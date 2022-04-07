@@ -32,7 +32,10 @@ class QueueManager:
         self.sample_dir = sample_dir    # set the target directory
         self.verbose = verbose          # verbosity level
 
-        # TODO: evaluate N_batch
+        if N_batch:
+            self.N_batch = N_batch
+        else:
+            self.N_batch = None
 
     def _get_models(self):
         """
@@ -52,6 +55,14 @@ class QueueManager:
                     p = pathlib.PurePath(item).name
                     self.models_to_run.append(p)
 
+        
+        self.N_models_to_run = len(self.models_to_run)
+
+        # if maximum number of models to run specified, then run a subset of all models
+        # check also this max is not greater than all models that are to be run
+        if (self.N_batch) and (self.N_batch < self.N_models_to_run):
+            self.models_to_run = self.models_to_run[:self.N_batch]
+        
         self.N_models_to_run = len(self.models_to_run)
 
     def _run_model(self, model_dir: str) -> None:

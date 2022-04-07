@@ -40,7 +40,6 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using BPASS models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -76,7 +75,7 @@
 <ul class="simple">
 <li><p>From the BPASS V2.2.1 <a class="reference external" href="https://bpass.auckland.ac.nz/9.html">data release</a> download the data for _bpass_v2p2.1_imf<em>chab300</em></p></li>
 </ul>
-<p><em>NOTE: the pearl script (in data/) needs to be placed on the parent directory</em></p>
+<p><em>NOTE: the Perl script (in data/) needs to be placed on the parent directory</em></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>├── BPASSv2.1_bin-imf135_300
 │   ├── ...
 │   └── ...
@@ -85,24 +84,24 @@
 </div>
 <ul class="simple">
 <li><p>Navigate to the BPASS folder <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">BPASSv2.1_bin-imf135_300</span></code></p></li>
-<li><p>Execute the pearl script from the folder
+<li><p>Execute the Perl script from the folder
 <code class="docutils literal notranslate"><span class="pre">../convert_bpassv2.x.pl</span></code></p></li>
 </ul>
-<p><em>NOTE: If it complains about permissions grant the pearl file permissions</em></p>
+<p><em>NOTE: If it complains about permissions grant the Perl file permissions</em></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x convert_bpassv2.x.pl
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Generate binary files from the resulting <em>.ascii</em> files excuting CLOUDY <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span></code></p></li>
+<li><p>Generate binary files from the resulting <em>.ascii</em> files executing Cloudy <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span></code></p></li>
 <li><p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code></p></li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">compile</span> <span class="pre">star</span> <span class="pre">BPASSv2_imf135_100_burst_binary.ascii&quot;</span></code></p></li>
 <li><p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code> again to generate the binaries.</p></li>
 </ul>
-<p>The binaries now need to be placed in a special location for CLOUDY to use them.</p>
+<p>The binaries now need to be placed in a special location for Cloudy to use them.</p>
 <ul class="simple">
-<li><p>Navigate to the CLOUDY data directory <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/c17.02/data</span></code></p></li>
+<li><p>Navigate to the Cloudy data directory <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/c17.02/data</span></code></p></li>
 <li><p>Create a binaries directory <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">binaries</span></code></p></li>
-<li><p>Finally copy the binary BPASS file to the binaries/ directory <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">bpass_v2p2.1_imf_chab300_burst_binary.mod</span> <span class="pre">~/c17.02/data/binaries/</span></code></p></li>
+<li><p>Finally, copy the binary BPASS file to the binaries/ directory <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">bpass_v2p2.1_imf_chab300_burst_binary.mod</span> <span class="pre">~/c17.02/data/binaries/</span></code></p></li>
 </ul>
 </section>
 

@@ -87,8 +87,12 @@ class CloudyInput:
     def _set_cosmic_rays(self) -> None:
         """ Cosmic rays must be included if the calculation extends into molecular regions. The
         ion-molecule chemistry that occurs in the cold ISM requires a source of ionization (Dyson and
-        Williams, 1997). """
-        command = 'cosmic rays background'
+        Williams, 1997). This includes galactic background cosmic rays. We adopt the Indriolo et al. (2007) mean H0
+        cosmic ray ionization rate of 2x10-16 s-1 . The H2 secondary ionization rate is then
+        4.6 x 10-16 s-1 ,2 . (Glassgold and Langer (1974) give the relationship between H0 and H2
+        ionization rates.). An optional scale factor specifies the cosmic ray ionization rate relative to this background
+        value. The scale factor is assumed to be a log unless the keyword linear also appears."""
+        command = 'cosmic rays background linear {}'.format(self.cosmic_ray_ionization_factor)
         self.buffer_to_write.append(command)
     
     def _set_cmb_background(self) -> None:
@@ -212,6 +216,7 @@ class CloudyInput:
                log_gas_density: float,
                gas_phase_metallicity: float,
                redshift: float,
+               cosmic_ray_ionization_factor:float, 
                ionization_parameter: float,
                stellar_metallicity: float,
                stellar_age: float) -> str:
@@ -223,6 +228,7 @@ class CloudyInput:
         :param float log_gas_density: value logarithm of the gas density
         :param float gas_phase_metallicity: value log of the gas metallicity
         :param float redshift: value of the redshift
+        :param float cosmic_ray_ionization_factor: value to use to scale the cosmic ray background
         :param float ionization_parameter: value log of the ionization parameter
         :param float stellar_metallicity: value log of the stellar metallicity
         :param float stellar_age: value stellar age in years
@@ -234,6 +240,7 @@ class CloudyInput:
         self.log_gas_density = log_gas_density
         self.gas_phase_metallicity = gas_phase_metallicity
         self.redshift = redshift
+        self.cosmic_ray_ionization_factor = cosmic_ray_ionization_factor
         self.ionization_parameter = ionization_parameter
         self.stellar_age = stellar_age
         self.stellar_metallicity = stellar_metallicity
