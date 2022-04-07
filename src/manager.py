@@ -4,7 +4,7 @@ import subprocess
 import multiprocessing
 import numpy as np
 
-from common.settings import *
+from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from common.utils import *
 from cloudy_input import CloudyInput
 
@@ -55,41 +55,40 @@ class QueueManager:
         self.N_models_to_run = len(self.models_to_run)
 
     def _run_model(self, model_dir: str) -> None:
-        """ Private method. Given the model path,
-        1. open a subprocess to move the model directory to the run directory
-        2. open a subprocess to run the model there with Cloudy,
-        3. while it's running watch the model, possibly kill it if it takes too long? (tbd)
-        4. check the finished model
-        5. move the model either to done or problems directories
+        """ Private method that will launch a subprocess to run the Cloudy model.
 
-        :param model_dir: string path to the model directory containing the model.in file
+        Since Cloudy doesn't seem to accept paths to the model.in files as an input, we cd to the
+        directory that contains the model.in file is located, i.e. sample_N123/todo/42/ and run
+        Cloudy from there.
+
+        :param model_dir: string name of the model directory containing the model.in file
         """
 
         try:
-            # Cloudy doesn't accept paths to the model.in files, so we need to cd to the
-            # directory where the model.in file is (dir_) and run cloudy from there.
-            sample_dir = self.sample_dir
-            dir_ = str(pathlib.Path(model_dir))
 
-            # 1. change to sample directory, move model from 'todo/' to 'running/' subdirectory
-            if self.verbose: print(f' Moving model {dir_} to {SAMPLE_SUBDIR_RUNNING} subdirectory')
+            sample_dir = os.path.abspath(self.sample_dir)
 
-            os.chdir(sample_dir)
-            cmd_string = f'mv {SAMPLE_SUBDIR_TODO}/{dir_} {SAMPLE_SUBDIR_RUNNING}/'
+            if self.verbose: print(f' Running model {model_dir} ...')
+
+            current_run_dir = os.path.join(sample_dir, SAMPLE_SUBDIR_TODO, model_dir)
+
+            os.chdir(current_run_dir)
+            cmd_string = f'{CLOUDY_PATH} model.in'
             subprocess.call(cmd_string, shell=True)
 
-            # 2. move to model directory in 'running/'
-            if self.verbose: print(f' Running model {dir_} ...')
+            # TODO: add some monitoring here
 
-            os.chdir(os.path.join(SAMPLE_SUBDIR_RUNNING, dir_))
-            cmd_string = f' {CLOUDY_PATH} model.in'
+            # # Assuming the process terminated successfully, we are moving the model
+            if self.verbose: print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
 
+            os.chdir(sample_dir)
+            cmd_string = f' mv {SAMPLE_SUBDIR_TODO}/{model_dir} {SAMPLE_SUBDIR_DONE}/'
             subprocess.call(cmd_string, shell=True)
 
         # manage exception
         except Exception as e:
             # subprocess.terminate()
-            message = "Error: %s run(*%r, **%r)" % (e.message, e.args, e.kwargs)
+            message = "Error: while processing model %s" % model_dir
             print(message)
 
         # TODO: 1. run checks after the run has finished,
