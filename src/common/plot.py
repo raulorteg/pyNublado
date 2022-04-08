@@ -14,7 +14,7 @@ from common.settings_parameters import *
 #  Matplotlib settings
 # -----------------------------------------------------------------
 matplotlib.use('Agg')
-mpl.rc('text', usetex=False)
+mpl.rc('text', usetex=True)
 
 
 # -----------------------------------------------------------------
