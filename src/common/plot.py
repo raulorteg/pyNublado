@@ -7,14 +7,14 @@ import matplotlib as mpl
 from matplotlib import rc
 
 import sys; sys.path.append('..')
-from common.settings_parameters import PARAMETER_LIMITS, PARAMETER_NAMES_LATEX, PARAMETER_NUMBER
+from common.settings_parameters import *
 
 
 # -----------------------------------------------------------------
 #  Matplotlib settings
 # -----------------------------------------------------------------
 matplotlib.use('Agg')
-mpl.rc('text', usetex=True)
+mpl.rc('text', usetex=False)
 
 
 # -----------------------------------------------------------------
@@ -31,22 +31,29 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     for i, label in enumerate(p_labels):
         p_labels[i] = '$' + label + '$'
 
-    # parameter ranges and padding
-    # Parameter names           Intervals                   Units
-    # 1. Gas density            interval=[-3.0, 6.0]        log (cm^-3)
-    # 2. Gas phase metallicity  interval=[-3.0, 0.30103]    Solar metallicity
-    # 3. Redshift               interval=[3.0, 12.0]        Absolute value
-    # 4. CR ionization factor   interval=[1.0, 1000.0]      Cosmic ray scaling factor, see Hazy X.y
-    # 5. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8
-    # 6. Stellar metallicity    interval=[-5, -1.3979]      Absolute value
-    # 7. Stellar age            interval=[1.0, 2000.0]      Myr
+    # Parameter names           Sampling intervals          Sampling units          Cloudy units
+    # 1. Gas density            interval=[-3.0, 6.0]        log_10 (cm^-3)          same
+    # 2. Gas phase metallicity  interval=[-3.0, 0.30103]    log_10( Z_solar)        10^()
+    # 3. Redshift               interval=[3.0, 12.0]        Absolute value          same
+    # 4. CR ionization factor   interval=[1.0, 3.0]         See Hazy X.y            10^()
+    # 5. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8            same
+    # 6. Stellar metallicity    interval=[-5, -1.3979]      Absolute value          10^()
+    # 7. Stellar age            interval=[1.0, 2000.0]      Myr                     ()*1e6
 
-    padding = [(-3.5, 6.5), (-3.2, 0.5), (2.0, 13.), (-50, 1050), (-4.4, 0.5), (-5.5, -1.1), (-150, 2080)]
+    # parameters have the units used in Cloudy, here we change some of them to make the plots more accessible
+    Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
+    t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
+
+    parameters[:, Z_gas_column] = np.log10(parameters[:, Z_gas_column])
+    parameters[:, t_star_column] = parameters[:, t_star_column] / 1e6
+
+    # parameter padding
+    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100)]
 
     # some plot settings
-    marker_size = 150
-    tick_label_size = 20
-    label_size = 22
+    marker_size = 100
+    tick_label_size = 18
+    label_size = 20
 
     # set up main plot
     f, ax_array = plt.subplots(N - 1, N - 1, figsize=(12, 12))

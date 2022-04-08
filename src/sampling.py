@@ -37,10 +37,11 @@ def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, 
     if filter:
         parameters = sampling_filter_redshift_stellar_age(parameters)
 
+    # transform some column from the sampling ranges to the units that Cloudy requires
+    parameters = sampling_adjust_units(parameters)
+
     if plot:
         plot_parameter_space(parameters=parameters, N_sample=N_sample, output_dir=path, file_type='png')
-
-    parameters = sampling_adjust_columns(parameters)
 
     if save_to_file:
 
@@ -53,26 +54,28 @@ def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, 
     return parameters
 
 
-def sampling_adjust_columns(parameters):
+def sampling_adjust_units(parameters):
     """
-    Metallicities are sampled in log space and have to be changed to linear space.
-    Cloudy wants the stellar age in years and not Mega years.
+    Some parameter units have to be adjusted to be compatible with Cloudy's input formats.
+
+    For example, we sampled some parameters in log space which need to be changed to linear space.
+    Others parameters might require linear transformations.
+
+    All required changes can be performed in this function.
 
     :param parameters: parameter object
     :return: parameter object
     """
+    print('  Adjusting sampling units')
 
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
-    # Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
-    t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
     cr_column = PARAMETER_NUMBER_CR_SCALING - 1
+    t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
 
     parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
-
-    # parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
-    parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
-
     parameters[:, cr_column] = 10 ** (parameters[:, cr_column])
+
+    parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
 
     return parameters
 
@@ -86,7 +89,7 @@ def sampling_filter_redshift_stellar_age(parameters):
     :rtype: numpy.array
     """
 
-    print('Filtering un-physical parameter combinations:')
+    print('  Filtering un-physical parameter combinations')
 
     N_sample_pre = parameters.shape[0]
 

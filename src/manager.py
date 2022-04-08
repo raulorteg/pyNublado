@@ -7,6 +7,7 @@ import numpy as np
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from common.utils import *
 from cloudy_input import CloudyInput
+from user_settings import CLOUDY_PATH
 
 
 class QueueManager:
@@ -55,7 +56,6 @@ class QueueManager:
                     p = pathlib.PurePath(item).name
                     self.models_to_run.append(p)
 
-        
         self.N_models_to_run = len(self.models_to_run)
 
         # if maximum number of models to run specified, then run a subset of all models

@@ -5,7 +5,8 @@ sys.path.append("../src")
 import os, pathlib, shutil
 import time
 import pytest
-from src.common.settings import CLOUDY_PATH, SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+from src.common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+from user_settings import CLOUDY_PATH
 from src.manager import QueueManager
 
 
