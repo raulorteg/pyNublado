@@ -5,7 +5,8 @@ sys.path.append("../src")
 import os, pathlib, shutil
 import time
 import pytest
-from src.common.settings import CLOUDY_PATH, SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+from src.common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+from user_settings import CLOUDY_PATH
 from src.manager import QueueManager
 
 
@@ -83,8 +84,8 @@ def test_queue_manager():
     for dir_ in [SAMPLE_SUBDIR_TODO]:
         assert len(os.listdir(f'tmp_data/sample_N100/{dir_}/')) == 0, f"Some models remain in {dir_} folder"
 
+    # clean up everything
+    if os.path.exists('tmp_data/'):
+        shutil.rmtree('tmp_data/')
+
 # TODO: more tests here ...
-
-
-if __name__ == "__main__":
-    test_queue_manager()
