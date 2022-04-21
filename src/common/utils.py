@@ -1,6 +1,10 @@
+import glob
+import os.path
+import re
 from datetime import datetime
+
 import sys; sys.path.append('..')
-import glob, os.path, re
+from common.settings import *
 
 
 def utils_scale_parameters(limits, parameters):
@@ -66,6 +70,40 @@ def utils_rescale_parameters_single(limits, p):
     return p
 
 
+def utils_setup_sample_dir(parent_path, N_sample):
+    """
+    Create the sample directory and its sub directories if they do not yet exist.
+    If the directory exists, do not overwrite anything.
+
+    Args:
+        parent_path: string: parent path
+        N_sample:  int: number of samples
+
+    Returns: string: containing the sample path
+             boolean: False if the directory already exists, True otherwise
+    """
+
+    folder = '{}{}'.format(SAMPLE_DIR_BASE, N_sample)
+    path = os.path.join(parent_path, folder)
+
+    new_directory = not os.path.isdir(path)
+
+    if new_directory:
+        os.makedirs(path)
+        print('Created directory {}'.format(path))
+
+        path_todo = os.path.join(path, SAMPLE_SUBDIR_TODO)
+        path_done = os.path.join(path, SAMPLE_SUBDIR_DONE)
+
+        os.makedirs(path_todo)
+        os.makedirs(path_done)
+
+        print('Created directory {}'.format(path_todo))
+        print('Created directory {}'.format(path_done))
+
+    return path, new_directory
+
+
 def utils_get_current_timestamp():
     """
     Get a current time stamp
@@ -76,7 +114,7 @@ def utils_get_current_timestamp():
     return datetime.now().strftime('%Y_%m_%d__%H_%M_%S')
 
 
-def atoi(text):
+def utils_atoi(text):
     """
     Args:
         text: Input string
@@ -86,7 +124,7 @@ def atoi(text):
     return int(text) if text.isdigit() else text
 
 
-def natural_keys(text):
+def utils_natural_keys(text):
     """
     Splits text to its digit
     Args:
@@ -95,10 +133,10 @@ def natural_keys(text):
         Integer portion of text if it contains digits
     """
 
-    return [atoi(c) for c in re.split('(\d+)', text)]
+    return [utils_atoi(c) for c in re.split('(\d+)', text)]
 
 
-def get_folders(target_dir):
+def utils_get_folders(target_dir):
     """
     Get folders in 'target_dir'
     Args:
@@ -107,12 +145,13 @@ def get_folders(target_dir):
         List of folders
     """
 
-    folders = glob.glob(traget_dir+'*/', recursive = True)
-    folders.sort(key=natural_keys)
+    folders = glob.glob(traget_dir+'*/', recursive=True)
+    folders.sort(key=utils_natural_keys)
 
     return folders
 
-def read_output(folder_name):
+
+def utils_read_output(folder_name):
     """
     Reads in 'model.out' inside 'folder_name'
     Args:
@@ -124,7 +163,7 @@ def read_output(folder_name):
     with open(F'{folder_name}model.out', 'r') as f:
         last_line = f.readlines()[-3:]
 
-    last_line=''.join(last_line)
-    last_line=re.sub(r'[\n]|\[|\]', '', last_line)
+    last_line = ''.join(last_line)
+    last_line = re.sub(r'[\n]|\[|\]', '', last_line)
 
     return last_line

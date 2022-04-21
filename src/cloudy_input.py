@@ -1,21 +1,22 @@
 import pathlib
 from sampling import sampling_create_parameters
 
+
 class CloudyInput:
     """ Class used to create model.in file and the file structure given a sample, a 
     combination of parameters that are to be run on CLOUDY.
     
     :param int index: index identifier of the sample within the whole array of samples.
-    :param int N: number of total samples.
+    :param int N_sample: number of total models.
     :param str target_dir: path of directory where samples are to be saved.
     :param str LineList_path: path to file where lines to be saved are written. 
     """
 
-    def __init__(self, index:int, N:int, target_dir:str, LineList_path:str):
+    def __init__(self, index: int, N_sample: int, target_dir: str, LineList_path: str):
 
         self.target_dir = target_dir        # directory path where samples are to be saved
         self.index = index                  # index of the sample, identifier for the sample
-        self.N = N                          # number of total samples
+        self.N = N_sample                          # number of total samples
         self.LineList_path = LineList_path  # path to file containing lines to be saved
         self.buffer_to_write = []           # buffer with the final paths of all model.in files created
 
@@ -25,7 +26,8 @@ class CloudyInput:
     
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
-        command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
+        command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" '
+        command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
         self.buffer_to_write.append(command)
     
     def _set_gas_density(self) -> None:
@@ -76,17 +78,21 @@ class CloudyInput:
         self.buffer_to_write.append(command)
     
     def _set_cloud_covering_factor(self) -> None:
-        """ Covering factor Ω/4π for the emission-line region. Affects both the luminosity of the emitted spectrum and the radiative
-        transfer of lines and continua. If a covering factor is set and the luminosity case used then the
-        luminosities will be for a shell covering Ω sr of the central object. """
+        """ Covering factor Ω/4π for the emission-line region. Affects both the luminosity of the emitted spectrum
+        and the radiative transfer of lines and continua. If a covering factor is set and the luminosity case used
+        then the luminosities will be for a shell covering Ω sr of the central object. """
         command = 'covering factor 1.0'
         self.buffer_to_write.append(command)
     
     def _set_cosmic_rays(self) -> None:
         """ Cosmic rays must be included if the calculation extends into molecular regions. The
         ion-molecule chemistry that occurs in the cold ISM requires a source of ionization (Dyson and
-        Williams, 1997). """
-        command = 'cosmic rays background'
+        Williams, 1997). This includes galactic background cosmic rays. We adopt the Indriolo et al. (2007) mean H0
+        cosmic ray ionization rate of 2x10-16 s-1 . The H2 secondary ionization rate is then
+        4.6 x 10-16 s-1 ,2 . (Glassgold and Langer (1974) give the relationship between H0 and H2
+        ionization rates.). An optional scale factor specifies the cosmic ray ionization rate relative to this background
+        value. The scale factor is assumed to be a log unless the keyword linear also appears."""
+        command = 'cosmic rays background linear {}'.format(self.cosmic_ray_ionization_factor)
         self.buffer_to_write.append(command)
     
     def _set_cmb_background(self) -> None:
@@ -126,8 +132,8 @@ class CloudyInput:
     def _set_prefix_for_savefiles(self) -> None:
 
         # create the folder structure if it doesnt exist
-        pathlib.Path(f'{self.target_dir}sample_N{self.N}/{self.index}').mkdir(parents=True, exist_ok=True)
-        command = 'set save prefix model'
+        pathlib.Path(f'{self.target_dir}/{self.index}').mkdir(parents=True, exist_ok=True)
+        command = 'set save prefix "model"'
         self.buffer_to_write.append(command)
     
     def _set_save_lines(self) -> None:
@@ -201,17 +207,19 @@ class CloudyInput:
         self._set_lines_to_save()
 
         # write all commands from the buffer into the model.in file
-        self.in_file = f'{self.target_dir}sample_N{self.N}/{self.index}/'+"model.in"
+        self.in_file = f'{self.target_dir}/{self.index}/'+"model.in"
         with open(self.in_file, "w+") as f:
             for command in self.buffer_to_write:
                 print(command, file=f)
 
-    def create(self, log_gas_density:float,
-                    gas_phase_metallicity:float,
-                    redshift:float,
-                    ionization_parameter:float,
-                    stellar_metallicity:float,
-                    stellar_age:float) -> str:
+    def create(self,
+               log_gas_density: float,
+               gas_phase_metallicity: float,
+               redshift: float,
+               cosmic_ray_ionization_factor:float, 
+               ionization_parameter: float,
+               stellar_metallicity: float,
+               stellar_age: float) -> str:
         """
         Main method of the class, called to produce the model.in file using the 
         parameters in the sample. Returns the path to the model.in file created so the
@@ -220,6 +228,7 @@ class CloudyInput:
         :param float log_gas_density: value logarithm of the gas density
         :param float gas_phase_metallicity: value log of the gas metallicity
         :param float redshift: value of the redshift
+        :param float cosmic_ray_ionization_factor: value to use to scale the cosmic ray background
         :param float ionization_parameter: value log of the ionization parameter
         :param float stellar_metallicity: value log of the stellar metallicity
         :param float stellar_age: value stellar age in years
@@ -231,6 +240,7 @@ class CloudyInput:
         self.log_gas_density = log_gas_density
         self.gas_phase_metallicity = gas_phase_metallicity
         self.redshift = redshift
+        self.cosmic_ray_ionization_factor = cosmic_ray_ionization_factor
         self.ionization_parameter = ionization_parameter
         self.stellar_age = stellar_age
         self.stellar_metallicity = stellar_metallicity
@@ -240,8 +250,10 @@ class CloudyInput:
 
         # return the path to the model.in file created
         return self.in_file
+
     
-def create_inputs(N:int, target_dir:str, LineList_path:str, filter:bool=True, save_to_file:bool=True, plot:bool=False):
+def create_inputs(N: int, target_dir: str, LineList_path: str, filter: bool=True, save_to_file: bool=True,
+                  plot: bool=False):
     """
     Creates the model.in inputs for CLOUDY and saves them creaing the folder structure.
     Calls the sampling.sampling_create_parameters() to obtain the combinations of parameters,
@@ -257,10 +269,13 @@ def create_inputs(N:int, target_dir:str, LineList_path:str, filter:bool=True, sa
     :rtype: None
     """
     samples = sampling_create_parameters(path=target_dir,
-                               n_samples=N,
-                               filter=True,
-                               save_to_file=True,
-                               plot=False
-                               )
+                                         N_sample=N,
+                                         filter=True,
+                                         save_to_file=True,
+                                         plot=False
+                                         )
     for idx, sample in enumerate(samples):
-        CloudyInput(index=idx, N=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
+        CloudyInput(index=idx, N_sample=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
+
+
+    #TODO: FK: this is also done in the hpc.py script, so might be obsolete?

@@ -40,7 +40,6 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bpass.html">Using BPASS models</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
@@ -73,26 +72,7 @@
              
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h1>
-<p>Example script</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pynublado.manager</span> <span class="kn">import</span> <span class="n">QueueManager</span>
-<span class="kn">from</span> <span class="nn">pynublado.sampling</span> <span class="kn">import</span> <span class="n">sampling_create_parameters</span>
-
-<span class="n">target_directory</span> <span class="o">=</span> <span class="s1">&#39;../data/samples/&#39;</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="c1"># create the samples (combination of input parmeters to run)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">sampling_create_parameters</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">target_directory</span><span class="p">,</span>
-                               <span class="n">n_samples</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
-                               <span class="nb">filter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">save_to_file</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                               <span class="n">plot</span><span class="o">=</span><span class="kc">False</span>
-                               <span class="p">)</span>
-
-<span class="c1"># create and run the models for this combinations</span>
-<span class="n">queue</span> <span class="o">=</span> <span class="n">QueueManager</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">target_dir</span><span class="o">=</span><span class="n">target_directory</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">queue</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>TODO</p>
 </section>
 
 

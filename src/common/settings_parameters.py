@@ -1,5 +1,3 @@
-# Settings related to the parameters and their ranges can go in here
-
 # -----------------------------------------------------------------
 #  Settings for data sets with 7 parameters
 # -----------------------------------------------------------------

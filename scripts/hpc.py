@@ -1,33 +1,81 @@
 """
-Example script to run the sampling of CLOUDY space.
-1. Get the combinations of input parameters to be run
-2. Create the model.in files for CLOUDY to run
-3. Run the model.in files with CLOUDY using multiprocessing.
+Example script to create a sample of Cloudy models and run them:
+
+1. Generate a sample of input parameters
+2. Create the respective model.in files for Cloudy to run
+3. Run the model.in files with Cloudy using multiprocessing.
 """
+
+import argparse
+import sys
+import os
+
+sys.path.append('..')
+sys.path.append('../src/')
+
+from src.cloudy_input import CloudyInput
+from src.manager import QueueManager
+from src.sampling import sampling_create_parameters
+from common.utils import *
+
+
+def main(args):
+
+    # 1. set up directory sample / check if it exists
+    sample_path, new_sample = utils_setup_sample_dir(parent_path=args.sample_parent_dir, N_sample=args.N_sample)
+
+    if not new_sample:
+
+        print('Sample {} already exists, skipping sample generation'.format(sample_path))
+
+    else:
+        # 1a. generate parameter samples
+        parameter_samples = sampling_create_parameters(path=sample_path,
+                                                       N_sample=args.N_sample,
+                                                       filter=True,
+                                                       save_to_file=True,
+                                                       plot=False)
+
+        # 1b. create individual directories and generate input files for each model
+        sample_todo_dir = os.path.join(sample_path, SAMPLE_SUBDIR_TODO)
+
+        print('Creating *.in files in {}'.format(sample_todo_dir))
+        for idx, sample in enumerate(parameter_samples):
+            CloudyInput(index=idx,
+                        N_sample=args.N_sample,
+                        target_dir=sample_todo_dir,
+                        LineList_path=args.line_list_path).create(*sample)
+
+    # 2. create a queue of models and run them
+    queue = QueueManager(sample_dir=sample_path,
+                         N_CPUs=args.N_cpus,
+                         N_batch=args.N_batch,
+                         verbose=True)
+
+    queue.manager_run()
+
 
 if __name__ == "__main__":
 
-    from src.manager import QueueManager
-    from src.sampling import sampling_create_parameters
-
-    import argparse
-    # example: python script_hpc.py --N=100
     parser = argparse.ArgumentParser()
-    parser.add_argument("--N", required=True, type=int, help="Number of samples to run (Note: some combinations will be filtered out due to not being Physical.)")
-    args = parser.parse_args()
+    parser.add_argument("--N_sample", required=True, type=int,
+                        help="Number of models in the sample. "
+                             "Note: some parameter combinations will be filtered out due to not being physical)")
 
-    # other inputs
-    target_directory = '../data/samples/'
-    N = args.N
+    parser.add_argument("--N_cpus", required=False, type=int,
+                        help="Number of CPU cores to utilise")
 
-    # create the samples (combination of input parmeters to run)
-    samples = sampling_create_parameters(path=target_directory,
-                               n_samples=N,
-                               filter=True,
-                               save_to_file=True,
-                               plot=False
-                               )
-    
-    # create and run the models for this combinations
-    queue = QueueManager(samples, N=N, target_dir=target_directory, verbose=True)
-    queue.run()
+    parser.add_argument("--N_batch", required=False, type=int,
+                        help="Number of models to run (default: all)")
+
+    my_args = parser.parse_args()
+
+    my_args.sample_parent_dir = '../data/samples/'
+    my_args.line_list_path = '../data/LineList_in.dat'
+
+    main(my_args)
+
+
+
+
+

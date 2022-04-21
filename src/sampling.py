@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from pyDOE import *
 import astropy.units as u
@@ -11,13 +10,12 @@ from common.utils import *
 from common.plot import *
 
 
-def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True, plot=False):
+def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, plot=False):
     """
     This function creates a set of parameters for a sample.
 
     :param str path: output directory
-    :param str prefix: file prefix
-    :param int n_samples: Number of parameter samples to be generated
+    :param int N_sample: Number of parameter samples to be generated
     :param bool save_to_file: Boolean - Save parameters to file
     :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical.
     This will results in a lower n_sample than specified.
@@ -27,31 +25,27 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     :rtype: numpy.array
     """
 
-    folder = '{}{}'.format(SAMPLE_DIR_BASE, n_samples)
-    path = os.path.join(path, folder)
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-        print('Created directory {}'.format(path))
+    print('Creating a set of parameters (N = {}) '.format(N_sample))
 
     np.random.seed(RANDOM_SEED)
 
     # get normalised latin hyper cube (all parameter values are in the [0,1] range)
-    lhs_normalised = lhs(n=PARAMETER_NUMBER, samples=n_samples)
+    lhs_normalised = lhs(n=PARAMETER_NUMBER, samples=N_sample)
 
     parameters = utils_rescale_parameters(limits=PARAMETER_LIMITS, parameters=lhs_normalised)
 
     if filter:
         parameters = sampling_filter_redshift_stellar_age(parameters)
 
-    if plot:
-        plot_parameter_space(parameters=parameters, n_samples=n_samples, output_dir=path, file_type='png')
+    # transform some column from the sampling ranges to the units that Cloudy requires
+    parameters = sampling_adjust_units(parameters)
 
-    parameters = sampling_adjust_columns(parameters)
+    if plot:
+        plot_parameter_space(parameters=parameters, N_sample=N_sample, output_dir=path, file_type='png')
 
     if save_to_file:
 
-        file_name = '{}_N{}.npy'.format(PARAMETER_FILE_BASE, n_samples)
+        file_name = '{}{}.npy'.format(PARAMETER_FILE_BASE, N_sample)
 
         parameter_file_path = os.path.join(path, file_name)
         np.save(parameter_file_path, parameters)
@@ -60,21 +54,27 @@ def sampling_create_parameters(path, n_samples, filter=False, save_to_file=True,
     return parameters
 
 
-def sampling_adjust_columns(parameters):
+def sampling_adjust_units(parameters):
     """
-    Metalicities are sampled in log space and have to be changed to linear space.
-    Cloudy wants the stellar age in years and not Mega years.
+    Some parameter units have to be adjusted to be compatible with Cloudy's input formats.
+
+    For example, we sampled some parameters in log space which need to be changed to linear space.
+    Others parameters might require linear transformations.
+
+    All required changes can be performed in this function.
 
     :param parameters: parameter object
     :return: parameter object
     """
+    print('  Adjusting sampling units')
 
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
-    Z_star_column = PARAMETER_NUMBER_STELLAR_METALLICITY - 1
+    cr_column = PARAMETER_NUMBER_CR_SCALING - 1
     t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
 
     parameters[:, Z_gas_column] = 10 ** (parameters[:, Z_gas_column])
-    # parameters[:, Z_star_column] = 10 ** (parameters[:, Z_star_column])
+    parameters[:, cr_column] = 10 ** (parameters[:, cr_column])
+
     parameters[:, t_star_column] = 1e6 * parameters[:, t_star_column]
 
     return parameters
@@ -89,9 +89,9 @@ def sampling_filter_redshift_stellar_age(parameters):
     :rtype: numpy.array
     """
 
-    print('Filtering un-physical parameter combinations:')
+    print('  Filtering un-physical parameter combinations')
 
-    n_samples_pre = parameters.shape[0]
+    N_sample_pre = parameters.shape[0]
 
     z_column = PARAMETER_NUMBER_REDSHIFT - 1
     t_column = PARAMETER_NUMBER_STELLAR_AGE - 1
@@ -108,24 +108,27 @@ def sampling_filter_redshift_stellar_age(parameters):
     parameters = parameters[mask]
 
     # bookkeeping
-    n_samples_post = parameters.shape[0]
-    delta = n_samples_pre - n_samples_post
-    print('  {} samples removed. {} remaining.'.format(delta, n_samples_post))
+    N_sample_post = parameters.shape[0]
+    delta = N_sample_pre - N_sample_post
+    print('  {} samples removed. {} remaining.'.format(delta, N_sample_post))
 
     return parameters
 
 
 # -----------------------------------------------------------------
-# execute this when file is executed
+# Testing ... 1, 2, 3
 # -----------------------------------------------------------------
 if __name__ == "__main__":
 
-    target_directory = '../data/samples/'
+    sample_directory = '../data/samples/test_sample_N2000'
+
+    if not os.path.isdir(sample_directory):
+        os.makedirs(sample_directory)
 
     N = 2000
 
-    sampling_create_parameters(path=target_directory,
-                               n_samples=N,
+    sampling_create_parameters(path=sample_directory,
+                               N_sample=N,
                                filter=True,
                                save_to_file=True,
                                plot=True
