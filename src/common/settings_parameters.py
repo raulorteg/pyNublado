@@ -29,11 +29,11 @@ PARAMETER_NUMBER_STELLAR_METALLICITY = 6
 PARAMETER_NUMBER_STELLAR_AGE = 7
 
 # LaTeX names of our parameters (for matplotlib)
-PARAMETER_NAMES_LATEX =['\mathrm{log}_{10}(\rho_{\mathrm{gas}} / \mathrm{cm^{3}})',
+PARAMETER_NAMES_LATEX =['\mathrm{log}_{10}(\\rho_{\mathrm{gas}} / \mathrm{cm^{3}})',
                         '\mathrm{log}_{10}(Z_{\mathrm{gas}} / Z_{\odot})',
                         'z',
                         '\mathrm{CR\, scaling}',
-                        '\mathrm{U}',
+                        '\mathrm{log}_{10}(U)',
                         '\mathrm{log}_{10}(Z_{\star})',
                         't_{\star} / \mathrm{Myr}'
                         ]
