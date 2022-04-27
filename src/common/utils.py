@@ -145,25 +145,30 @@ def utils_get_folders(target_dir):
         List of folders
     """
 
-    folders = glob.glob(traget_dir+'*/', recursive=True)
+    folders = glob.glob(target_dir+'*/', recursive=True)
     folders.sort(key=utils_natural_keys)
 
     return folders
 
 
-def utils_read_output(folder_name):
+def utils_read_output_tail(folder_name, tail_len=5):
     """
-    Reads in 'model.out' inside 'folder_name'
+    Reads in the tail strings of 'model.out' inside 'folder_name'
     Args:
         folder_name: A string containing a sample directory with cloudy outputs
+        tail_len: Number of tail strings to read in
     Returns:
-        A string with the last 3 lines of output, returns '' if empty
+        A string with the last 'tail_len' lines of output, returns 0 if file not found
     """
 
-    with open(F'{folder_name}model.out', 'r') as f:
-        last_line = f.readlines()[-3:]
+    try:
+        with open(F'{folder_name}model.out', 'r') as f:
+            tail = f.readlines()[-tail_len:]
 
-    last_line = ''.join(last_line)
-    last_line = re.sub(r'[\n]|\[|\]', '', last_line)
+        tail=''.join(tail)
+        # Remove all newline (\n) and square brackets
+        tail=re.sub(r'[\n]|\[|\]', '', tail)
+    except FileNotFoundError:
+        tail=0
 
-    return last_line
+    return tail
