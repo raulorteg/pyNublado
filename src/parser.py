@@ -104,12 +104,12 @@ class OutputParser:
                 "stellar_age"]
         
         # remove this
-        column_names = ["gas_density",
-                "gas_phase_metallicity",
-                "Redshift",
-                "ionization_parameter",
-                "stellar_metallicity",
-                "stellar_age"]
+        #column_names = ["gas_density",
+        #        "gas_phase_metallicity",
+        #        "Redshift",
+        #        "ionization_parameter",
+        #        "stellar_metallicity",
+        #        "stellar_age"]
 
         inputs = pd.DataFrame(inputs, columns=column_names)
         inputs["id"] = hashes_column
@@ -193,6 +193,7 @@ class OutputParser:
 
             else:
                 status_code = 4 # model.out wasnt created
+                times.append(None)
             indexes.append(index)
             status_codes.append(status_code)
             hashes.append(self.index_to_hash(int(index)))
