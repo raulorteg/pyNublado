@@ -51,6 +51,7 @@ class OutputParser:
         # here we list the parsing methods to be executed
         if subdirs["done"]:
             self.parse_status(path=subdirs["done"])
+            self.parse_emis(path=subdirs["done"])
 
     def hash_list(self, inputs:list):
         """
@@ -103,12 +104,12 @@ class OutputParser:
                 "stellar_age"]
         
         # remove this
-        #column_names = ["gas_density",
-        #        "gas_phase_metallicity",
-        #        "Redshift",
-        #        "ionization_parameter",
-        #        "stellar_metallicity",
-        #        "stellar_age"]
+        column_names = ["gas_density",
+                "gas_phase_metallicity",
+                "Redshift",
+                "ionization_parameter",
+                "stellar_metallicity",
+                "stellar_age"]
 
         inputs = pd.DataFrame(inputs, columns=column_names)
         inputs["id"] = hashes_column
@@ -168,9 +169,50 @@ class OutputParser:
         """
         save_path = path.parent.joinpath("status.pkl")
 
-        status_codes, indexes, hashes = [], [], []
+        status_codes, indexes, hashes, times = [], [], [], []
         for item in path.iterdir():
             out_file = item.joinpath("model.out")
+            index = str(out_file.parent).split("/")[-1]
+            if out_file.exists():
+                
+                line = subprocess.check_output(['tail', '-1', out_file])
+                line = bytes.decode(line)
+                status_code = self.status_to_int(line)
+
+                line = subprocess.check_output(['tail', '-2', out_file])
+                line = bytes.decode(line)
+                if "ExecTime(s)" in line:
+                    subline = line.split()
+                    for idx, word in enumerate(subline):
+                        if word == "ExecTime(s)":
+                            break
+                    time = subline[idx+1]
+                    times.append(float(time))
+                else:
+                    times.append(None)
+
+            else:
+                status_code = 4 # model.out wasnt created
+            indexes.append(index)
+            status_codes.append(status_code)
+            hashes.append(self.index_to_hash(int(index)))
+        
+        status_df = pd.DataFrame()
+        status_df["index_model"] = indexes
+        status_df["status"] = status_codes
+        status_df["hashes"] = hashes
+        status_df["time"] = times
+        status_df.to_pickle(save_path)
+        print(status_df)
+        del status_df
+    
+    def parse_emis(self, path:pathlib.PosixPath):
+        exit()
+        save_path = path.parent.joinpath("emis.pkl")
+
+        indexes, hashes = [], []
+        for item in path.iterdir():
+            out_file = item.joinpath("model.emis")
             index = str(out_file.parent).split("/")[-1]
             if out_file.exists():
                 
@@ -182,13 +224,8 @@ class OutputParser:
             indexes.append(index)
             status_codes.append(status_code)
             hashes.append(self.index_to_hash(int(index)))
-        
-        status_df = pd.DataFrame()
-        status_df["index_model"] = indexes
-        status_df["status"] = status_codes
-        status_df["hashes"] = hashes
-        status_df.to_pickle(save_path)
-        del status_df
+
+
             
 # example
 if __name__ == "__main__":
