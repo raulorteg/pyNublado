@@ -204,7 +204,6 @@ class OutputParser:
         status_df["hashes"] = hashes
         status_df["time"] = times
         status_df.to_pickle(save_path)
-        print(status_df)
         del status_df
     
     def parse_emis(self, path:pathlib.PosixPath):
