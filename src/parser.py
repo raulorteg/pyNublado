@@ -205,28 +205,7 @@ class OutputParser:
         status_df["time"] = times
         status_df.to_pickle(save_path)
         del status_df
-    
-    def parse_emis(self, path:pathlib.PosixPath):
-        exit()
-        save_path = path.parent.joinpath("emis.pkl")
 
-        indexes, hashes = [], []
-        for item in path.iterdir():
-            out_file = item.joinpath("model.emis")
-            index = str(out_file.parent).split("/")[-1]
-            if out_file.exists():
-                
-                line = subprocess.check_output(['tail', '-1', out_file])
-                line = bytes.decode(line)
-                status_code = self.status_to_int(line)
-            else:
-                status_code = 4 # model.out wasnt created
-            indexes.append(index)
-            status_codes.append(status_code)
-            hashes.append(self.index_to_hash(int(index)))
-
-
-            
 # example
 if __name__ == "__main__":
     
