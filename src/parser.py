@@ -175,10 +175,12 @@ class OutputParser:
             index = str(out_file.parent).split("/")[-1]
             if out_file.exists():
                 
+                # read the exit code phrase from the last line in model.out file
                 line = subprocess.check_output(['tail', '-1', out_file])
                 line = bytes.decode(line)
                 status_code = self.status_to_int(line)
 
+                # save the execution time, if present in model.out file
                 line = subprocess.check_output(['tail', '-2', out_file])
                 line = bytes.decode(line)
                 if "ExecTime(s)" in line:
@@ -198,13 +200,114 @@ class OutputParser:
             status_codes.append(status_code)
             hashes.append(self.index_to_hash(int(index)))
         
+        # build the dataframe, by adding all the columns
         status_df = pd.DataFrame()
         status_df["index_model"] = indexes
         status_df["status"] = status_codes
         status_df["hashes"] = hashes
         status_df["time"] = times
         status_df.to_pickle(save_path)
+
+        # let the table of status codes available
+        # for other methods of the parser class
+        self.status = status_df
         del status_df
+    
+    def parse_emis_file(self, path:pathlib.PosixPath):
+        """
+        Given the path to e.g "done/1234" directory
+        where a finished model is saved, this method parses the model.emis
+        file containing the emission lines and saves it into a dataframe. 
+        finally it returns the deepest line in the model, corresponding
+        to the outer-most zone (emergent emission). The method then saves
+        the extracted information in a pandas dataframe and serializes it with pickle.
+
+        :param pathlib.PosixPath path: path to the e.g "done/1234" directory
+        """
+
+        save_path = path.parent.joinpath("emis.pkl")
+        with open(path, "r") as f:
+            lines = f.readlines()
+
+            # identify the columns (emission lines) to be the header
+            header = lines[0].split()
+            header_columns = []
+            header_columns.append(header[0].replace("#", "")) # this is "#depth"
+
+            buffer = []
+            for idx, item in enumerate(header[1:]):
+                if len(buffer) == 0:
+                    buffer.append(item)
+                
+                elif "." in item:
+                    buffer.append(item)
+                    header_columns.append("_".join(buffer))
+                    buffer = []
+                    
+                else:
+                    buffer.append(item)
+            
+            # initialize the dictionary with empty lists
+            emis_dict = {}
+            for key in header_columns:
+                emis_dict[key] = []
+            
+            # fill in the dicitonary
+            for line in lines[1:]:
+                splitted_line = line.split()
+                for idx, elem in enumerate(splitted_line):
+                    try:
+                        emis_dict[header_columns[idx]].append(float(elem))
+                    except:
+                        print(elem)
+                        pass
+            # convert the dictionary into a pandas dataframe
+            emis_df = pd.DataFrame().from_dict(emis_dict)
+            emis_df.to_pickle(save_path)
+
+            # return the outer-most emission line results
+            emis_max_depth = emis_df[emis_df["depth"] == emis_df["depth"].max()]
+            
+            # free memory
+            del emis_dict
+            del emis_df
+            return emis_max_depth
+
+    def parse_emis(self, path:pathlib.PosixPath):
+        """
+        Given the path to "done" directory
+        where a finished model is saved, this method parses loops over
+        all methods and for each parses the model.emis
+        file containing the emission lines. Then creates a dataframe containing
+        the outer-most zone (emergent emission) for all models. The method then saves
+        the extracted information in a pandas dataframe and serializes it with pickle.
+
+        :param pathlib.PosixPath path: path to the e.g "done" directory
+        """
+
+        save_path = path.parent.joinpath("emis.pkl")
+
+        emis_df, indexes, hashes, status = [], [], [], []
+        for item in path.iterdir():
+            print(item)
+            emis_file = item.joinpath("model.emis")
+            index = str(emis_file.parent).split("/")[-1]
+
+            # check if status_code of index model is "OK"
+            exit_code = self.status[self.status["index_model"] == index].status.values[0]
+            if (emis_file.exists()) and (exit_code == 0):
+                df = self.parse_emis_file(emis_file)
+                emis_df.append(df)
+                    
+                indexes.append(index)
+                hashes.append(self.index_to_hash(int(index)))
+                
+            
+        emis_dataframe = pd.concat(emis_df)
+        emis_dataframe["index_model"] = indexes
+        emis_dataframe["hashes"] = hashes
+        emis_dataframe.to_pickle(save_path)
+        del emis_dataframe
 
 # example
 if __name__ == "__main__":
@@ -212,4 +315,6 @@ if __name__ == "__main__":
     path = "/home/raul/Desktop/sample_N4000"
     output_parser = OutputParser()
     output_parser.parse(path=path)
+
+
 
