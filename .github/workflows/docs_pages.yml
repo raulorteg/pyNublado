@@ -26,11 +26,8 @@ jobs:
           python -m pip install sphinx-rtd-theme
           python -m pip install m2r2
         
-      - name: Make the sphinx docs
-        run: |
-          make -C docs clean
-          make -C docs html
-          
+      
+
       - name: Init new repo in dist folder and commit generated files
         run: |
           cd docs/build/html/
