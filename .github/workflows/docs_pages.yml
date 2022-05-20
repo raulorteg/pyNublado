@@ -34,6 +34,12 @@ jobs:
         git commit -m "Update documentation" -a || true
         # The above command will fail if no changes were present, so we ignore
         # that.
+    - name: Running the Sphinx to gh-pages Action
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0-beta.2
+        with:
+          branch: main
+          dir_docs: docs
+          sphinxopts: ''
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
