@@ -36,6 +36,7 @@ jobs:
           cd docs/build/html/
           git init
           touch .nojekyll
+          git config --global --add safe.directory /github/workspace/docs/build/html
           git add -A
           git config --local user.email "action@github.com"
           git config --local user.name "Github Action"
