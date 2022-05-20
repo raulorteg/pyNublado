@@ -167,10 +167,12 @@ models will be run.</p></li>
 </dd></dl>
 
 <span class="target" id="module-sampling"></span><dl class="py function">
-<dt class="sig sig-object py" id="sampling.sampling_adjust_columns">
-<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sampling_adjust_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sampling_adjust_columns" title="Permalink to this definition"></a></dt>
-<dd><p>Metallicities are sampled in log space and have to be changed to linear space.
-Cloudy wants the stellar age in years and not Mega years.</p>
+<dt class="sig sig-object py" id="sampling.sampling_adjust_units">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sampling_adjust_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sampling_adjust_units" title="Permalink to this definition"></a></dt>
+<dd><p>Some parameter units have to be adjusted to be compatible with Cloudy’s input formats.</p>
+<p>For example, we sampled some parameters in log space which need to be changed to linear space.
+Others parameters might require linear transformations.</p>
+<p>All required changes can be performed in this function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>parameters</strong> – parameter object</p>
