@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README &mdash; pyNublado  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="pyNublado" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pyNublado
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pynublado">pyNublado</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-cloudy">Running Cloudy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-parameters">Input parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-params">Output params:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bpass.html">Using BPASS models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyNublado</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>README</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/readme.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline"></a></h1>
+<section id="pynublado">
+<h2>pyNublado<a class="headerlink" href="#pynublado" title="Permalink to this headline"></a></h2>
+<p>A package to run (a lot of) <a class="reference external" href="https://nublado.org">Cloudy</a> models.</p>
+<section id="running-cloudy">
+<h3>Running Cloudy<a class="headerlink" href="#running-cloudy" title="Permalink to this headline"></a></h3>
+<p>Example of running Cloudy independently:</p>
+<ol class="arabic simple">
+<li><p>Create a <em>[name].in</em> file</p></li>
+<li><p>Navigate to the folder where the .in file is located</p></li>
+<li><p>Execute Cloudy from the directory <code class="docutils literal notranslate"><span class="pre">~/c17.02/source/cloudy.exe</span> <span class="pre">[name].in</span></code></p></li>
+</ol>
+</section>
+<section id="input-parameters">
+<h3>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Gas density (log scale): -3 - 6</p></li>
+<li><p>Gas phase metallicity: 0.0001 - 2.0 (solar)</p></li>
+<li><p>CMB background (z_redshift): 3-12</p></li>
+<li><p>Cosmic rays background: <code class="docutils literal notranslate"><span class="pre">cosmic</span> <span class="pre">rays</span> <span class="pre">background</span> <span class="pre">linear</span> <span class="pre">1</span></code> 1-1000</p></li>
+<li><p>Ionization parameter: -4 - 0 (log units)</p></li>
+<li><p>Radiation spectrum (BPASS), Chabrier IMF, Mup=300 M_sun: depends on age, metallicity (Z)</p>
+<ul>
+<li><p>Stellar ages (is delimited by the redshift): 1 Myr up to 2 Gyr.</p></li>
+<li><p>Stellar metallicity (Z): 1e-5-0.040 (absolute value)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="output-params">
+<h3>Output params:<a class="headerlink" href="#output-params" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lines in <code class="docutils literal notranslate"><span class="pre">data/LineLabels_filtered.txt</span></code>.</p></li>
+</ul>
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<p>Tests can be found in <code class="docutils literal notranslate"><span class="pre">tests/</span></code>, to run the tests with pytest:</p>
+<ol class="arabic simple">
+<li><p>Install pytest <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pytest</span></code></p></li>
+<li><p>Navigate to tests <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">tests</span></code></p></li>
+<li><p>Run tests <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-v</span> <span class="pre">test.py</span></code>, the -v flag is optional for verbosity</p></li>
+</ol>
+<p>The tests check if cloudy path in <code class="docutils literal notranslate"><span class="pre">src/common/settings.py</span></code> is the correct path of the cloudy installation in our system by runnning a test model.in, then checks if the output of CLOUDY is ok (“Cloudy exited OK”), then creates the file structure src.manager.QueueManager() expects and runs 4 models on multiple cpus to check the pipeline.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="pyNublado" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
