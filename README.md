@@ -1,5 +1,7 @@
 ## pyNublado
 
+Docs: https://raulorteg.github.io/pyNublado/
+
 A package to run (a lot of) [Cloudy](https://nublado.org) models.
 
 ### Running Cloudy
