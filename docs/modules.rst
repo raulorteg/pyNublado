@@ -10,6 +10,9 @@ Modules
 .. automodule:: sampling
    :members:
 
+.. automodule:: parser
+   :members:
+
 .. automodule:: common
    :members:
 
