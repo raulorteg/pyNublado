@@ -25,6 +25,10 @@ jobs:
           python -m pip install -U sphinx
           python -m pip install sphinx-rtd-theme
           python -m pip install m2r2
+          python -m pip install numpy
+          python -m pip install pyDOE
+          python -m pip install astropy
+          python -m pip install matplotlib
         
       - name: Make the sphinx docs
         run: |
