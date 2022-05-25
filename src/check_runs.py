@@ -37,6 +37,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
     # 5. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8            same
     # 6. Stellar metallicity    interval=[-5, -1.3979]      Absolute value          10^()
     # 7. Stellar age            interval=[1.0, 2000.0]      Myr                     ()*1e6
+    # 8. DTM                    interval=[0., 0.5]          Absolute value          Not directly a cloudy parameter
 
     # parameters have the units used in Cloudy, here we change some of them to make the plots more accessible
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
@@ -52,8 +53,8 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 (-100, 1100), #comment when sample run with CR ionization turned off
                 (-4.4, 0.5),
                 (-5.5, -1.1),
-                (-200, 2100)
-                ]
+                (-200, 2100),
+                (0,0.5)]
 
     # some plot settings
     marker_size = 10
@@ -180,8 +181,8 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
 def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
 
     #Location of parameter space files
-    param_space = np.load(F'../data/samples/sample_N8000/parameters_N{N_sample}.npy')
-    sample_dir  = F'../data/samples/sample_N{N_sample}/'
+    param_space = np.load(F'../data/samples/sample_N{N_sample}/parameters_N{N_sample}.npy')
+    sample_dir  = F'../data/samples/sample_N{N_sample}/todo/'
 
     #File locations as an increasing list
     sample_files = utils_get_folders(sample_dir)
