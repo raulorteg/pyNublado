@@ -39,6 +39,8 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     # 5. ionization parameter   interval=[-4.0, 0.0]        See Hazy 5.8            same
     # 6. Stellar metallicity    interval=[-5, -1.3979]      Absolute value          10^()
     # 7. Stellar age            interval=[1.0, 2000.0]      Myr                     ()*1e6
+    # 8. DTM                    interval=[0., 0.5]          Absolute value          Not directly a cloudy parameter
+
 
     # parameters have the units used in Cloudy, here we change some of them to make the plots more accessible
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
@@ -48,7 +50,7 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     parameters[:, t_star_column] = parameters[:, t_star_column] / 1e6
 
     # parameter padding
-    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100)]
+    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100), (0,0.5)]
 
     # some plot settings
     marker_size = 100
