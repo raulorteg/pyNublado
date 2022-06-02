@@ -17,14 +17,14 @@ import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.rcParams['text.usetex'] = True
 
-# TODO: add doc strings here
+# TODO: add doc strings for these functions
 
 
 def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib.cm.viridis, output_dir='./',
                    file_type='png', show_plot=True):
 
     print('Creating parameter space visualisation')
-    # Check N in common.settings_parameters, currently run without CR
+    # Check N in common.settings_parameters, currently run without CR # TODO: Is this still true?
     # PARAMETER_NUMBER_STELLAR_METALLICITY and PARAMETER_NUMBER_STELLAR_AGE
     N = PARAMETER_NUMBER
 
@@ -66,7 +66,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
     label_size = 12
 
     # Some run space manipulation for separate plotting
-    z = np.array(list(run_space.values())) #s et parameter space color
+    z = np.array(list(run_space.values())) # set parameter space color
     success = (z == 0)
 
     run_ticks = np.array(list(run_key.keys()))
@@ -181,6 +181,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
 def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
 
     # Location of parameter space files
+    # TODO: these paths should probably not be hard-coded
     param_space = np.load(F'../data/samples/sample_N{N_sample}/parameters_N{N_sample}.npy')
     sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_TODO}'
 
@@ -228,7 +229,7 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
 
     print("Total samples: ", len(sample_files))
     print("successful number: ", success)
-    print(F"{np.round(100 * success/len(sample_files), 2)} percent of runs were success")
+    print(F"{np.round(100 * success/len(sample_files), 2)} percent of runs were successful")
 
     plot_run_space(param_space, N_sample, run_space, run_key, colormap=colormap, show_plot=show_plot)
 
