@@ -31,6 +31,9 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     for i, label in enumerate(p_labels):
         p_labels[i] = '$' + label + '$'
 
+    # In general our parameters have the units as used in Cloudy.
+    # For this plot we change some of them to make the sub-plots more accessible
+
     # Parameter names           Sampling intervals          Sampling units          Cloudy units
     # 1. Gas density            interval=[-3.0, 6.0]        log_10 (cm^-3)          same
     # 2. Gas phase metallicity  interval=[-3.0, 0.30103]    log_10( Z_solar)        10^()
@@ -41,8 +44,6 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     # 7. Stellar age            interval=[1.0, 2000.0]      Myr                     ()*1e6
     # 8. DTM                    interval=[0., 0.5]          Absolute value          Not directly a cloudy parameter
 
-
-    # parameters have the units used in Cloudy, here we change some of them to make the plots more accessible
     Z_gas_column = PARAMETER_NUMBER_GAS_PHASE_METALLICITY - 1
     t_star_column = PARAMETER_NUMBER_STELLAR_AGE - 1
 
@@ -50,7 +51,7 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     parameters[:, t_star_column] = parameters[:, t_star_column] / 1e6
 
     # parameter padding
-    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100), (0,0.5)]
+    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100), (-0.1, 0.6)]
 
     # some plot settings
     marker_size = 100

@@ -1,6 +1,8 @@
 import pathlib
 from sampling import sampling_create_parameters
-import abundances
+
+import sys; sys.path.append('..')
+from common.abundances import *
 
 
 class CloudyInput:
@@ -44,17 +46,17 @@ class CloudyInput:
 
     def _set_abundances(self) -> None:
         """ This will use solar abundances from abundance.py which uses the Asplund+2009 values"""
-        # command = 'abundances solar_GASS10 no grains'
+        # command = 'abundances solar_GASS10 no grains' # (OLD)
         a_depletion = abundances.abundances((10**self.gas_phase_metallicity)*abundances.Z_sol, self.DTM)
-        command='abundances he ='+str(a_depletion['He'])+' '
-        ii=0
+        command = 'abundances he ='+str(a_depletion['He'])+' '
+        ii = 0
         for metal in abundances.metals:
-            command+=' '+metal.lower()+' ='+str(a_depletion[metal])+' '
-            ii+=1
-            if ii>5:
-                ii=0
-                command+='\ncontinue   '
-        command+=' no grains'
+            command += ' '+metal.lower()+' ='+str(a_depletion[metal])+' '
+            ii += 1
+            if ii > 5:
+                ii = 0
+                command += '\ncontinue   '
+        command += ' no grains'
         self.buffer_to_write.append(command)
 
     def _set_dust_grains(self) -> None:
@@ -285,6 +287,7 @@ def create_inputs(N: int, target_dir: str, LineList_path: str, filter: bool=True
                                          save_to_file=True,
                                          plot=False
                                          )
+
     for idx, sample in enumerate(samples):
         CloudyInput(index=idx, N_sample=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
 
