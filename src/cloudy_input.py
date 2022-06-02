@@ -47,10 +47,10 @@ class CloudyInput:
     def _set_abundances(self) -> None:
         """ This will use solar abundances from abundance.py which uses the Asplund+2009 values"""
         # command = 'abundances solar_GASS10 no grains' # (OLD)
-        a_depletion = abundances.abundances((10**self.gas_phase_metallicity)*abundances.Z_sol, self.DTM)
+        a_depletion = abundances((10**self.gas_phase_metallicity) * Z_sol, self.DTM)
         command = 'abundances he ='+str(a_depletion['He'])+' '
         ii = 0
-        for metal in abundances.metals:
+        for metal in metals:
             command += ' '+metal.lower()+' ='+str(a_depletion[metal])+' '
             ii += 1
             if ii > 5:
@@ -65,9 +65,9 @@ class CloudyInput:
         distribution is deficient in small particles and so produces the relatively grey extinction
         observed in Orion (Baldwin et al., 1991). We scale the abundance relative to the ISM abundance,
         ideally should scale based on the least abundant metal needed."""
-        a_nodepletion = abundances.abundances((10**self.gas_phase_metallicity)*abundances.Z_sol, 0)
-        f_graphite = 10**a_nodepletion['C']/10**abundances.sol['C']
-        f_silicate = 10**a_nodepletion['Si']/10**abundances.sol['Si']
+        a_nodepletion = abundances((10**self.gas_phase_metallicity) * Z_sol, 0)
+        f_graphite = 10**a_nodepletion['C']/10**sol['C']
+        f_silicate = 10**a_nodepletion['Si']/10**sol['Si']
         command = F'grains Orion graphite {f_graphite} \ngrains Orion silicate {f_silicate}'
         self.buffer_to_write.append(command)
 
