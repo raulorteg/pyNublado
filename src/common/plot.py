@@ -59,7 +59,7 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     label_size = 20
 
     # set up main plot
-    f, ax_array = plt.subplots(N - 1, N - 1, figsize=(12, 12))
+    f, ax_array = plt.subplots(N - 1, N - 1, figsize=(14, 13))
     for i in range(0, N - 1):
         for j in range(1, N):
             if j > i:
@@ -108,7 +108,7 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
                 ax_array[N - 2 - i, j - 1].axis('off')
 
     # make good use of space
-    f.subplots_adjust(hspace=0, wspace=0, left=0.13, bottom=0.10, right=0.95, top=0.98)
+    #f.subplots_adjust(hspace=0, wspace=0, left=0.13, bottom=0.10, right=0.95, top=0.98)
 
     # build file name and save figure
 
