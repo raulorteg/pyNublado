@@ -17,6 +17,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.rcParams['text.usetex'] = True
 
+# TODO: add doc strings here
+
 
 def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib.cm.viridis, output_dir='./',
                    file_type='png', show_plot=True):
@@ -55,23 +57,23 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 (-100, 1100),
                 (-4.4, 0.5),
                 (-5.5, -1.1),
-                (-200, 2100),
-                (-0.1, 0.6)]
+                (-200, 2200),
+                (-0.1, 0.55)]
 
     # some plot settings
     marker_size = 10
     tick_label_size = 8
     label_size = 12
 
-    # Some run space manipulation for separate plottting
-    z = np.array(list(run_space.values())) #set parameter space color
+    # Some run space manipulation for separate plotting
+    z = np.array(list(run_space.values())) #s et parameter space color
     success = (z == 0)
 
     run_ticks = np.array(list(run_key.keys()))
     run_labels = np.array(list(run_key.values()))
 
     # set up main plot
-    f, ax_array = plt.subplots(N, N, figsize=(12, 12))
+    f, ax_array = plt.subplots(N, N, figsize=(14, 14))
 
     # choose a colormap
     c_m = colormap
@@ -81,7 +83,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
         for j in range(0, N):
 
             # empty diagonals
-            if i==j:
+            if i == j:
                 ax_array[i, j].axis('off')
 
             # successful runs in the upper triangle
@@ -104,21 +106,20 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 ax_array[i, j].tick_params(axis='x', which='major', labelsize=tick_label_size, top=True, bottom=False)
                 ax_array[i, j].tick_params(axis='y', which='major', labelsize=tick_label_size, right=True, left=False)
 
-                if j==N-1:
+                if j == N-1:
                     ax_array[i, j].set_ylabel(ylabel=rF'${p_labels[i]}$', size=label_size, labelpad=10)
                     ax_array[i, j].yaxis.set_label_position('right')
                     ax_array[i, j].yaxis.set_tick_params(right='on', left='off')
                     ax_array[i, j].yaxis.set_ticks_position('right')
-                if i==0:
+                if i == 0:
                     ax_array[i, j].set_xlabel(xlabel=rF'${p_labels[j]}$', size=label_size, labelpad=10)
                     ax_array[i, j].xaxis.set_label_position('top')
                     ax_array[i, j].xaxis.set_tick_params(top='on', bottom='off')
                     ax_array[i, j].xaxis.set_ticks_position('top')
-                if j<N-1:
+                if j < N-1:
                     ax_array[i, j].set_yticklabels([])
-                if i>0:
+                if i > 0:
                     ax_array[i, j].set_xticklabels([])
-
 
             # plotting the failed runs in the lower traingle
             elif j < i:
@@ -140,17 +141,17 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 ax_array[i, j].tick_params(axis='x', which='major', labelsize=tick_label_size, top=False)
                 ax_array[i, j].tick_params(axis='y', which='major', labelsize=tick_label_size, right=False)
 
-                if i==N-1:
+                if i == N-1:
                     ax_array[i, j].set_xlabel(xlabel=rF'${p_labels[j]}$', size=label_size, labelpad=10)
                     ax_array[i, j].xaxis.set_label_position("bottom")
                     ax_array[i, j].xaxis.set_tick_params(top='off')
-                if j==0:
+                if j == 0:
                     ax_array[i, j].set_ylabel(ylabel=rF'${p_labels[i]}$', size=label_size, labelpad=10)
                     ax_array[i, j].yaxis.set_label_position("left")
                     ax_array[i, j].yaxis.set_tick_params(right='off')
-                if j>0:
+                if j > 0:
                     ax_array[i, j].set_yticklabels([])
-                if i!=N-1:
+                if i != N-1:
                     ax_array[i, j].set_xticklabels([])
 
     # make good use of space
@@ -223,7 +224,7 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
             run_space[jj] = 7
         elif "Cloudy exited OK" in tail:
             run_space[jj] = 0
-            success+=1
+            success += 1
 
     print("Total samples: ", len(sample_files))
     print("successful number: ", success)
@@ -239,7 +240,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--N_sample", required=True, type=int,
                         help="Number of models in the sample. ")
-
 
     args = parser.parse_args()
     check_run(args.N_sample, show_plot=True)

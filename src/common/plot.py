@@ -51,7 +51,7 @@ def plot_parameter_space(parameters, N_sample, output_dir, file_type='png'):
     parameters[:, t_star_column] = parameters[:, t_star_column] / 1e6
 
     # parameter padding
-    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2100), (-0.1, 0.6)]
+    padding = [(-3.7, 6.7), (-3.2, 0.5), (2.0, 13.), (-100, 1100), (-4.4, 0.5), (-5.5, -1.1), (-200, 2200), (-0.1, 0.55)]
 
     # some plot settings
     marker_size = 100
