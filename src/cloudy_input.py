@@ -30,7 +30,9 @@ class CloudyInput:
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
         command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" '
-        command += 'age={} years Z={}'.format(1e6*self.stellar_age, self.stellar_metallicity)
+        #command += 'age={} years Z={}'.format(1e6*self.stellar_age, self.stellar_metallicity)
+        # cloudy fails when the stellar age [in Myr] is multiplied by 1e6
+        command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
         self.buffer_to_write.append(command)
 
     def _set_gas_density(self) -> None:
