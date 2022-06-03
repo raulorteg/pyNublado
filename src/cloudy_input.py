@@ -1,6 +1,8 @@
 import pathlib
 from sampling import sampling_create_parameters
-import abundances
+
+import sys; sys.path.append('..')
+from common.abundances import *
 
 
 class CloudyInput:
@@ -28,7 +30,9 @@ class CloudyInput:
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
         command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" '
-        command += 'age={} years Z={}'.format(1e6*self.stellar_age, self.stellar_metallicity)
+        #command += 'age={} years Z={}'.format(1e6*self.stellar_age, self.stellar_metallicity)
+        # cloudy fails when the stellar age [in Myr] is multiplied by 1e6
+        command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
         self.buffer_to_write.append(command)
 
     def _set_gas_density(self) -> None:
@@ -44,17 +48,17 @@ class CloudyInput:
 
     def _set_abundances(self) -> None:
         """ This will use solar abundances from abundance.py which uses the Asplund+2009 values"""
-        # command = 'abundances solar_GASS10 no grains'
-        a_depletion = abundances.abundances((10**self.gas_phase_metallicity)*abundances.Z_sol, self.DTM)
-        command='abundances he ='+str(a_depletion['He'])+' '
-        ii=0
-        for metal in abundances.metals:
-            command+=' '+metal.lower()+' ='+str(a_depletion[metal])+' '
-            ii+=1
-            if ii>5:
-                ii=0
-                command+='\ncontinue   '
-        command+=' no grains'
+        # command = 'abundances solar_GASS10 no grains' # (OLD)
+        a_depletion = abundances((10**self.gas_phase_metallicity) * Z_sol, self.DTM)
+        command = 'abundances he ='+str(a_depletion['He'])+' '
+        ii = 0
+        for metal in metals:
+            command += ' '+metal.lower()+' ='+str(a_depletion[metal])+' '
+            ii += 1
+            if ii > 5:
+                ii = 0
+                command += '\ncontinue   '
+        command += ' no grains'
         self.buffer_to_write.append(command)
 
     def _set_dust_grains(self) -> None:
@@ -63,9 +67,9 @@ class CloudyInput:
         distribution is deficient in small particles and so produces the relatively grey extinction
         observed in Orion (Baldwin et al., 1991). We scale the abundance relative to the ISM abundance,
         ideally should scale based on the least abundant metal needed."""
-        a_nodepletion = abundances.abundances((10**self.gas_phase_metallicity)*abundances.Z_sol, 0)
-        f_graphite = 10**a_nodepletion['C']/10**abundances.sol['C']
-        f_silicate = 10**a_nodepletion['Si']/10**abundances.sol['Si']
+        a_nodepletion = abundances((10**self.gas_phase_metallicity) * Z_sol, 0)
+        f_graphite = 10**a_nodepletion['C']/10**sol['C']
+        f_silicate = 10**a_nodepletion['Si']/10**sol['Si']
         command = F'grains Orion graphite {f_graphite} \ngrains Orion silicate {f_silicate}'
         self.buffer_to_write.append(command)
 
@@ -285,6 +289,7 @@ def create_inputs(N: int, target_dir: str, LineList_path: str, filter: bool=True
                                          save_to_file=True,
                                          plot=False
                                          )
+
     for idx, sample in enumerate(samples):
         CloudyInput(index=idx, N_sample=N, target_dir=target_dir, LineList_path=LineList_path).create(*sample)
 

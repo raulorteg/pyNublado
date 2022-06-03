@@ -12,7 +12,6 @@ import os
 
 sys.path.append('..')
 sys.path.append('../src/')
-
 from src.cloudy_input import CloudyInput
 from src.manager import QueueManager
 from src.sampling import sampling_create_parameters

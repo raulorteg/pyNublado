@@ -128,10 +128,10 @@ class QueueManager:
         # TODO: use SAMPLE_SUBDIR_* variables, modify to check runs in sample_N123/running
 
         try:
-            pathlib.Path(f'{self.sample_dir}/todo').mkdir(parents=True, exist_ok=False)
+            pathlib.Path(f'{self.sample_dir}/{SAMPLE_SUBDIR_TODO}').mkdir(parents=True, exist_ok=False)
         except FileExistsError:
             if self.verbose: print("Folder exists")
-            req_dir = f'{self.sample_dir}/todo'
+            req_dir = f'{self.sample_dir}/{SAMPLE_SUBDIR_TODO}'
             exists = True
         else:
             if self.verbose: print("Folder created")
@@ -164,7 +164,7 @@ class QueueManager:
                 subprocess.call(f'mv {key} {self.sample_dir}/', shell=True)
         else:
             for key in to_do:
-                subprocess.call(f'mv {key} {self.sample_dir}/todo', shell=True)
+                subprocess.call(f'mv {key} {self.sample_dir}/{SAMPLE_SUBDIR_TODO}', shell=True)
 
     def manager_run(self) -> None:
         """ Main method of the class, it wraps the private methods to read the files and run the files."""
