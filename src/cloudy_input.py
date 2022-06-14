@@ -65,22 +65,41 @@ class CloudyInput:
         """ specifies graphitic and silicate grains with a size distribution and abundance
         appropriate for those along the line of sight to the Trapezium stars in Orion. The Orion size
         distribution is deficient in small particles and so produces the relatively grey extinction
-        observed in Orion (Baldwin et al., 1991). We scale the abundance relative to the ISM abundance,
-        ideally should scale based on the least abundant metal needed."""
-        a_nodepletion = abundances((10**self.gas_phase_metallicity) * Z_sol, 0)
-        f_graphite = 10**a_nodepletion['C']/10**sol['C']
-        f_silicate = 10**a_nodepletion['Si']/10**sol['Si']
-        command = F'grains Orion graphite {f_graphite} \ngrains Orion silicate {f_silicate}'
-        self.buffer_to_write.append(command)
+        observed in Orion (Baldwin et al., 1991).
+        One problem with the grains approach is metals/element abundances do not talk to the grains command
+        and hence there is issues with mass conservation (see cloudy documentation). To alleviate this one
+        needs to make the orion grain abundances consistent with the depletion values. Assume 1 per cent of
+        C is in PAH's.
+        """
+        a_nodepletion   = abundances((10**self.gas_phase_metallicity) * Z_sol, 0)
+        a_depletion     = abundances((10**self.gas_phase_metallicity) * Z_sol, self.DTM)
+        delta_C         = 10**a_nodepletion['C'] - 10**a_depletion['C']
+        delta_PAH       = 0.01 * (10**a_nodepletion['C'])
+        delta_graphite  = delta_C - delta_PAH
+        delta_Si        = 10**a_nodepletion['Si'] - 10**a_depletion['Si']
+        if self.DTM>0:
+            f_graphite  = delta_graphite/(10**(-3.6259))
+            f_Si        = delta_Si/(10**(-4.5547))
+            command = F'grains Orion graphite {f_graphite} \ngrains Orion silicate {f_Si}'
+            self.buffer_to_write.append(command)
+        else:
+            f_graphite, f_Si = 0, 0
 
     def _set_polyaromatic_carbon_grains(self) -> None:
         """ PAHs appear to exist mainly at the interface between the H+ region and the molecular clouds.
         Apparently PAHs are destroyed in ionized gas (Sellgren et al., 1990, AGN3 section 8.5) by
         ionizing photons and by collisions with ions (mainly H+ ) and may be depleted into larger grains
-        in molecular regions. We scale the abundance as a function of the total abundance of neutral
-        atomic and molecular hydrogen."""
-        command = F'grains PAH H,H2'
-        self.buffer_to_write.append(command)
+        in molecular regions. Also assume the carbon fraction of PAHs from Abel+2008
+        (https://iopscience.iop.org/article/10.1086/591505) assuming 1 percent of Carbon in PAHs. Another
+        way is to scale the abundance as a function of the metallicity using the Z_PAH vs Z_gas relation
+        from Galliano+2008 (https://iopscience.iop.org/article/10.1086/523621, y = 4.17*Z_gas_sol - 7.085),
+        which will again introduce issues on mass conservation."""
+        if self.DTM>0:
+            a_nodepletion   = abundances((10**self.gas_phase_metallicity) * Z_sol, 0)
+            delta_PAH       = 0.01 * (10**a_nodepletion['C'])
+            f_pah   = delta_PAH/(10**(-4.446))
+            command = F'grains PAH {f_pah}'
+            self.buffer_to_write.append(command)
 
     def _set_pressure_function(self) -> None:
         """ This holds the total pressure constant. This includes ram, magnetic, turbulent, particle, and
