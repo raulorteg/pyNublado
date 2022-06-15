@@ -17,8 +17,7 @@ def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, 
     :param str path: output directory
     :param int N_sample: Number of parameter samples to be generated
     :param bool save_to_file: Boolean - Save parameters to file
-    :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical.
-    This will results in a lower n_sample than specified.
+    :param bool filter: Boolean - Filter the sample for parameter combinations that are unphysical. This will results in a lower n_sample than specified.
     :param bool plot: Boolean - create a visualisation of the parameter space
 
     :return: A 2D numpy array in which each row represents a parameter vector. It will also be saved as a numpy object.
@@ -57,14 +56,13 @@ def sampling_create_parameters(path, N_sample, filter=False, save_to_file=True, 
 def sampling_adjust_units(parameters):
     """
     Some parameter units have to be adjusted to be compatible with Cloudy's input formats.
-
     For example, we sampled some parameters in log space which need to be changed to linear space.
     Others parameters might require linear transformations.
-
     All required changes can be performed in this function.
 
-    :param parameters: parameter object
+    :param object parameters: parameter object
     :return: parameter object
+    :rtype: object
     """
     print('  Adjusting sampling units')
 

@@ -1,5 +1,5 @@
 # Installation
-pyNublado manages the creation of input scripts for CLOUDY, their execution and parsing of the resuling outputs. The installation has two steps: installing CLOUDY and installing pyNublado
+pyNublado manages the creation of input scripts for CLOUDY, their execution and parsing of the resulting outputs. The installation has two steps: installing CLOUDY and installing pyNublado
 
 ## Requirements
  * Python 3.7 or newer

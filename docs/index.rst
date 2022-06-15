@@ -6,6 +6,16 @@
 pyNublado
 =====================================
 
+pyNublado, from python + Nublado, its a python package to be used in running large amounts of CLOUDY models.
+Cloudy is a spectral synthesis code designed to simulate conditions in interstellar matter under a broad range of conditions.
+pyNublado can be used to sample efficiently the input parameter space, create input files for CLOUDY, running the models on CLOUDY 
+on multiple workers and parse the results, all from python.
+
+.. image:: ../media/pynublado_schema.png
+  :width: 700
+
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -15,6 +25,7 @@ pyNublado
    bpass.rst
    usage.rst
    modules.rst
+   test.rst
 
 Indices and tables
 ==================
