@@ -3,6 +3,7 @@ import pathlib
 import subprocess
 import multiprocessing
 import numpy as np
+import traceback
 
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from common.utils import *
@@ -85,6 +86,9 @@ class QueueManager:
 
             os.chdir(current_run_dir)
             cmd_string = f'{CLOUDY_PATH} model.in'
+
+            error = foo
+
             subprocess.call(cmd_string, shell=True)
 
             # TODO: add some monitoring here
@@ -101,6 +105,7 @@ class QueueManager:
             # subprocess.terminate()
             message = "Error: while processing model %s" % model_dir
             print(message)
+            traceback.print_exc()
 
         # TODO: 1. run checks after the run has finished,
         #       2. move model dir to either done or problems
