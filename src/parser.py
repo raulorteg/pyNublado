@@ -6,7 +6,10 @@ import warnings
 import hashlib
 import subprocess
 
-class OutputParser:
+class OutputParser(object):
+    """ Parser class used to parse all outputs from CLOUDY and save them into a dataframe
+    for future use.
+    """
     def __init__(self):
         pass
 
@@ -16,7 +19,12 @@ class OutputParser:
     def parse(self, path:str):
         """
         Main method of the class, calls all other implemented
-        parsing methods.
+        parsing methods. Takes as input the path to the folder where all CLOUDY outputs
+        are stored.
+
+        :param str path: string path to the folder where the ran models are
+        :return: None
+        :rtype: None
         """
         raw_path = path
         path = pathlib.Path(path).iterdir()
@@ -56,13 +64,14 @@ class OutputParser:
     def hash_list(self, inputs:list):
         """
         Given a list of elements produce a unique fixed-limit hash to be used as an id of
-        the combination of inputs. THe method starts by hashing all inputs individually,
+        the combination of inputs. The method starts by hashing all inputs individually,
         then it concatenates the hashed inputs and hashes again this concatenated single element
         to obtain the final hash to be used as an id of the combination of inputs. The hashing
         protocol used is MD5.
 
         :param list inputs: list of float inputs to be used in producing the unique hash id
-        :return str hash_:  unique hash id
+        :return hash_:  unique hash id
+        :rtype: list
         """
         hashed_inputs = []
         for x in inputs:
@@ -83,9 +92,9 @@ class OutputParser:
         the inputs loads it, converts it into a dataframe to be used in the other
         methods and computes the id column by hashing the inputs.
 
-        :param pathlib.PosixPath path: path to the .npy file containing the
-        input parameters combinations
-        :return pandas.DataFrame inputs: input parameter combinations as a pandas Dataframe
+        :param pathlib.PosixPath path: path to the .npy file containing the input parameters combinations
+        :return inputs: input parameter combinations as a pandas Dataframe
+        :rtype: pandas.DataFrame
         """
 
         save_path = path.parent.joinpath("inputs.pkl")
@@ -123,11 +132,11 @@ class OutputParser:
     def status_to_int(self, status:str):
         """
         Method to map the different exit status of the ran models
-        into an index. 0=succesfull, 1=aborted,
-        2=unfinished/didnt converge, 3=empty, 4=didnt exist
-
+        into an index. 0=succesfull, 1=aborted, 2=unfinished/didnt converge, 3=empty, 4=didnt exist
+        
         :param str status: line containing the exit status of the model
-        :return int status_code: mapped status code int.
+        :return status_code: mapped status code int.
+        :rtype: int
         """
 
         if "Cloudy exited OK" in status:
@@ -150,10 +159,10 @@ class OutputParser:
         dataframe and return it.
 
         :param int index: index of the model
-        :return str hash_: string hash id of the model
+        :return hash: string hash id of the model
+        :rtype: str
         """
-        hash_ = self.inputs.iloc[index].id
-        return hash_
+        return self.inputs.iloc[index].id
         
     def parse_status(self, path:pathlib.PosixPath):
         """
@@ -162,7 +171,7 @@ class OutputParser:
         last line of the model.out files to extract how did the model exited
         (e.g it was succesfull, it aborted, it didnt converge, ....)
         this status codes are represented by an int: 0=succesfull, 1=aborted,
-        2=unfinished/didnt converge, 3=empty, 4=didnt exist. THe method then saves
+        2=unfinished/didnt converge, 3=empty, 4=didnt exist. Tje method then saves
         the extracted information in a pandas dataframe and serializes it with pickle.
 
         :param pathlib.PosixPath path: path to the "done" directory
