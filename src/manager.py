@@ -77,7 +77,7 @@ class QueueManager:
         """
 
         try:
-
+            original_dir = os.getcwd()
             sample_dir = os.path.abspath(self.sample_dir)
 
             if self.verbose: print(f' Running model {model_dir} ...')
@@ -86,8 +86,6 @@ class QueueManager:
 
             os.chdir(current_run_dir)
             cmd_string = f'{CLOUDY_PATH} model.in'
-
-            error = foo
 
             subprocess.call(cmd_string, shell=True)
 
@@ -99,6 +97,9 @@ class QueueManager:
             os.chdir(sample_dir)
             cmd_string = f' mv {SAMPLE_SUBDIR_TODO}/{model_dir} {SAMPLE_SUBDIR_DONE}/'
             subprocess.call(cmd_string, shell=True)
+
+            # go back to original dir
+            os.chdir(original_dir)
 
         # manage exception
         except Exception as e:
