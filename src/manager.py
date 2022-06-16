@@ -100,18 +100,15 @@ class QueueManager:
             os.chdir(original_dir)
 
         # manage exceptions
+        except subprocess.TimeoutExpired:
+            if self.verbose:
+                print(f' Time out reached while processing model {model_dir}')
+                print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
+
         except Exception as e:
-
-            if e == subprocess.TimeoutExpired:
-                if self.verbose:
-                    print(f' Time out reached while processing model {model_dir}')
-                    print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
-
-            else:
-
-                # subprocess.terminate()
-                message = " Error: while processing model %s" % model_dir
-                print(message)
+            # subprocess.terminate()
+            if self.verbose:
+                print(f' Error: while processing model {model_dir}')
                 traceback.print_exc()
 
     def _run(self) -> None:
