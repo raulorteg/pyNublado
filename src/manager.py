@@ -101,10 +101,18 @@ class QueueManager:
 
         # manage exceptions
         except Exception as e:
-            # subprocess.terminate()
-            message = "Error: while processing model %s" % model_dir
-            print(message)
-            traceback.print_exc()
+
+            if e == subprocess.TimeoutExpired:
+                if self.verbose:
+                    print(f' Time out reached while processing model {model_dir}')
+                    print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
+
+            else:
+
+                # subprocess.terminate()
+                message = " Error: while processing model %s" % model_dir
+                print(message)
+                traceback.print_exc()
 
     def _run(self) -> None:
         """ Private method called by the public method self.manager_run().
