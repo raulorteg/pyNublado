@@ -90,7 +90,7 @@ class QueueManager:
             try:
                 subprocess.call(cmd_string, shell=True, timeout=CLOUDY_RUN_TIMEOUT)
             except subprocess.TimeoutExpired:
-                # catch time out. then continue
+                # catch time out, then continue and move the model directory
                 if self.verbose: print(f' Time out reached while processing model {model_dir}')
                 pass
 
@@ -110,7 +110,7 @@ class QueueManager:
             if self.verbose:
                 print(f' Error: while processing model {model_dir}')
                 traceback.print_exc()
-                
+
     def _run(self) -> None:
         """ Private method called by the public method self.manager_run().
         When called it runs all created models using Cloudy on as may CPUs as defined,
