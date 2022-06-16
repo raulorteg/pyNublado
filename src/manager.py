@@ -8,7 +8,7 @@ import traceback
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from common.utils import *
 from cloudy_input import CloudyInput
-from user_settings import CLOUDY_PATH
+from user_settings import CLOUDY_PATH, CLOUDY_RUN_TIMEOUT
 
 
 class QueueManager:
@@ -87,11 +87,9 @@ class QueueManager:
             os.chdir(current_run_dir)
             cmd_string = f'{CLOUDY_PATH} model.in'
 
-            subprocess.call(cmd_string, shell=True)
+            subprocess.call(cmd_string, shell=True, timeout=CLOUDY_RUN_TIMEOUT)
 
-            # TODO: add some monitoring here
-
-            # # Assuming the process terminated successfully, we are moving the model
+            # Assuming the process terminated successfully, we are moving the model
             if self.verbose: print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
 
             os.chdir(sample_dir)
@@ -101,16 +99,12 @@ class QueueManager:
             # go back to original dir
             os.chdir(original_dir)
 
-        # manage exception
+        # manage exceptions
         except Exception as e:
             # subprocess.terminate()
             message = "Error: while processing model %s" % model_dir
             print(message)
             traceback.print_exc()
-
-        # TODO: 1. run checks after the run has finished,
-        #       2. move model dir to either done or problems
-        #       3. the exception handler does not currently work
 
     def _run(self) -> None:
         """ Private method called by the public method self.manager_run().
