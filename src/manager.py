@@ -87,7 +87,12 @@ class QueueManager:
             os.chdir(current_run_dir)
             cmd_string = f'{CLOUDY_PATH} model.in'
 
-            subprocess.call(cmd_string, shell=True, timeout=CLOUDY_RUN_TIMEOUT)
+            try:
+                subprocess.call(cmd_string, shell=True, timeout=CLOUDY_RUN_TIMEOUT)
+            except subprocess.TimeoutExpired:
+                # catch time out. then continue
+                if self.verbose: print(f' Time out reached while processing model {model_dir}')
+                pass
 
             # Assuming the process terminated successfully, we are moving the model
             if self.verbose: print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
@@ -99,18 +104,13 @@ class QueueManager:
             # go back to original dir
             os.chdir(original_dir)
 
-        # manage exceptions
-        except subprocess.TimeoutExpired:
-            if self.verbose:
-                print(f' Time out reached while processing model {model_dir}')
-                print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
-
-        except Exception as e:
-            # subprocess.terminate()
+        # catch all other exceptions
+        # TODO: specify more / different cases here once they arise (see traceback output)
+        except Exception:
             if self.verbose:
                 print(f' Error: while processing model {model_dir}')
                 traceback.print_exc()
-
+                
     def _run(self) -> None:
         """ Private method called by the public method self.manager_run().
         When called it runs all created models using Cloudy on as may CPUs as defined,
