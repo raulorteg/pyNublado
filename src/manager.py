@@ -3,11 +3,12 @@ import pathlib
 import subprocess
 import multiprocessing
 import numpy as np
+import traceback
 
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from common.utils import *
 from cloudy_input import CloudyInput
-from user_settings import CLOUDY_PATH
+from user_settings import CLOUDY_PATH, CLOUDY_RUN_TIMEOUT
 
 
 class QueueManager:
@@ -76,7 +77,7 @@ class QueueManager:
         """
 
         try:
-
+            original_dir = os.getcwd()
             sample_dir = os.path.abspath(self.sample_dir)
 
             if self.verbose: print(f' Running model {model_dir} ...')
@@ -85,26 +86,30 @@ class QueueManager:
 
             os.chdir(current_run_dir)
             cmd_string = f'{CLOUDY_PATH} model.in'
-            subprocess.call(cmd_string, shell=True)
 
-            # TODO: add some monitoring here
+            try:
+                subprocess.call(cmd_string, shell=True, timeout=CLOUDY_RUN_TIMEOUT)
+            except subprocess.TimeoutExpired:
+                # catch time out, then continue and move the model directory
+                if self.verbose: print(f' Time out reached while processing model {model_dir}')
+                pass
 
-            # # Assuming the process terminated successfully, we are moving the model
+            # Assuming the process terminated successfully, we are moving the model
             if self.verbose: print(f' Moving model {model_dir} to {SAMPLE_SUBDIR_DONE} directory')
 
             os.chdir(sample_dir)
             cmd_string = f' mv {SAMPLE_SUBDIR_TODO}/{model_dir} {SAMPLE_SUBDIR_DONE}/'
             subprocess.call(cmd_string, shell=True)
 
-        # manage exception
-        except Exception as e:
-            # subprocess.terminate()
-            message = "Error: while processing model %s" % model_dir
-            print(message)
+            # go back to original dir
+            os.chdir(original_dir)
 
-        # TODO: 1. run checks after the run has finished,
-        #       2. move model dir to either done or problems
-        #       3. the exception handler does not currently work
+        # catch all other exceptions
+        # TODO: specify more / different cases here once they arise (see traceback output)
+        except Exception:
+            if self.verbose:
+                print(f' Error: while processing model {model_dir}')
+                traceback.print_exc()
 
     def _run(self) -> None:
         """ Private method called by the public method self.manager_run().
