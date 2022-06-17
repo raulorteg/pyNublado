@@ -105,20 +105,13 @@ class OutputParser(object):
             hashes_column.append(self.hash_list(inputs_list))
 
         column_names = ["gas_density",
-                "gas_phase_metallicity",
-                "Redshift",
-                "cr_ionization_factor",
-                "ionization_parameter",
-                "stellar_metallicity",
-                "stellar_age"]
-        
-        # remove this
-        #column_names = ["gas_density",
-        #        "gas_phase_metallicity",
-        #        "Redshift",
-        #        "ionization_parameter",
-        #        "stellar_metallicity",
-        #        "stellar_age"]
+                        "gas_phase_metallicity",
+                        "Redshift",
+                        "cr_ionization_factor",
+                        "ionization_parameter",
+                        "stellar_metallicity",
+                        "stellar_age",
+                        "dtm"]
 
         inputs = pd.DataFrame(inputs, columns=column_names)
         inputs["id"] = hashes_column
@@ -321,7 +314,7 @@ class OutputParser(object):
 # example
 if __name__ == "__main__":
     
-    path = "/home/raul/Desktop/sample_N4000"
+    path = "../data/samples/sample_N3"
     output_parser = OutputParser()
     output_parser.parse(path=path)
 
