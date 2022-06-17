@@ -60,6 +60,7 @@ class OutputParser(object):
         if subdirs["done"]:
             self.parse_status(path=subdirs["done"])
             self.parse_emis(path=subdirs["done"])
+            self.parse_cont(path=subdirs["done"])
 
     def hash_list(self, inputs:list):
         """
@@ -310,6 +311,41 @@ class OutputParser(object):
         emis_dataframe["hashes"] = hashes
         emis_dataframe.to_pickle(save_path)
         del emis_dataframe
+    
+    def parse_cont_file(self, path:pathlib.PosixPath):
+        """
+        Given the path to e.g "done/1234" directory
+        where a finished model is saved, this method parses the model.cont
+        file containing the continuum (incident, reflected, transmitted, ...)
+        and saves it into a dataframe. The method then saves the extracted information
+        in a pandas dataframe and serializes it with pickle.
+
+        :param pathlib.PosixPath path: path to the e.g "done/1234" directory
+        """
+        save_path = path.parent.joinpath("cont.pkl")
+        cont_dataframe = pd.read_csv(path, sep="\t")
+        cont_dataframe.to_pickle(save_path)
+        del cont_dataframe
+    
+    def parse_cont(self, path:pathlib.PosixPath):
+        """
+        Given the path to "done" directory
+        where a finished model is saved, this method parses loops over
+        all methods and for each parses the model.cont
+        file containing the continuum and save it into the folder serializing the
+        dataframe with pickle.
+
+        :param pathlib.PosixPath path: path to the e.g "done" directory
+        """
+        for item in path.iterdir():
+            print(item)
+            cont_file = item.joinpath("model.cont")
+            index = str(cont_file.parent).split("/")[-1]
+
+            # check if status_code of index model is "OK"
+            exit_code = self.status[self.status["index_model"] == index].status.values[0]
+            if (cont_file.exists()) and (exit_code == 0):
+                self.parse_cont_file(cont_file)
 
 # example
 if __name__ == "__main__":
