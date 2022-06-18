@@ -10,31 +10,31 @@ pyNublado manages the creation of input scripts for Cloudy runs, their execution
 Instructions from [the Cloudy wiki](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks):
 
 * Download the latest Cloudy version
-  ```bash
+```bash
   wget https://data.nublado.org/cloudy_releases/c17/c17.03.tar.gz --no-check-certificate
-  ```
+```
 * Unpack the files 
-  ```bash
-  tar xvfz c17.03.tar.gz
-  ```
+```bash
+ tar xvfz c17.03.tar.gz
+```
 * Move the extracted Cloudy folder to where you want it to live, e.g. your home directory 
-  ```bash
+```bash
   mv c17.03 ~/c17.03
-  ```
+```
 * Navigate to the source folder 
-  ```bash
+```bash
   cd c17.03/source
-  ```
+```
 * Build the executable 
-  ```bash
+```bash
   make
-  ```
+```
   
 Once installed, you can test whether the installation was successful:
 * Run the executable
-  ```bash
-  ~/c17.02/source/cloudy.exe
-  ```  
+```bash
+ ~/c17.02/source/cloudy.exe
+```  
 * Type "test" then press ```Enter``` **twice**
 * Cloudy should print some output, which ends with "Cloudy exited OK"
 
