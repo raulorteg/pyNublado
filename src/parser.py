@@ -73,7 +73,7 @@ class OutputParser(object):
         protocol used is MD5.
 
         :param list inputs: list of float inputs to be used in producing the unique hash id
-        :return hash_:  unique hash id
+        :return hash:  unique hash id
         :rtype: list
         """
         hashed_inputs = []
