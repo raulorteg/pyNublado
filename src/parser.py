@@ -6,6 +6,8 @@ import warnings
 import hashlib
 import subprocess
 
+from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+
 class OutputParser(object):
     """ Parser class used to parse all outputs from CLOUDY and save them into a dataframe
     for future use.
@@ -30,12 +32,12 @@ class OutputParser(object):
         path = pathlib.Path(path).iterdir()
 
         # create a dict index to access each subpath
-        subdirs = {"todo":None, "done":None, "inputs":None}
+        subdirs = {SAMPLE_SUBDIR_TODO:None, SAMPLE_SUBDIR_DONE:None, "inputs":None}
         for item in path:
-            if "todo" in str(item):
-                subdirs["todo"] = item
-            elif "done" in str(item):
-                subdirs["done"] = item
+            if SAMPLE_SUBDIR_TODO in str(item):
+                subdirs[SAMPLE_SUBDIR_TODO] = item
+            elif SAMPLE_SUBDIR_DONE in str(item):
+                subdirs[SAMPLE_SUBDIR_DONE] = item
             elif "parameters" in str(item):
                 subdirs["inputs"] = item
         
@@ -45,7 +47,7 @@ class OutputParser(object):
                 warnings.warn(f"[{key}] subdirectory couldnt be found within the path given ({raw_path}).")
         
         # check /todo subdirectory is empty
-        if subdirs["todo"]:
+        if subdirs[SAMPLE_SUBDIR_TODO]:
             n_items = 0
             [n_items + 1 for item in subdirs["todo"].iterdir()]
             if n_items > 0:
@@ -57,10 +59,10 @@ class OutputParser(object):
             inputs_df = self.parse_inputs(path=subdirs["inputs"])
 
         # here we list the parsing methods to be executed
-        if subdirs["done"]:
-            self.parse_status(path=subdirs["done"])
-            self.parse_emis(path=subdirs["done"])
-            self.parse_cont(path=subdirs["done"])
+        if subdirs[SAMPLE_SUBDIR_DONE]:
+            self.parse_status(path=subdirs[SAMPLE_SUBDIR_DONE])
+            self.parse_emis(path=subdirs[SAMPLE_SUBDIR_DONE])
+            self.parse_cont(path=subdirs[SAMPLE_SUBDIR_DONE])
 
     def hash_list(self, inputs:list):
         """
@@ -272,8 +274,7 @@ class OutputParser(object):
             emis_max_depth = emis_df[emis_df["depth"] == emis_df["depth"].max()]
             
             # free memory
-            del emis_dict
-            del emis_df
+            del emis_dict, emis_df
             return emis_max_depth
 
     def parse_emis(self, path:pathlib.PosixPath):
@@ -292,7 +293,6 @@ class OutputParser(object):
 
         emis_df, indexes, hashes, status = [], [], [], []
         for item in path.iterdir():
-            print(item)
             emis_file = item.joinpath("model.emis")
             index = str(emis_file.parent).split("/")[-1]
 
@@ -310,7 +310,7 @@ class OutputParser(object):
         emis_dataframe["index_model"] = indexes
         emis_dataframe["hashes"] = hashes
         emis_dataframe.to_pickle(save_path)
-        del emis_dataframe
+        del emis_dataframe, emis_df, indexes, hashes
     
     def parse_cont_file(self, path:pathlib.PosixPath):
         """
@@ -324,19 +324,27 @@ class OutputParser(object):
         """
         save_path = path.parent.joinpath("cont.pkl")
         cont_dataframe = pd.read_csv(path, sep="\t")
+        cont_dataframe.rename(columns={
+                                    "#Cont  nu":"photon_energy",
+                                    "trans":"transmitted",
+                                    "reflc":"reflected"}
+                                , inplace=True)
         cont_dataframe.to_pickle(save_path)
-        del cont_dataframe
+        return cont_dataframe
     
     def parse_cont(self, path:pathlib.PosixPath):
         """
         Given the path to "done" directory
         where a finished model is saved, this method parses loops over
-        all methods and for each parses the model.cont
+        all different samples and for each parses the model.cont
         file containing the continuum and save it into the folder serializing the
         dataframe with pickle.
 
         :param pathlib.PosixPath path: path to the e.g "done" directory
         """
+        save_path = path.parent.joinpath("cont.pkl")
+
+        cont_df, indexes, hashes, status = [], [], [], []
         for item in path.iterdir():
             print(item)
             cont_file = item.joinpath("model.cont")
@@ -345,7 +353,19 @@ class OutputParser(object):
             # check if status_code of index model is "OK"
             exit_code = self.status[self.status["index_model"] == index].status.values[0]
             if (cont_file.exists()) and (exit_code == 0):
-                self.parse_cont_file(cont_file)
+                cont_dataframe = self.parse_cont_file(cont_file)
+
+                cont_df.append(cont_dataframe)
+                indexes.append(index)
+                hashes.append(self.index_to_hash(int(index)))
+            
+        cont_dataframe = pd.DataFrame()
+        cont_dataframe["continuum"] = cont_df
+        cont_dataframe["index_model"] = indexes
+        cont_dataframe["hashes"] = hashes
+
+        cont_dataframe.to_pickle(save_path)
+        del cont_dataframe, cont_df, indexes, hashes
 
 # example
 if __name__ == "__main__":
