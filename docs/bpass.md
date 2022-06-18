@@ -20,12 +20,12 @@ _NOTE: If it complains about permissions, grant the Perl file permissions_
 ```bash
 chmod +x convert_bpassv2.x.pl
 ```
-* Generate binary files from the resulting _.ascii_ files executing Cloudy 
+* Generate binary files from the resulting _.ascii_ files executing Cloudy   
   ```bash
   ~/c17.03/source/cloudy.exe
   ```
 * Press ```enter```
-* Type 
+* Type
   ```bash 
   compile star BPASSv2_imf135_100_burst_binary.ascii" 
   ```
