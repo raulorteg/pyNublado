@@ -9,7 +9,7 @@ pyNublado manages the creation of input scripts for Cloudy runs, their execution
 ## Installing CLOUDY
 Instructions from [the Cloudy wiki](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks):
 
-* Download the latest Cloudy version 
+* Download the latest Cloudy version
   ```bash
   wget https://data.nublado.org/cloudy_releases/c17/c17.03.tar.gz --no-check-certificate
   ```
@@ -22,7 +22,7 @@ Instructions from [the Cloudy wiki](https://gitlab.nublado.org/cloudy/cloudy/-/w
   mv c17.03 ~/c17.03
   ```
 * Navigate to the source folder 
-  ```bash 
+  ```bash
   cd c17.03/source
   ```
 * Build the executable 
@@ -31,10 +31,10 @@ Instructions from [the Cloudy wiki](https://gitlab.nublado.org/cloudy/cloudy/-/w
   ```
   
 Once installed, you can test whether the installation was successful:
-* Run the executable 
-  ```bash 
+* Run the executable
+  ```bash
   ~/c17.02/source/cloudy.exe
-  ```
+  ```  
 * Type "test" then press ```Enter``` **twice**
 * Cloudy should print some output, which ends with "Cloudy exited OK"
 
