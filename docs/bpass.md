@@ -21,11 +21,13 @@ _NOTE: If it complains about permissions, grant the Perl file permissions_
 chmod +x convert_bpassv2.x.pl
 ```
 * Generate binary files from the resulting _.ascii_ files executing Cloudy 
+
   ```bash
   ~/c17.03/source/cloudy.exe
   ```
 * Press ```enter```
 * Type 
+
   ```bash 
   compile star BPASSv2_imf135_100_burst_binary.ascii" 
   ```
@@ -34,14 +36,17 @@ chmod +x convert_bpassv2.x.pl
 The binaries now need to be placed in a special location for Cloudy to use them.
 
 * Navigate to the Cloudy data directory 
+
   ```bash
   cd ~/c17.03/data
   ```
-* Create a binaries directory 
+* Create a binaries directory
+
   ```bash
   mkdir binaries
   ```
 * Finally, copy the binary BPASS file to the binaries/ directory 
+
   ```bash 
   cp bpass_v2p2.1_imf_chab300_burst_binary.mod ~/c17.03/data/binaries/
   ```
