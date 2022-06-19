@@ -25,13 +25,13 @@ chmod +x convert_bpassv2.x.pl
   ```bash
   ~/c17.03/source/cloudy.exe
   ```
-* Press ```enter```
+* Press `enter`
 * Type 
 
   ```bash 
-  compile star BPASSv2_imf135_100_burst_binary.ascii" 
+  compile star BPASSv2_imf135_100_burst_binary.ascii
   ```
-* Press ```enter``` again to generate the binaries.
+* Press `enter` again to generate the binaries.
 
 The binaries now need to be placed in a special location for Cloudy to use them.
 
