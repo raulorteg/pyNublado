@@ -9,7 +9,7 @@ A package to run (a lot of) [Cloudy](https://nublado.org) models.
 Example of running Cloudy independently:
 1. Create a _[name].in_ file
 2. Navigate to the folder where the .in file is located
-3. Execute Cloudy from the directory ```~/c17.02/source/cloudy.exe [name].in```
+3. Execute Cloudy from the directory ```~/c17.03/source/cloudy.exe [name].in```
 
 
 ### Input parameters

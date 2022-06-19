@@ -3,7 +3,7 @@
 # -----------------------------------------------------------
 #
 # Cloudy executable
-CLOUDY_PATH = '~/c17.02/source/cloudy.exe'
+CLOUDY_PATH = '~/c17.03/source/cloudy.exe'
 
 # time out for individual cloudy runs in seconds
 CLOUDY_RUN_TIMEOUT = 7200
