@@ -1,11 +1,11 @@
-
-
-import os
+import sys
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 import argparse
 
-import numpy as np
-
-import sys; sys.path.append('..')
+sys.path.append('..')
+sys.path.append('../src/')
 from common.settings_parameters import *
 from common.settings import SAMPLE_SUBDIR_TODO
 from common.utils import *
@@ -13,8 +13,7 @@ from common.utils import *
 # -----------------------------------------------------------------
 #  Matplotlib settings
 # -----------------------------------------------------------------
-import matplotlib
-import matplotlib.pyplot as plt
+
 matplotlib.rcParams['text.usetex'] = True
 
 # TODO: add doc strings for these functions
