@@ -151,7 +151,7 @@ def utils_get_model_folders(target_dir):
     return folders
 
 
-def utils_read_output_tail(folder_name, tail_len=5):
+def utils_read_model_output_tail(folder_name, tail_len=5):
     """
     Reads in the tail strings of 'model.out' inside 'folder_name'
     Args:
@@ -162,13 +162,13 @@ def utils_read_output_tail(folder_name, tail_len=5):
     """
 
     try:
-        with open(F'{folder_name}model.out', 'r') as f:
+        with open(F'{folder_name}/model.out', 'r') as f:
             tail = f.readlines()[-tail_len:]
 
-        tail=''.join(tail)
+        tail = ''.join(tail)
         # Remove all newline (\n) and square brackets
-        tail=re.sub(r'[\n]|\[|\]', '', tail)
+        tail = re.sub(r'[\n]|\[|\]', '', tail)
     except FileNotFoundError:
-        tail=0
+        tail = 0
 
     return tail

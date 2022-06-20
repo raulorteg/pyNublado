@@ -185,29 +185,27 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
     sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_DONE}'
 
     # File locations as an increasing list
-    sample_files = utils_get_model_folders(sample_dir)
-    # obsolete:
-    #'NR', 'Empty', 'Abort', 'Went wrong', 'Unphysical', 'Converge', 'Time'
+    model_dir_list = utils_get_model_folders(sample_dir)
 
     # Define dictionary to store summary statistics
     run_space = {}
     run_key = {0: 'Success',
-               1: 'DNR',        # Did not run (could be because of scheduling)
-               2: 'Empty',      # Cloudy problem with parameter space
-               3: 'Abort',      # Cloudy aborted
-               4: 'Wrong',      # Something went wrong
-               5: 'Unphysical', # Problem with parameter space or negative population
-               6: 'Converge',   # Did not converge
-               7: 'DNF',        # Did not finish in time (this is due to mine having allocated a fixed time to a run)
+               1: 'DNR',         # Did not run (could be because of scheduling)
+               2: 'Empty',       # Cloudy problem with parameter space
+               3: 'Abort',       # Cloudy aborted
+               4: 'Wrong',       # Something went wrong
+               5: 'Unphysical',  # Problem with parameter space or negative population
+               6: 'Converge',    # Did not converge
+               7: 'DNF',         # Did not finish in time (this is due to mine having allocated a fixed time to a run)
                }
 
     # Placeholder for successful runs
     success = 0
 
-    for jj, sample_file in enumerate(sample_files):
+    for jj, sample_file in enumerate(model_dir_list):
 
         # Get the tail of the cloudy output file
-        tail = utils_read_output_tail(sample_file)
+        tail = utils_read_model_output_tail(sample_file)
 
         if tail == 0:
             run_space[jj] = 1
@@ -227,9 +225,9 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
             run_space[jj] = 0
             success += 1
 
-    print("Total samples: ", len(sample_files))
+    print("Total samples: ", len(model_dir_list))
     print("successful number: ", success)
-    print(F"{np.round(100 * success/len(sample_files), 2)} percent of runs were successful")
+    print(F"{np.round(100 * success/len(model_dir_list), 2)} percent of runs were successful")
 
     plot_run_space(param_space, N_sample, run_space, run_key, colormap=colormap, show_plot=show_plot)
 
