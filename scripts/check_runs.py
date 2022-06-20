@@ -7,7 +7,7 @@ import argparse
 sys.path.append('..')
 sys.path.append('../src/')
 from common.settings_parameters import *
-from common.settings import SAMPLE_SUBDIR_TODO
+from common.settings import SAMPLE_SUBDIR_DONE
 from common.utils import *
 
 # -----------------------------------------------------------------
@@ -182,11 +182,12 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
     # Location of parameter space files
     # TODO: these paths should probably not be hard-coded
     param_space = np.load(F'../data/samples/sample_N{N_sample}/parameters_N{N_sample}.npy')
-    sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_TODO}'
+    sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_DONE}'
 
     # File locations as an increasing list
-    sample_files = utils_get_folders(sample_dir)
-    'NR', 'Empty', 'Abort', 'Went wrong', 'Unphysical', 'Converge', 'Time'
+    sample_files = utils_get_model_folders(sample_dir)
+    # obsolete:
+    #'NR', 'Empty', 'Abort', 'Went wrong', 'Unphysical', 'Converge', 'Time'
 
     # Define dictionary to store summary statistics
     run_space = {}

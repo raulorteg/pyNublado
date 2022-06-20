@@ -136,16 +136,16 @@ def utils_natural_keys(text):
     return [utils_atoi(c) for c in re.split('(\d+)', text)]
 
 
-def utils_get_folders(target_dir):
+def utils_get_model_folders(target_dir):
     """
-    Get folders in 'target_dir'
+    Get a list of model folders in 'target_dir'
     Args:
         target_dir: A string containing the target directory of samples
     Returns:
         List of folders
     """
 
-    folders = glob.glob(target_dir+'*/', recursive=True)
+    folders = glob.glob(target_dir+'/*', recursive=True)
     folders.sort(key=utils_natural_keys)
 
     return folders
