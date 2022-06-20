@@ -13,8 +13,9 @@ from common.utils import *
 # -----------------------------------------------------------------
 #  Matplotlib settings
 # -----------------------------------------------------------------
-
-matplotlib.rcParams['text.usetex'] = True
+matplotlib.use('Agg')
+usetex = matplotlib.checkdep_usetex(True)
+matplotlib.rcParams['text.usetex'] = usetex
 
 # TODO: add doc strings for these functions
 
@@ -23,7 +24,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                    file_type='png', show_plot=True):
 
     print('Creating parameter space visualisation')
-    # Check N in common.settings_parameters, currently run without CR # TODO: Is this still true?
+
     # PARAMETER_NUMBER_STELLAR_METALLICITY and PARAMETER_NUMBER_STELLAR_AGE
     N = PARAMETER_NUMBER
 
@@ -60,7 +61,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 (-0.1, 0.55)]
 
     # some plot settings
-    marker_size = 10
+    marker_size = 20
     tick_label_size = 8
     label_size = 12
 
@@ -120,7 +121,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 if i > 0:
                     ax_array[i, j].set_xticklabels([])
 
-            # plotting the failed runs in the lower traingle
+            # plotting the failed runs in the lower triangle
             elif j < i:
 
                 ax = ax_array[i, j].scatter(x=parameters[:, j][~success],
@@ -202,27 +203,27 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
     # Placeholder for successful runs
     success = 0
 
-    for jj, sample_file in enumerate(model_dir_list):
+    for i, model_dir in enumerate(model_dir_list):
 
         # Get the tail of the cloudy output file
-        tail = utils_read_model_output_tail(sample_file)
+        tail = utils_read_model_output_tail(model_dir)
 
         if tail == 0:
-            run_space[jj] = 1
+            run_space[i] = 1
         elif tail == '':
-            run_space[jj] = 2
+            run_space[i] = 2
         elif 'ABORT' in tail:
-            run_space[jj] = 3
+            run_space[i] = 3
         elif 'something went wrong' in tail:
-            run_space[jj] = 4
+            run_space[i] = 4
         elif 'unphysical' in tail or 'negative population' in tail:
-            run_space[jj] = 5
+            run_space[i] = 5
         elif 'did not converge' in tail:
-            run_space[jj] = 6
+            run_space[i] = 6
         elif "Cloudy exited OK" not in tail:
-            run_space[jj] = 7
+            run_space[i] = 7
         elif "Cloudy exited OK" in tail:
-            run_space[jj] = 0
+            run_space[i] = 0
             success += 1
 
     print("Total samples: ", len(model_dir_list))
@@ -241,4 +242,4 @@ if __name__ == "__main__":
                         help="Number of models in the sample. ")
 
     args = parser.parse_args()
-    check_run(args.N_sample, show_plot=True)
+    check_run(args.N_sample, show_plot=False)
