@@ -14,6 +14,13 @@ on multiple workers and parse the results, all from python.
 .. image:: ../media/pynublado_schema.png
   :width: 700
 
+pyNublado returns the parsed output in 4 different tables that can be merged using the primary key id, a unique identifier
+of a set of inputs ran on cloudy. The 4 different tables correspond to the table of inputs: containing the name and values of the
+input parameters, status: containing information about how the model finished (e.g successfull, aborted, ...) and time of execution, 
+emission, and continuum table. A schema of the different tables generated can be seen below.
+
+.. image:: ../media/dataset_schema.png
+   :width: 700
 
 
 .. toctree::
