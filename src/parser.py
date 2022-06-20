@@ -6,7 +6,7 @@ import warnings
 import hashlib
 import subprocess
 
-from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
+from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE, INPUT_PARAMETER_NAMES, EXIT_STATUSES
 
 class OutputParser(object):
     """ Parser class used to parse all outputs from CLOUDY and save them into a dataframe
@@ -49,7 +49,7 @@ class OutputParser(object):
         # check /todo subdirectory is empty
         if subdirs[SAMPLE_SUBDIR_TODO]:
             n_items = 0
-            [n_items + 1 for item in subdirs["todo"].iterdir()]
+            [n_items + 1 for item in subdirs[SAMPLE_SUBDIR_TODO].iterdir()]
             if n_items > 0:
                 warnings.warn(f"TODO folder not empty. Found {n_items} not executed models.")
         
@@ -107,14 +107,7 @@ class OutputParser(object):
         for inputs_list in inputs:
             hashes_column.append(self.hash_list(inputs_list))
 
-        column_names = ["gas_density",
-                        "gas_phase_metallicity",
-                        "Redshift",
-                        "cr_ionization_factor",
-                        "ionization_parameter",
-                        "stellar_metallicity",
-                        "stellar_age",
-                        "dtm"]
+        column_names = INPUT_PARAMETER_NAMES
 
         inputs = pd.DataFrame(inputs, columns=column_names)
         inputs["id"] = hashes_column
@@ -136,18 +129,22 @@ class OutputParser(object):
         """
 
         if "Cloudy exited OK" in status:
-            return 0
+            # 0 model was successfull
+            return EXIT_STATUSES["successful"]
 
         elif "something went wrong" in status:
-            return 1
+            # 1 model aborted
+            return EXIT_STATUSES["aborted"]
 
         else:
             mod_status = status.replace(" ", "")
             mod_status = mod_status.replace("\n", "")
             if len(mod_status) < 0:
-                return 2 # model didnt finish
+                # 2 model didnt finish
+                return EXIT_STATUSES["unfinished"]
             else:
-                return 3 # model got stuck without printing anything
+                # 3 model got stuck without printing anything
+                return EXIT_STATUSES["empty"]
 
     def index_to_hash(self, index:int):
         """
@@ -199,7 +196,7 @@ class OutputParser(object):
                     times.append(None)
 
             else:
-                status_code = 4 # model.out wasnt created
+                status_code = EXIT_STATUSES["not_exists"] #4, model.out wasnt created
                 times.append(None)
             indexes.append(index)
             status_codes.append(status_code)
@@ -207,9 +204,9 @@ class OutputParser(object):
         
         # build the dataframe, by adding all the columns
         status_df = pd.DataFrame()
-        status_df["index_model"] = indexes
+        status_df["index"] = indexes
         status_df["status"] = status_codes
-        status_df["hashes"] = hashes
+        status_df["id"] = hashes
         status_df["time"] = times
         status_df.to_pickle(save_path)
 
@@ -297,7 +294,7 @@ class OutputParser(object):
             index = str(emis_file.parent).split("/")[-1]
 
             # check if status_code of index model is "OK"
-            exit_code = self.status[self.status["index_model"] == index].status.values[0]
+            exit_code = self.status[self.status["index"] == index].status.values[0]
             if (emis_file.exists()) and (exit_code == 0):
                 df = self.parse_emis_file(emis_file)
                 emis_df.append(df)
@@ -307,8 +304,8 @@ class OutputParser(object):
                 
             
         emis_dataframe = pd.concat(emis_df)
-        emis_dataframe["index_model"] = indexes
-        emis_dataframe["hashes"] = hashes
+        emis_dataframe["index"] = indexes
+        emis_dataframe["id"] = hashes
         emis_dataframe.to_pickle(save_path)
         del emis_dataframe, emis_df, indexes, hashes
     
@@ -329,6 +326,7 @@ class OutputParser(object):
                                     "trans":"transmitted",
                                     "reflc":"reflected"}
                                 , inplace=True)
+        cont_dataframe.drop(columns=['reflin', 'outlin', 'lineID', 'cont', 'nLine'], inplace=True)
         cont_dataframe.to_pickle(save_path)
         return cont_dataframe
     
@@ -346,12 +344,11 @@ class OutputParser(object):
 
         cont_df, indexes, hashes, status = [], [], [], []
         for item in path.iterdir():
-            print(item)
             cont_file = item.joinpath("model.cont")
             index = str(cont_file.parent).split("/")[-1]
 
             # check if status_code of index model is "OK"
-            exit_code = self.status[self.status["index_model"] == index].status.values[0]
+            exit_code = self.status[self.status["index"] == index].status.values[0]
             if (cont_file.exists()) and (exit_code == 0):
                 cont_dataframe = self.parse_cont_file(cont_file)
 
@@ -361,8 +358,8 @@ class OutputParser(object):
             
         cont_dataframe = pd.DataFrame()
         cont_dataframe["continuum"] = cont_df
-        cont_dataframe["index_model"] = indexes
-        cont_dataframe["hashes"] = hashes
+        cont_dataframe["index"] = indexes
+        cont_dataframe["id"] = hashes
 
         cont_dataframe.to_pickle(save_path)
         del cont_dataframe, cont_df, indexes, hashes
