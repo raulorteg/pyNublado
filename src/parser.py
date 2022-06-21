@@ -8,6 +8,7 @@ import subprocess
 
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE, INPUT_PARAMETER_NAMES, EXIT_STATUSES
 
+
 class OutputParser(object):
     """ Parser class used to parse all outputs from CLOUDY and save them into a dataframe
     for future use.
@@ -15,10 +16,10 @@ class OutputParser(object):
     def __init__(self):
         pass
 
-    def __call__(path:str):
+    def __call__(path: str):
         self.parse(path)
 
-    def parse(self, path:str):
+    def parse(self, path: str):
         """
         Main method of the class, calls all other implemented
         parsing methods. Takes as input the path to the folder where all CLOUDY outputs
@@ -31,7 +32,7 @@ class OutputParser(object):
         raw_path = path
         path = pathlib.Path(path).iterdir()
 
-        # create a dict index to access each subpath
+        # create a dict index to access each sub-path
         subdirs = {SAMPLE_SUBDIR_TODO:None, SAMPLE_SUBDIR_DONE:None, "inputs":None}
         for item in path:
             if SAMPLE_SUBDIR_TODO in str(item):
@@ -41,7 +42,7 @@ class OutputParser(object):
             elif "parameters" in str(item):
                 subdirs["inputs"] = item
         
-        # print warning if any of the expected subdirs wasnt found
+        # print warning if any of the expected subdirectories were not found
         for key in subdirs.keys():
             if not subdirs[key]:
                 warnings.warn(f"[{key}] subdirectory couldnt be found within the path given ({raw_path}).")
@@ -64,7 +65,7 @@ class OutputParser(object):
             self.parse_emis(path=subdirs[SAMPLE_SUBDIR_DONE])
             self.parse_cont(path=subdirs[SAMPLE_SUBDIR_DONE])
 
-    def hash_list(self, inputs:list):
+    def hash_list(self, inputs: list):
         """
         Given a list of elements produce a unique fixed-limit hash to be used as an id of
         the combination of inputs. The method starts by hashing all inputs individually,
@@ -88,8 +89,7 @@ class OutputParser(object):
         # hash the concatenated hash
         return hashlib.md5(merged_hashes).hexdigest()
 
-
-    def parse_inputs(self, path:pathlib.PosixPath):
+    def parse_inputs(self, path: pathlib.PosixPath):
         """
         Method that given the path to the .npy file containing
         the inputs loads it, converts it into a dataframe to be used in the other
@@ -118,10 +118,10 @@ class OutputParser(object):
         self.inputs = inputs
         return inputs
 
-    def status_to_int(self, status:str):
+    def status_to_int(self, status: str):
         """
         Method to map the different exit status of the ran models
-        into an index. 0=succesfull, 1=aborted, 2=unfinished/didnt converge, 3=empty, 4=didnt exist
+        into an index. 0=successful, 1=aborted, 2=unfinished/didnt converge, 3=empty, 4=didnt exist
         
         :param str status: line containing the exit status of the model
         :return status_code: mapped status code int.
@@ -129,7 +129,7 @@ class OutputParser(object):
         """
 
         if "Cloudy exited OK" in status:
-            # 0 model was successfull
+            # 0 model was successful
             return EXIT_STATUSES["successful"]
 
         elif "something went wrong" in status:
@@ -146,7 +146,7 @@ class OutputParser(object):
                 # 3 model got stuck without printing anything
                 return EXIT_STATUSES["empty"]
 
-    def index_to_hash(self, index:int):
+    def index_to_hash(self, index: int):
         """
         Given an int index, look for the hash associated in the inputs
         dataframe and return it.
@@ -157,13 +157,13 @@ class OutputParser(object):
         """
         return self.inputs.iloc[index].id
         
-    def parse_status(self, path:pathlib.PosixPath):
+    def parse_status(self, path: pathlib.PosixPath):
         """
         Given the path to the "done" directory
         where finished models are saved, this method looks at the 
         last line of the model.out files to extract how did the model exited
-        (e.g it was succesfull, it aborted, it didnt converge, ....)
-        this status codes are represented by an int: 0=succesfull, 1=aborted,
+        (e.g it was successful, it aborted, it didnt converge, ....)
+        this status codes are represented by an int: 0=successful, 1=aborted,
         2=unfinished/didnt converge, 3=empty, 4=didnt exist. Tje method then saves
         the extracted information in a pandas dataframe and serializes it with pickle.
 
@@ -196,13 +196,13 @@ class OutputParser(object):
                     times.append(None)
 
             else:
-                status_code = EXIT_STATUSES["not_exists"] #4, model.out wasnt created
+                status_code = EXIT_STATUSES["not_exists"]   # 4, model.out was not created
                 times.append(None)
             indexes.append(index)
             status_codes.append(status_code)
             hashes.append(self.index_to_hash(int(index)))
         
-        # build the dataframe, by adding all the columns
+        # build the dataframe, by adding all columns
         status_df = pd.DataFrame()
         status_df["index"] = indexes
         status_df["status"] = status_codes
@@ -215,7 +215,7 @@ class OutputParser(object):
         self.status = status_df
         del status_df
     
-    def parse_emis_file(self, path:pathlib.PosixPath):
+    def parse_emis_file(self, path: pathlib.PosixPath):
         """
         Given the path to e.g "done/1234" directory
         where a finished model is saved, this method parses the model.emis
@@ -254,7 +254,7 @@ class OutputParser(object):
             for key in header_columns:
                 emis_dict[key] = []
             
-            # fill in the dicitonary
+            # fill in the dictionary
             for line in lines[1:]:
                 splitted_line = line.split()
                 for idx, elem in enumerate(splitted_line):
@@ -274,7 +274,7 @@ class OutputParser(object):
             del emis_dict, emis_df
             return emis_max_depth
 
-    def parse_emis(self, path:pathlib.PosixPath):
+    def parse_emis(self, path: pathlib.PosixPath):
         """
         Given the path to "done" directory
         where a finished model is saved, this method parses loops over
@@ -301,7 +301,6 @@ class OutputParser(object):
                     
                 indexes.append(index)
                 hashes.append(self.index_to_hash(int(index)))
-                
             
         emis_dataframe = pd.concat(emis_df)
         emis_dataframe["index"] = indexes
@@ -309,7 +308,7 @@ class OutputParser(object):
         emis_dataframe.to_pickle(save_path)
         del emis_dataframe, emis_df, indexes, hashes
     
-    def parse_cont_file(self, path:pathlib.PosixPath):
+    def parse_cont_file(self, path: pathlib.PosixPath):
         """
         Given the path to e.g "done/1234" directory
         where a finished model is saved, this method parses the model.cont
@@ -321,11 +320,10 @@ class OutputParser(object):
         """
         save_path = path.parent.joinpath("cont.pkl")
         cont_dataframe = pd.read_csv(path, sep="\t")
-        cont_dataframe.rename(columns={
-                                    "#Cont  nu":"photon_energy",
-                                    "trans":"transmitted",
-                                    "reflc":"reflected"}
-                                , inplace=True)
+        cont_dataframe.rename(columns={"#Cont  nu": "photon_energy",
+                                       "trans": "transmitted",
+                                       "reflc": "reflected"},
+                              inplace=True)
         cont_dataframe.drop(columns=['reflin', 'outlin', 'lineID', 'cont', 'nLine'], inplace=True)
         cont_dataframe.to_pickle(save_path)
         return cont_dataframe
@@ -363,6 +361,7 @@ class OutputParser(object):
 
         cont_dataframe.to_pickle(save_path)
         del cont_dataframe, cont_df, indexes, hashes
+
 
 # example
 if __name__ == "__main__":
