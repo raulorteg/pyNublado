@@ -1,5 +1,5 @@
 numpy
 pydoe
 astropy
-matplotlib
+matplotlib>=3.5.0
 pytest
