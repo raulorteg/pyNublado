@@ -164,7 +164,7 @@ class OutputParser(object):
         last line of the model.out files to extract how did the model exited
         (e.g it was successful, it aborted, it didnt converge, ....)
         this status codes are represented by an int: 0=successful, 1=aborted,
-        2=unfinished/didnt converge, 3=empty, 4=didnt exist. Tje method then saves
+        2=unfinished/didnt converge, 3=empty, 4=didnt exist. The method then saves
         the extracted information in a pandas dataframe and serializes it with pickle.
 
         :param pathlib.PosixPath path: path to the "done" directory
