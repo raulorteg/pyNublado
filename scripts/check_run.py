@@ -3,6 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+from tqdm import tqdm
 
 sys.path.append('..')
 sys.path.append('../src/')
@@ -203,14 +204,15 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
                7: 'DNF'          # Did not finish in time (this is due to mine having allocated a fixed time to a run)
                }
 
-    # Placeholder for successful runs
-    success = 0
+    # Accounting array
     outcome_array = np.zeros(len(run_key))
 
-    for i, model_dir in enumerate(model_dir_list):
+    print(F"\nReading model.out files")
+
+    for i in tqdm(range(len(model_dir_list))):
 
         # Get the tail of the cloudy output file
-        tail = utils_read_model_output_tail(model_dir)
+        tail = utils_read_model_output_tail(model_dir_list[i])
 
         if "Cloudy exited OK" in tail:
             run_space[i] = 0
