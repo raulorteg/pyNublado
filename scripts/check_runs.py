@@ -1,21 +1,21 @@
-
-
-import os
+import sys
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 import argparse
 
-import numpy as np
-
-import sys; sys.path.append('..')
+sys.path.append('..')
+sys.path.append('../src/')
 from common.settings_parameters import *
-from common.settings import SAMPLE_SUBDIR_TODO
+from common.settings import SAMPLE_SUBDIR_DONE
 from common.utils import *
 
 # -----------------------------------------------------------------
 #  Matplotlib settings
 # -----------------------------------------------------------------
-import matplotlib
-import matplotlib.pyplot as plt
-matplotlib.rcParams['text.usetex'] = True
+matplotlib.use('Agg')
+usetex = matplotlib.checkdep_usetex(True)
+matplotlib.rcParams['text.usetex'] = usetex
 
 # TODO: add doc strings for these functions
 
@@ -23,8 +23,8 @@ matplotlib.rcParams['text.usetex'] = True
 def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib.cm.viridis, output_dir='./',
                    file_type='png', show_plot=True):
 
-    print('Creating parameter space visualisation')
-    # Check N in common.settings_parameters, currently run without CR # TODO: Is this still true?
+    print('\nCreating parameter space vs run outcome visualisation')
+
     # PARAMETER_NUMBER_STELLAR_METALLICITY and PARAMETER_NUMBER_STELLAR_AGE
     N = PARAMETER_NUMBER
 
@@ -52,16 +52,16 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
 
     # parameter padding
     padding = [(-3.7, 6.7),
-                (-3.2, 0.5),
-                (2.0, 13.),
-                (-100, 1100),
-                (-4.4, 0.5),
-                (-5.5, -1.1),
-                (-200, 2200),
-                (-0.1, 0.55)]
+               (-3.2, 0.5),
+               (2.0, 13.),
+               (-100, 1100),
+               (-4.4, 0.5),
+               (-5.5, -1.1),
+               (-200, 2200),
+               (-0.1, 0.55)]
 
     # some plot settings
-    marker_size = 10
+    marker_size = 20
     tick_label_size = 8
     label_size = 12
 
@@ -121,7 +121,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
                 if i > 0:
                     ax_array[i, j].set_xticklabels([])
 
-            # plotting the failed runs in the lower traingle
+            # plotting the failed runs in the lower triangle
             elif j < i:
 
                 ax = ax_array[i, j].scatter(x=parameters[:, j][~success],
@@ -164,7 +164,7 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
     cbaxes.set_yticklabels(run_labels, fontsize=8)
 
     # build file name and save figure
-    file_name = F'sample_runs_{N_sample}.{file_type}'
+    file_name = F'outcome_vs_p-space_sample_N{N_sample}.{file_type}'
 
     output_path = os.path.join(output_dir, file_name)
 
@@ -180,58 +180,61 @@ def plot_run_space(parameters, N_sample, run_space, run_key, colormap=matplotlib
 
 def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
 
-    # Location of parameter space files
+    # Location of parameter space files (assuming it exists)
     # TODO: these paths should probably not be hard-coded
-    param_space = np.load(F'../data/samples/sample_N{N_sample}/parameters_N{N_sample}.npy')
-    sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_TODO}'
+    parameters = np.load(F'../data/samples/sample_N{N_sample}/parameters_N{N_sample}.npy')
 
-    # File locations as an increasing list
-    sample_files = utils_get_folders(sample_dir)
-    'NR', 'Empty', 'Abort', 'Went wrong', 'Unphysical', 'Converge', 'Time'
+    n_models_total = np.shape(parameters)[0]
+
+    # File locations as an increasing list, again assuming it exists
+    sample_dir = F'../data/samples/sample_N{N_sample}/{SAMPLE_SUBDIR_DONE}'
+    model_dir_list = utils_get_model_folders(sample_dir)
+    n_models_processed = len(model_dir_list)
 
     # Define dictionary to store summary statistics
     run_space = {}
     run_key = {0: 'Success',
-               1: 'DNR',        # Did not run (could be because of scheduling)
-               2: 'Empty',      # Cloudy problem with parameter space
-               3: 'Abort',      # Cloudy aborted
-               4: 'Wrong',      # Something went wrong
-               5: 'Unphysical', # Problem with parameter space or negative population
-               6: 'Converge',   # Did not converge
-               7: 'DNF',        # Did not finish in time (this is due to mine having allocated a fixed time to a run)
+               1: 'DNR',         # Did not run (could be because of scheduling)
+               2: 'Empty',       # Cloudy problem with parameter space
+               3: 'Abort',       # Cloudy aborted
+               4: 'Wrong',       # Something went wrong
+               5: 'Unphysical',  # Problem with parameter space or negative population
+               6: 'Converge',    # Did not converge
+               7: 'DNF'          # Did not finish in time (this is due to mine having allocated a fixed time to a run)
                }
 
     # Placeholder for successful runs
     success = 0
 
-    for jj, sample_file in enumerate(sample_files):
+    for i, model_dir in enumerate(model_dir_list):
 
         # Get the tail of the cloudy output file
-        tail = utils_read_output_tail(sample_file)
+        tail = utils_read_model_output_tail(model_dir)
 
         if tail == 0:
-            run_space[jj] = 1
+            run_space[i] = 1
         elif tail == '':
-            run_space[jj] = 2
+            run_space[i] = 2
         elif 'ABORT' in tail:
-            run_space[jj] = 3
+            run_space[i] = 3
         elif 'something went wrong' in tail:
-            run_space[jj] = 4
+            run_space[i] = 4
         elif 'unphysical' in tail or 'negative population' in tail:
-            run_space[jj] = 5
+            run_space[i] = 5
         elif 'did not converge' in tail:
-            run_space[jj] = 6
+            run_space[i] = 6
         elif "Cloudy exited OK" not in tail:
-            run_space[jj] = 7
+            run_space[i] = 7
         elif "Cloudy exited OK" in tail:
-            run_space[jj] = 0
+            run_space[i] = 0
             success += 1
 
-    print("Total samples: ", len(sample_files))
-    print("successful number: ", success)
-    print(F"{np.round(100 * success/len(sample_files), 2)} percent of runs were successful")
+    print(F"\n {n_models_total} models in total in this sample")
+    print(F" {n_models_processed} models processed ({np.round(100 * n_models_processed/n_models_total, 2)}%)")
+    print(F" {np.round(100 * success/n_models_processed, 2)}% percent of processed runs were successful")
 
-    plot_run_space(param_space, N_sample, run_space, run_key, colormap=colormap, show_plot=show_plot)
+    if n_models_processed == n_models_total:
+        plot_run_space(parameters, N_sample, run_space, run_key, colormap=colormap, show_plot=show_plot)
 
 
 if __name__ == "__main__":
@@ -243,4 +246,4 @@ if __name__ == "__main__":
                         help="Number of models in the sample. ")
 
     args = parser.parse_args()
-    check_run(args.N_sample, show_plot=True)
+    check_run(args.N_sample, show_plot=False)
