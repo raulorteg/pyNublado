@@ -1,12 +1,12 @@
 # Installation
 pyNublado manages the creation of input scripts for Cloudy runs, their execution, and parsing of the resulting outputs. This installation guide has two steps: installing CLOUDY and installing pyNublado
 
-## Requirements
+### Requirements
  * Python 3.7 or newer
  * Your favourite C++ compiler to build Cloudy
 
 
-## Installing CLOUDY
+### Installing CLOUDY
 Instructions from [the Cloudy wiki](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/DownloadLinks):
 
 * Download the latest Cloudy version
@@ -46,7 +46,7 @@ Once installed, you can test whether the installation was successful:
 * Cloudy should print some output, which ends with "Cloudy exited OK"
 
 
-## Installing pyNublado
+### Installing pyNublado
 
 1. Clone the repository
 
@@ -56,7 +56,7 @@ Once installed, you can test whether the installation was successful:
 
 2. Install all dependencies, either via **pip** or **conda**
 
-### pip
+#### pip
 * Create virtual environment:
     * Update pip ``` python -m pip install pip --upgrade ```
     * Install ``` virtualenv ``` using pip ``` python -m pip install virtualenv ```
@@ -65,7 +65,7 @@ Once installed, you can test whether the installation was successful:
     * Note: to deactivate environmet run ``` deactivate ```
 * Install requirements on the Virtual environment ``` python -m pip install -r requirements.txt ```
 
-### conda
+#### conda
 In an existing Anaconda (or Miniconda) environment the requirements can be installed like so:
 
 * ```bash

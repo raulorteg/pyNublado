@@ -3,11 +3,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+from tqdm import tqdm
 
 sys.path.append('..')
 sys.path.append('../src/')
 from common.settings_parameters import *
-from common.settings import SAMPLE_SUBDIR_DONE
+from common.settings import SAMPLE_SUBDIR_DONE, EXIT_STATUSES
 from common.utils import *
 
 # -----------------------------------------------------------------
@@ -203,35 +204,47 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
                7: 'DNF'          # Did not finish in time (this is due to mine having allocated a fixed time to a run)
                }
 
-    # Placeholder for successful runs
-    success = 0
+    # Accounting array
+    outcome_array = np.zeros(len(run_key))
 
-    for i, model_dir in enumerate(model_dir_list):
+    print(F"\nReading model.out files")
+
+    for i in tqdm(range(len(model_dir_list))):
 
         # Get the tail of the cloudy output file
-        tail = utils_read_model_output_tail(model_dir)
+        tail = utils_read_model_output_tail(model_dir_list[i])
 
-        if tail == 0:
+        if "Cloudy exited OK" in tail:
+            run_space[i] = 0
+            outcome_array[0] += 1
+        elif tail == 0:
             run_space[i] = 1
+            outcome_array[1] += 1
         elif tail == '':
             run_space[i] = 2
+            outcome_array[2] += 1
         elif 'ABORT' in tail:
             run_space[i] = 3
+            outcome_array[3] += 1
         elif 'something went wrong' in tail:
             run_space[i] = 4
+            outcome_array[4] += 1
         elif 'unphysical' in tail or 'negative population' in tail:
             run_space[i] = 5
+            outcome_array[5] += 1
         elif 'did not converge' in tail:
             run_space[i] = 6
+            outcome_array[6] += 1
         elif "Cloudy exited OK" not in tail:
             run_space[i] = 7
-        elif "Cloudy exited OK" in tail:
-            run_space[i] = 0
-            success += 1
+            outcome_array[7] += 1
 
     print(F"\n {n_models_total} models in total in this sample")
     print(F" {n_models_processed} models processed ({np.round(100 * n_models_processed/n_models_total, 2)}%)")
-    print(F" {np.round(100 * success/n_models_processed, 2)}% percent of processed runs were successful")
+    print(F" Breakdown of the EXIT codes:\n")
+    for i in range(len(run_key)):
+        outcome_percent = np.round(100 * outcome_array[i] / n_models_processed, 2)
+        print(F"\t{outcome_percent}% \t|\t{i}: {run_key[i]} ")
 
     if n_models_processed == n_models_total:
         plot_run_space(parameters, N_sample, run_space, run_key, colormap=colormap, show_plot=show_plot)
