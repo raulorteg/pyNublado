@@ -121,7 +121,7 @@ class QueueManager:
             if self.verbose: print('Initialising {} threads'.format(self.N_CPUs))
             pool = multiprocessing.Pool(processes=self.N_CPUs, maxtasksperchild=1)
 
-            pool.map(self._run_model, self.models_to_run)
+            pool.map(func=self._run_model, iterable=self.models_to_run, chunksize=1)
 
             pool.close()
             pool.join()

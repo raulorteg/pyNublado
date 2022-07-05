@@ -207,7 +207,7 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
     # Accounting array
     outcome_array = np.zeros(len(run_key))
 
-    print(F"\nReading model.out files")
+    print(F"\nReading model outcomes for all models in {sample_dir}")
 
     for i in tqdm(range(len(model_dir_list))):
 
@@ -239,9 +239,9 @@ def check_run(N_sample, colormap=matplotlib.cm.viridis, show_plot=True):
             run_space[i] = 7
             outcome_array[7] += 1
 
-    print(F"\n {n_models_total} models in total in this sample")
-    print(F" {n_models_processed} models processed ({np.round(100 * n_models_processed/n_models_total, 2)}%)")
-    print(F" Breakdown of the EXIT codes:\n")
+    print(F"\n{n_models_total} models in total in this sample")
+    print(F"{n_models_processed} models processed ({np.round(100 * n_models_processed/n_models_total, 2)}%)")
+    print(F"Breakdown of the EXIT codes:\n")
     for i in range(len(run_key)):
         outcome_percent = np.round(100 * outcome_array[i] / n_models_processed, 2)
         print(F"\t{outcome_percent}% \t|\t{i}: {run_key[i]} ")
