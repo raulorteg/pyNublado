@@ -5,6 +5,7 @@ import os, re
 import warnings
 import hashlib
 import subprocess
+from tqdm import tqdm
 
 from common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE, INPUT_PARAMETER_NAMES, EXIT_STATUSES
 
@@ -33,37 +34,39 @@ class OutputParser(object):
         path = pathlib.Path(path).iterdir()
 
         # create a dict index to access each sub-path
-        subdirs = {SAMPLE_SUBDIR_TODO:None, SAMPLE_SUBDIR_DONE:None, "inputs":None}
+        sub_dirs = {SAMPLE_SUBDIR_TODO: None, SAMPLE_SUBDIR_DONE: None, "inputs": None}
         for item in path:
             if SAMPLE_SUBDIR_TODO in str(item):
-                subdirs[SAMPLE_SUBDIR_TODO] = item
+                sub_dirs[SAMPLE_SUBDIR_TODO] = item
             elif SAMPLE_SUBDIR_DONE in str(item):
-                subdirs[SAMPLE_SUBDIR_DONE] = item
+                sub_dirs[SAMPLE_SUBDIR_DONE] = item
             elif "parameters" in str(item):
-                subdirs["inputs"] = item
+                sub_dirs["inputs"] = item
         
         # print warning if any of the expected subdirectories were not found
-        for key in subdirs.keys():
-            if not subdirs[key]:
-                warnings.warn(f"[{key}] subdirectory couldnt be found within the path given ({raw_path}).")
+        for key in sub_dirs.keys():
+            if not sub_dirs[key]:
+                warnings.warn(f"[{key}] subdirectory could not be found within the path given ({raw_path}).")
         
-        # check /todo subdirectory is empty
-        if subdirs[SAMPLE_SUBDIR_TODO]:
+        # check if the todo subdirectory is empty
+        if sub_dirs[SAMPLE_SUBDIR_TODO]:
             n_items = 0
-            [n_items + 1 for item in subdirs[SAMPLE_SUBDIR_TODO].iterdir()]
+            [n_items + 1 for item in sub_dirs[SAMPLE_SUBDIR_TODO].iterdir()]
             if n_items > 0:
-                warnings.warn(f"TODO folder not empty. Found {n_items} not executed models.")
+                warnings.warn(f"{SAMPLE_SUBDIR_TODO} folder not empty. Found {n_items} not executed models.")
         
-        # load the input parameters as a dataframe to be accessed by all
-        # parsing methods
-        if subdirs["inputs"]:
-            inputs_df = self.parse_inputs(path=subdirs["inputs"])
+        # load the input parameters as a dataframe (to be accessed by all parsing methods)
+        if sub_dirs["inputs"]:
+            inputs_df = self.parse_inputs(path=sub_dirs["inputs"])
+            N_models_in_sample = len(inputs_df)
+        else:
+            N_models_in_sample = 0          # Fallback. Value only used in tqdm progress bar, won't fail
 
         # here we list the parsing methods to be executed
-        if subdirs[SAMPLE_SUBDIR_DONE]:
-            self.parse_status(path=subdirs[SAMPLE_SUBDIR_DONE])
-            self.parse_emis(path=subdirs[SAMPLE_SUBDIR_DONE])
-            self.parse_cont(path=subdirs[SAMPLE_SUBDIR_DONE])
+        if sub_dirs[SAMPLE_SUBDIR_DONE]:
+            self.parse_status(path=sub_dirs[SAMPLE_SUBDIR_DONE], N_models=N_models_in_sample)
+            self.parse_emis(path=sub_dirs[SAMPLE_SUBDIR_DONE], N_models=N_models_in_sample)
+            self.parse_cont(path=sub_dirs[SAMPLE_SUBDIR_DONE], N_models=N_models_in_sample)
 
     def hash_list(self, inputs: list):
         """
@@ -104,7 +107,9 @@ class OutputParser(object):
         
         inputs = np.load(path)
         hashes_column = []
-        for inputs_list in inputs:
+
+        print('Parser: Hashing input parameters')
+        for inputs_list in tqdm(inputs):
             hashes_column.append(self.hash_list(inputs_list))
 
         column_names = INPUT_PARAMETER_NAMES
@@ -160,7 +165,7 @@ class OutputParser(object):
         """
         return self.inputs.iloc[index].id
         
-    def parse_status(self, path: pathlib.PosixPath):
+    def parse_status(self, path: pathlib.PosixPath, N_models: int):
         """
         Given the path to the "done" directory
         where finished models are saved, this method looks at the 
@@ -171,11 +176,15 @@ class OutputParser(object):
         it with pickle.
 
         :param pathlib.PosixPath path: path to the "done" directory
+        :param int N_models: number of expected models in the sample
         """
         save_path = path.parent.joinpath("status.pkl")
 
         status_codes, indexes, hashes, times = [], [], [], []
-        for item in path.iterdir():
+
+        print('Parser: Parsing run statuses')
+
+        for item in tqdm(path.iterdir(), total=N_models):
             out_file = item.joinpath("model.out")
             index = str(out_file.parent).split("/")[-1]
             if out_file.exists():
@@ -280,7 +289,7 @@ class OutputParser(object):
             del emis_dict, emis_df
             return emis_max_depth
 
-    def parse_emis(self, path: pathlib.PosixPath):
+    def parse_emis(self, path: pathlib.PosixPath, N_models: int):
         """
         Given the path to "done" directory
         where a finished model is saved, this method parses loops over
@@ -290,12 +299,16 @@ class OutputParser(object):
         the extracted information in a pandas dataframe and serializes it with pickle.
 
         :param pathlib.PosixPath path: path to the e.g "done" directory
+        :param int N_models: number of expected models in the sample
         """
 
         save_path = path.parent.joinpath("emis.pkl")
 
         emis_df, indexes, hashes, status = [], [], [], []
-        for item in path.iterdir():
+
+        print('Parser: Parsing emission line data')
+
+        for item in tqdm(path.iterdir(), total=N_models):
             emis_file = item.joinpath("model.emis")
             index = str(emis_file.parent).split("/")[-1]
 
@@ -334,7 +347,7 @@ class OutputParser(object):
         cont_dataframe.to_pickle(save_path)
         return cont_dataframe
     
-    def parse_cont(self, path:pathlib.PosixPath):
+    def parse_cont(self, path:pathlib.PosixPath, N_models: int):
         """
         Given the path to "done" directory
         where a finished model is saved, this method parses loops over
@@ -343,11 +356,15 @@ class OutputParser(object):
         dataframe with pickle.
 
         :param pathlib.PosixPath path: path to the e.g "done" directory
+        :param int N_models: number of expected models in the sample
         """
         save_path = path.parent.joinpath("cont.pkl")
 
         cont_df, indexes, hashes, status = [], [], [], []
-        for item in path.iterdir():
+
+        print('Parser: Parsing continuum data')
+
+        for item in tqdm(path.iterdir(), total=N_models):
             cont_file = item.joinpath("model.cont")
             index = str(cont_file.parent).split("/")[-1]
 
