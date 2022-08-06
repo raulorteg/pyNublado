@@ -9,6 +9,7 @@ Example script to create a sample of Cloudy models and run them:
 import argparse
 import sys
 import os
+from tqdm import tqdm
 
 sys.path.append('..')
 sys.path.append('../src/')
@@ -21,7 +22,8 @@ from common.utils import *
 def main(args):
 
     # 1. set up directory sample / check if it exists
-    sample_path, new_sample = utils_setup_sample_dir(parent_path=args.sample_parent_dir, N_sample=args.N_sample)
+    sample_path, new_sample = utils_setup_sample_dir(parent_path=args.sample_parent_dir,
+                                                     N_sample=args.N_sample)
 
     if not new_sample:
 
@@ -38,8 +40,8 @@ def main(args):
         # 1b. create individual directories and generate input files for each model
         sample_todo_dir = os.path.join(sample_path, SAMPLE_SUBDIR_TODO)
 
-        print('Creating *.in files in {}'.format(sample_todo_dir))
-        for idx, sample in enumerate(parameter_samples):
+        print('Creating model.in files in {}'.format(sample_todo_dir))
+        for idx, sample in enumerate(tqdm(parameter_samples)):
             CloudyInput(index=idx,
                         N_sample=args.N_sample,
                         target_dir=sample_todo_dir,
