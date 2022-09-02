@@ -1,11 +1,16 @@
-### Using BPASS models
+## Using BPASS models
+We are using the stellar models of the BPASS V2.2.1 [data release](https://bpass.auckland.ac.nz/9.html)
+
+## updated docu
+
+tba
+
+
+## old docu
 * From the BPASS V2.2.1 [data release](https://bpass.auckland.ac.nz/9.html) download the data for _bpass_v2p2.1_imf_chab300_
 
-
-_NOTE: the Perl script (in data/) needs to be placed on the parent directory_
-
 ```bash
-├── BPASSv2.1_bin-imf135_300
+├── BPASSv2.1_bin-imf135_100
 │   ├── ...
 │   └── ...
 ├── convert_bpassv2.x.pl
