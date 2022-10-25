@@ -1,7 +1,7 @@
 import os
 import gdown
 
-BPASS_FILE = "bpass_v2.2.1_imf135_100.tar.gz"
+BPASS_FILE = "bpass_v2.2.1_imf_chab300.tar.gz"
 
 
 def download_bpass():
@@ -9,9 +9,9 @@ def download_bpass():
     Attempts to download the BPASS files
     Returns: None
     """
-    url = "https://drive.google.com/uc?id=1wGpW9j4Ts4AL947s1rUQCfKc76V4LqV4"
+    url = "https://drive.google.com/uc?id=1JcUM-qyOQD16RdfWjhGKSTwdNfRUW4Xu"
 
-    gdown.download(url, output=BPASS_FILE, quiet=False)
+    gdown.download(url, output=BPASS_FILE, quiet=False, fuzzy=True )
 
 
 def unpack_bpass():
@@ -22,7 +22,12 @@ def unpack_bpass():
 def convert_bpass():
 
     os.system("chmod +x convert_bpassv2.x.pl")
+
+    # create ascii files
     os.system("./convert_bpassv2.x.pl")
+
+    # clean up
+    os.system("rm *.dat.gz")
 
 
 if __name__ == "__main__":
