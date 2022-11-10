@@ -30,7 +30,7 @@ pyNublado comes with a number of tests for the pytest framework. They can be fou
 
 1. Install pytest, e.g. via ```pip install pytest``` or ```conda install pytest```
 2. Navigate to the tests subdirectory ```cd tests```
-3. Run tests ```pytest test.py -v```, the `-v` flag is optional for increased verbosity
+3. Run tests ```pytest test.py -v```, the `-v` (or `-vv`) flag is optional for increased verbosity
 
 The tests do the following:
 
