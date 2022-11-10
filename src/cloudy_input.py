@@ -1,6 +1,6 @@
 import pathlib
 from sampling import sampling_create_parameters
-from user_settings import BPASS_MOD_DIR, BPASS_MOD_FILE
+from user_settings import STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE
 
 import sys; sys.path.append('..')
 from common.abundances import *
@@ -30,7 +30,7 @@ class CloudyInput:
 
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
-        command = 'table star "{}/{}" '.format(BPASS_MOD_DIR, BPASS_MOD_FILE)
+        command = 'table star "{}/{}" '.format(STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE)
 
         # Note that cloudy fails when the stellar age [in Myr] is multiplied by 1e6
         command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
