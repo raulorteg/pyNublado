@@ -10,6 +10,8 @@ from src.common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
 from user_settings import CLOUDY_PATH, STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE
 from src.manager import QueueManager
 
+Q_MANAGER_TEST_TIME_SECONDS = 60
+
 
 def test_cloudy_runs():
     # check no model.out file exists
@@ -72,7 +74,7 @@ def test_queue_manager():
     queue.manager_run()
 
     # wait for the models to finish
-    time.sleep(30)
+    time.sleep(Q_MANAGER_TEST_TIME_SECONDS)
 
     # assert number of models run is ok
     assert queue.N_models_to_run == 4, "Some models did not get identified by the _get_models() method."

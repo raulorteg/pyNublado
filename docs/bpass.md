@@ -40,9 +40,10 @@ Then run the script. Once run successfully, the script should produce files with
   mkdir ~/c17.03/data/binaries/
   cp BPASS_burst_binary.ascii  ~/c17.03/data/binaries/bpass_v2p2.1_imf_chab300_burst_binary.ascii
 ```  
-* Generating binary mod files can be achieved by Executing Cloudy
+* Generating binary mod files can be achieved by executing Cloudy from the Cloudy data directory
 
 ```bash
+  cd ~/c17.03/data/
   ~/c17.03/source/cloudy.exe
   ```
 Press `enter` and then type 
@@ -52,7 +53,7 @@ Press `enter` and then type
 ```
 * Press `enter` again (twice in total)  to generate the binaries.
 
-* Your data directory should now contain the following file: `binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod`
+* Your Cloudy data directory should now contain the following file: `binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod`
 
 Additionally, running the test suit should reveal if your BPASS file has been correctly installed.
 
