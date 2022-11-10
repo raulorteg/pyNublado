@@ -29,7 +29,7 @@ def _download_bpass():
     else:
         url = "https://drive.google.com/uc?id=1JcUM-qyOQD16RdfWjhGKSTwdNfRUW4Xu"
 
-        gdown.download(url, output=BPASS_ARCHIVE_FILE, quiet=False, fuzzy=True )
+        gdown.download(url, output=BPASS_ARCHIVE_FILE, quiet=False, fuzzy=True)
 
     os.system(F"tar -xvf {BPASS_ARCHIVE_FILE}")
 
@@ -44,12 +44,10 @@ def _convert_bpass():
     # create ascii files
     os.system("./convert_bpassv2.x.pl")
 
-    # clean up
+    # delete unnecessary files
     os.system("rm *.dat.gz")
     os.system("rm input_bpass_z*_bin_imf_chab300")
     os.system("rm input_bpass_z*_sin_imf_chab300")
-
-    # TODO: remove other files?
 
 
 def _compile_bpass():
@@ -67,7 +65,6 @@ def _compile_bpass():
 
     if not cloudy_data_path.exists():
         raise Exception(F"Can't find Cloudy data directory. Exiting")
-        exit(1)
 
     # check if STELLAR_MODEL_DIR exists
     cloudy_stellar_model_path = cloudy_data_path.joinpath(STELLAR_MODEL_DIR)
@@ -83,8 +80,8 @@ def _compile_bpass():
     target_ascii_path = Path.joinpath(cloudy_stellar_model_path, F"{Path(STELLAR_MODEL_MOD_FILE).stem}.ascii")
     shutil.copy(str(ascii_path), str(target_ascii_path))
 
-    # cd there & create the .in file for cloudy to compile
-    os.chdir(cloudy_stellar_model_path)
+    # cd to the data directory & create the .in file for cloudy to compile
+    os.chdir(cloudy_data_path)
 
     cloudy_compile_cmd = F"compile star \"{STELLAR_MODEL_DIR}/{target_ascii_path.name}\"\n"
 
