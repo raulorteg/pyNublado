@@ -29,6 +29,7 @@ def _download_bpass():
     else:
         url = "https://drive.google.com/uc?id=1JcUM-qyOQD16RdfWjhGKSTwdNfRUW4Xu"
 
+
         gdown.download(url, output=BPASS_ARCHIVE_FILE, quiet=False, fuzzy=True)
 
     os.system(F"tar -xvf {BPASS_ARCHIVE_FILE}")
@@ -89,7 +90,11 @@ def _compile_bpass():
         f.write(cloudy_compile_cmd)
 
     # run cloudy on the .in file
+    print(F"Compiling binary stellar atmosphere module with Cloudy")
     os.system(F"{cloudy_exe_path} {COMPILE_IN_FILE}")
+
+    print(F"Done")
+    # TODO: check if outfile exists and cloudy exited okay.
 
 
 def _get_file_md5_hash(file_path):
