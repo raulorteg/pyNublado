@@ -52,6 +52,13 @@ def _convert_bpass():
 
 
 def _compile_bpass():
+    """
+    Checks if the target directories for teh stellar atmospheres model exist,
+    moves the previously generated ascii file from the BPASS directory to the
+    Cloudy data directory and compiles it there into a binary model that
+    Cloudy can use.
+    Returns: None
+    """
 
     # check if ascii file exists
     ascii_path = Path(BPASS_ASCII_FILE_TMP)
@@ -100,6 +107,7 @@ def _compile_bpass():
 def _get_file_md5_hash(file_path):
     """
     Calculates the md5 hash for a given file, assuming it exists.
+    Args: pathlib Path object to be checked
     Returns: Hex string representation of the MD5 hash
     """
     with open(file_path, "rb") as f:

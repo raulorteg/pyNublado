@@ -1,18 +1,14 @@
-## Using BPASS models
+## Setting up BPASS models
 We are using the stellar models of the BPASS V2.2.1 [data release](https://bpass.auckland.ac.nz/9.html)
-
-## updated docu
 
 There are two ways to install the BPASS models
 
-1. run the installation script ``setup_bpass.py``
+1. Run the installation script ``setup_bpass.py``
 ```bash
   python3 setup_bpass.py
 ```
 
-
-2. do it manually, as shown below:
-
+2. Do it manually, as shown below:
 
 * From the BPASS V2.2.1 [data release](https://bpass.auckland.ac.nz/9.html) download the archive 
   _bpass_v2.2.1_imf_chab300.tar.gz_, either from the Google Drive or the Sharepoint page. 
