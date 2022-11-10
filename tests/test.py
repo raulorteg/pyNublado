@@ -1,12 +1,13 @@
+import os, pathlib, shutil
+import time
+import pytest
+
 import sys
 sys.path.append("..")
 sys.path.append("../src")
 
-import os, pathlib, shutil
-import time
-import pytest
 from src.common.settings import SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE
-from user_settings import CLOUDY_PATH
+from user_settings import CLOUDY_PATH, STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE
 from src.manager import QueueManager
 
 
@@ -77,7 +78,7 @@ def test_queue_manager():
     assert queue.N_models_to_run == 4, "Some models did not get identified by the _get_models() method."
 
     # check all directories that need to be created exist
-    for dir_ in [ SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE ]:
+    for dir_ in [SAMPLE_SUBDIR_TODO, SAMPLE_SUBDIR_DONE]:
         assert os.path.exists(f"tmp_data/sample_N100/{dir_}"), f"{dir_} directory could not be found"
 
     # check all directories that need to be empty are so
@@ -87,5 +88,24 @@ def test_queue_manager():
     # clean up everything
     if os.path.exists('tmp_data/'):
         shutil.rmtree('tmp_data/')
+
+
+def test_bpass_exists():
+
+    cloudy_exe_path = pathlib.Path(CLOUDY_PATH).expanduser()
+    cloudy_install_path = cloudy_exe_path.parent.parent
+    cloudy_data_path = cloudy_install_path.joinpath('data')
+
+    assert cloudy_data_path.exists(), F"Unable to find Cloudy data directory {cloudy_data_path}"
+
+    # check if STELLAR_MODEL_DIR exists
+    cloudy_stellar_model_dir_path = cloudy_data_path.joinpath(STELLAR_MODEL_DIR)
+    assert cloudy_stellar_model_dir_path.exists(), \
+        F"Unable to find Stellar model directory {cloudy_stellar_model_dir_path}"
+
+    # check if STELLAR_MODEL_MOD_FILE exists
+    cloudy_stellar_model_file_path = cloudy_stellar_model_dir_path.joinpath(STELLAR_MODEL_MOD_FILE)
+    assert cloudy_stellar_model_file_path.exists(), \
+        F"Unable to find Stellar model file {cloudy_stellar_model_file_path}"
 
 # TODO: more tests here ...
