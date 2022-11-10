@@ -95,7 +95,6 @@ def _compile_bpass():
     os.system(F"{cloudy_exe_path} {COMPILE_IN_FILE}")
 
 
-
 def _get_file_md5_hash(file_path):
     """
     Calculates the md5 hash for a given file, assuming it exists.
@@ -113,6 +112,6 @@ def _get_file_md5_hash(file_path):
 
 if __name__ == "__main__":
 
-    # _download_bpass()
-    # _convert_bpass()
+    _download_bpass()
+    _convert_bpass()
     _compile_bpass()
