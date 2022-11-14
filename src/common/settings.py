@@ -39,4 +39,3 @@ EXIT_STATUSES = {
             'Converge':6,    # Did not converge
             'DNF':7          # Did not finish in time (this is due to mine having allocated a fixed time to a run)
             }
-            

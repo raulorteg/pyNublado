@@ -1,7 +1,6 @@
 # Testing Cloudy and pyNublado
 
 
-
 ### Cloudy installation test run 
 
 In order to test that your Cloudy installation works as expected, put in the path to your Cloudy executable and run it:
@@ -31,10 +30,11 @@ pyNublado comes with a number of tests for the pytest framework. They can be fou
 
 1. Install pytest, e.g. via ```pip install pytest``` or ```conda install pytest```
 2. Navigate to the tests subdirectory ```cd tests```
-3. Run tests ```pytest -v test.py```, the -v flag is optional for increased verbosity
+3. Run tests ```pytest test.py -v```, the `-v` (or `-vv`) flag is optional for increased verbosity
 
 The tests do the following:
 
 * check if the Cloudy path in ```src/usr_settings.py``` is the correct path of the Cloudy installation by running a test model.in
 * check if the output of CLOUDY is ok ("Cloudy exited OK")
 * it creates the file structure src.manager.QueueManager() expects and runs 4 models on multiple cpus to test the pipeline.
+* check if the stellar atmosphere model specified in `src/user_settings.py` is installed (see BPASS installation)

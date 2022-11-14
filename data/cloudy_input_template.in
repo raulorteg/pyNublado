@@ -1,6 +1,6 @@
 title test_script_cloudy
 # BPASS model binary file (compiled by Cloudy)
-table star "BPASSv2p1_imf135all_100_burst_binary.mod" age=2e8 years Z=-1.8
+table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" age=2e8 years Z=-1.8
 #
 # gas density (in log units)
 hden 1.0

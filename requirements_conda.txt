@@ -4,3 +4,4 @@ astropy
 matplotlib>=3.5.0
 pytest
 tqdm
+gdown

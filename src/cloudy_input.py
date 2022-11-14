@@ -1,5 +1,6 @@
 import pathlib
 from sampling import sampling_create_parameters
+from user_settings import STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE
 
 import sys; sys.path.append('..')
 from common.abundances import *
@@ -19,7 +20,7 @@ class CloudyInput:
 
         self.target_dir = target_dir        # directory path where samples are to be saved
         self.index = index                  # index of the sample, identifier for the sample
-        self.N = N_sample                          # number of total samples
+        self.N = N_sample                   # number of total samples
         self.LineList_path = LineList_path  # path to file containing lines to be saved
         self.buffer_to_write = []           # buffer with the final paths of all model.in files created
 
@@ -29,9 +30,9 @@ class CloudyInput:
 
     def _set_bpass_model(self) -> None:
         """ SEDs from stellar atmosphere """
-        command = 'table star "binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod" '
-        #command += 'age={} years Z={}'.format(1e6*self.stellar_age, self.stellar_metallicity)
-        # cloudy fails when the stellar age [in Myr] is multiplied by 1e6
+        command = 'table star "{}/{}" '.format(STELLAR_MODEL_DIR, STELLAR_MODEL_MOD_FILE)
+
+        # Note that cloudy fails when the stellar age [in Myr] is multiplied by 1e6
         command += 'age={} years Z={}'.format(self.stellar_age, self.stellar_metallicity)
         self.buffer_to_write.append(command)
 
