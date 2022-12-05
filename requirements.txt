@@ -6,3 +6,4 @@ pytest
 tqdm
 gdown
 pandas
+seaborn
