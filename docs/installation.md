@@ -1,5 +1,22 @@
 # Installation
-pyNublado manages the creation of input scripts for Cloudy runs, their execution, and parsing of the resulting outputs. This installation guide has two steps: installing CLOUDY and installing pyNublado
+pyNublado manages the creation of input scripts for Cloudy runs, their execution, and parsing of the resulting outputs. This installation guide gives two options to install and use CLOUDY & pyNublado: Installing them directly or using Docker. 
+
+
+## Using Docker
+For information about Docker a good reference is their documentation [https://www.docker.com/](https://www.docker.com/).
+
+1. First build the image using the ```Dockerfile``` provided:
+  ```bash
+  sudo docker build . --tag="pynublado:latest"
+  ```
+
+2. Once built we can then run our application on the Docker container. 
+  ```bash
+  sudo docker run -v $PWD/data:/root/pyNublado/data -it --rm  "pynublado:latest" hpc.py --N_sample=<N_sample> --N_cpus=<N_cpus>
+  ```
+
+
+## Installing CLOUDY & pyNublado
 
 ### Requirements
  * Python 3.7 or newer
