@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameters &mdash; pyNublado  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pyNublado
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bpass.html">Setting up BPASS models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing Cloudy and pyNublado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyNublado</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Parameters</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/parameters.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameters">
+<h1>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h1>
+<p>pyNublado is set up to employ eight different input parameters for Cloudy runs. The parameters and their respective ranges are given below.</p>
+<section id="cloudy-input-parameters">
+<h2>Cloudy input parameters<a class="headerlink" href="#cloudy-input-parameters" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Gas density (log scale): -3 - 6</p></li>
+<li><p>Gas phase metallicity: 0.0001 - 2.0 (solar)</p></li>
+<li><p>CMB background (z_redshift): 3 - 12</p></li>
+<li><p>Cosmic rays background: <code class="docutils literal notranslate"><span class="pre">cosmic</span> <span class="pre">rays</span> <span class="pre">background</span> <span class="pre">linear</span> <span class="pre">1</span></code> 1 - 1000</p></li>
+<li><p>Ionization parameter: -4 - 0 (log units)</p></li>
+<li><p>Stellar ages (is delimited by the redshift): 1 Myr up to 2 Gyr.</p></li>
+<li><p>Stellar metallicity (Z): 1e-5 - 0.040 (absolute value)</p></li>
+<li><p>Dust to metal ratio:     0.0 - 0.5</p></li>
+</ol>
+<p>For the radiation spectra of our sources we use the BPASS model (Chabrier IMF, Mup=300 M_sun), which depends on stellar age (parameter 6) and stellar metallicity (parameter 7).</p>
+<p>A Not on the dust to metal parameter: (Aswin?)</p>
+<p>Parameter ranges can be altered in <code class="docutils literal notranslate"><span class="pre">src/common/settings_parameters.py</span></code></p>
+</section>
+<section id="output-parameters">
+<h2>Output parameters<a class="headerlink" href="#output-parameters" title="Permalink to this heading"></a></h2>
+<p>The list of emission lines that the Cloudy runs will output is defined and can be altered in the following file: <code class="docutils literal notranslate"><span class="pre">data/LineList_in.txt</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

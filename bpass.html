@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up BPASS models &mdash; pyNublado  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pyNublado
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#pynublado">pyNublado</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up BPASS models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Testing Cloudy and pyNublado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyNublado</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Setting up BPASS models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bpass.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setting-up-bpass-models">
+<h1>Setting up BPASS models<a class="headerlink" href="#setting-up-bpass-models" title="Permalink to this heading"></a></h1>
+<p>We are using the stellar models of the BPASS V2.2.1 <a class="reference external" href="https://bpass.auckland.ac.nz/9.html">data release</a></p>
+<p>There are two ways to install the BPASS models</p>
+<ol class="arabic">
+<li><p>Run the installation script <code class="docutils literal notranslate"><span class="pre">setup_bpass.py</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 setup_bpass.py
+</pre></div>
+</div>
+</li>
+<li><p>Do it manually, as shown below:</p></li>
+</ol>
+<ul>
+<li><p>From the BPASS V2.2.1 <a class="reference external" href="https://bpass.auckland.ac.nz/9.html">data release</a> download the archive
+_bpass_v2.2.1_imf<em>chab300.tar.gz</em>, either from the Google Drive or the Sharepoint page.
+Should you prefer a different stellar model, please adjust the steps accordingly.</p></li>
+<li><p>Unpack the archive and place the Perl script that is located in <code class="docutils literal notranslate"><span class="pre">data/BPASS/convert_bpassv2.x.pl</span></code>
+within the same directory as the extracted files. Alternatively, extract the BPASS archive files directly into
+<code class="docutils literal notranslate"><span class="pre">data/BPASS</span></code>.</p></li>
+<li><p>Navigate to the directory containing the script and the archive files and execute the script.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./convert_bpassv2.x.pl
+</pre></div>
+</div>
+<p><em>NOTE: If the script complains about file permissions, grant the Perl file permissions to be executable</em></p>
+</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x convert_bpassv2.x.pl
+</pre></div>
+</div>
+<p>Then run the script. Once run successfully, the script should produce files with the <em>.ascii</em> suffix.</p>
+<ul class="simple">
+<li><p>In order to generate a binary file from the resulting <em>.ascii</em> file, the desired model file needs to
+be moved into the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory of the Cloudy installation. Here, we choose the binary model:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/c17.03/data/binaries/
+cp BPASS_burst_binary.ascii  ~/c17.03/data/binaries/bpass_v2p2.1_imf_chab300_burst_binary.ascii
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Generating binary mod files can be achieved by executing Cloudy from the Cloudy data directory</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/c17.03/data/
+~/c17.03/source/cloudy.exe
+</pre></div>
+</div>
+<p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code> and then type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>compile star <span class="s2">&quot;binaries/bpass_v2p2.1_imf_chab300_burst_binary.ascii&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">enter</span></code> again (twice in total)  to generate the binaries.</p></li>
+<li><p>Your Cloudy data directory should now contain the following file: <code class="docutils literal notranslate"><span class="pre">binaries/bpass_v2p2.1_imf_chab300_burst_binary.mod</span></code></p></li>
+</ul>
+<p>Additionally, running the test suit should reveal if your BPASS file has been correctly installed.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

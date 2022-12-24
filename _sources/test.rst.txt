@@ -1,0 +1,2 @@
+.. mdinclude:: test.md
+
